@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { insforge } from "./insforge-client";
+import { yarah } from "./yarah-client";
 
 interface Todo {
   id: string;
@@ -18,7 +18,7 @@ export function TodoApp({ dashboardUrl }: { dashboardUrl: string }) {
   }, []);
 
   async function fetchTodos() {
-    const { data, error } = await insforge.database
+    const { data, error } = await yarah.database
       .from("todo")
       .select()
       .order("created_at", { ascending: false });
@@ -39,7 +39,7 @@ export function TodoApp({ dashboardUrl }: { dashboardUrl: string }) {
       is_completed: false,
     };
     setTodos((prev) => [optimistic, ...prev]);
-    insforge.database
+    yarah.database
       .from("todo")
       .insert([{ text: trimmed }])
       .select()
@@ -58,7 +58,7 @@ export function TodoApp({ dashboardUrl }: { dashboardUrl: string }) {
         t.id === id ? { ...t, is_completed: !currentValue } : t
       )
     );
-    await insforge.database
+    await yarah.database
       .from("todo")
       .update({ is_completed: !currentValue })
       .eq("id", id);

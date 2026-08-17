@@ -2,8 +2,8 @@
 const nextConfig = {
   images: {
     remotePatterns: [
-      { protocol: 'https', hostname: '**.insforge.app' },
-      { protocol: 'https', hostname: 'cdn.insforge.dev' },
+      { protocol: 'https', hostname: '**.apps.yarah.dev' },
+      { protocol: 'https', hostname: 'cdn.yarah.dev' },
     ],
   },
   async rewrites() {

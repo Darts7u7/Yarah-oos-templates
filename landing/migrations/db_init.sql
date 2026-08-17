@@ -1,5 +1,5 @@
 -- Acme landing template — waitlist signups.
--- RLS: anon can INSERT only; admin reads via service role (InsForge dashboard).
+-- RLS: anon can INSERT only; admin reads via service role (Yarah dashboard).
 
 create extension if not exists citext;
 

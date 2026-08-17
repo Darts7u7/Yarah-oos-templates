@@ -1,5 +1,5 @@
 {
-  "name": "insforge-ai-pdf-chatbot",
+  "name": "yarah-ai-pdf-chatbot",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,11 +8,11 @@
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "auth:migrate": "npx -y auth@latest migrate --config ./lib/auth.ts -y",
-    "setup": "npm run auth:migrate && npx -y @insforge/cli storage create-bucket pdf-documents --private && npx -y @insforge/cli storage create-bucket audio-overviews --public",
+    "setup": "npm run auth:migrate && npx -y @yarahdev/cli storage create-bucket pdf-documents --private && npx -y @yarahdev/cli storage create-bucket audio-overviews --public",
     "test": "node --import tsx --test scripts/*.test.mjs"
   },
   "dependencies": {
-    "@insforge/sdk": "latest",
+    "@yarahdev/sdk": "^1.5.2",
     "@radix-ui/react-slot": "^1.2.4",
     "better-auth": "^1.6.0",
     "class-variance-authority": "^0.7.1",

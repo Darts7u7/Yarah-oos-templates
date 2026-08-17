@@ -12,6 +12,6 @@ export const useWorkspaceStore = create<WorkspaceStore>()(
       activeWorkspaceId: null,
       setActiveWorkspaceId: (id) => set({ activeWorkspaceId: id }),
     }),
-    { name: 'insforge-admin.workspace' },
+    { name: 'yarah-admin.workspace' },
   ),
 )

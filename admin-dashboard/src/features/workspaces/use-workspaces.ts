@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { insforge } from '@/lib/insforge'
+import { yarah } from '@/lib/yarah'
 
 export type Workspace = {
   id: string
@@ -16,7 +16,7 @@ export function useWorkspaces(userId: string | undefined) {
     enabled: !!userId,
     queryKey: ['workspaces', userId],
     queryFn: async (): Promise<WorkspaceMembership[]> => {
-      const { data: members, error: memErr } = await insforge.database
+      const { data: members, error: memErr } = await yarah.database
         .from('workspace_members')
         .select('workspace_id, role')
         .eq('user_id', userId!)
@@ -25,7 +25,7 @@ export function useWorkspaces(userId: string | undefined) {
       if (memberRows.length === 0) return []
 
       const ids = memberRows.map((r) => r.workspace_id)
-      const { data: wsRows, error: wsErr } = await insforge.database
+      const { data: wsRows, error: wsErr } = await yarah.database
         .from('workspaces')
         .select('id, slug, name, owner_id, created_at')
         .in('id', ids)

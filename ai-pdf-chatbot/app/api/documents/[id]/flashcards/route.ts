@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { createInsforgeServerClient } from '@/lib/insforge';
+import { createYarahServerClient } from '@/lib/yarah';
 import { getCurrentAuthState } from '@/lib/auth-state';
 import { generateFlashcards } from '@/lib/ai/document-insights';
 import { parsePdf } from '@/lib/pdf/parse';
@@ -20,7 +20,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
   if (!auth.viewer.isAuthenticated || !auth.accessToken) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
-  const client = createInsforgeServerClient({ accessToken: auth.accessToken });
+  const client = createYarahServerClient({ accessToken: auth.accessToken });
   const { data, error } = await client.database
     .from('document_flashcards')
     .select('id, question, answer, sort_order')
@@ -37,7 +37,7 @@ export async function POST(_req: Request, { params }: { params: Promise<{ id: st
   if (!auth.viewer.isAuthenticated || !auth.viewer.id || !auth.accessToken) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
-  const client = createInsforgeServerClient({ accessToken: auth.accessToken });
+  const client = createYarahServerClient({ accessToken: auth.accessToken });
 
   const docRes = await client.database
     .from('documents')

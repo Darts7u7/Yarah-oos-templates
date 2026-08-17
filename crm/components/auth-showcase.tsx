@@ -37,7 +37,7 @@ export function AuthShowcase({
             <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-2xl bg-accent text-accent-foreground">
               <Database className="h-5 w-5" />
             </div>
-            <CardTitle className="text-base">InsForge auth and database</CardTitle>
+            <CardTitle className="text-base">Yarah auth and database</CardTitle>
           </CardHeader>
           <CardContent className="text-sm text-muted-foreground">
             Authentication, database access, storage, and server-side queries are already wired in.

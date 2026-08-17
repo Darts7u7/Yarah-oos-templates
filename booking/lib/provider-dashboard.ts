@@ -1,18 +1,18 @@
 import 'server-only';
 
-import { createInsforgeServerClient } from '@/lib/insforge';
+import { createYarahServerClient } from '@/lib/yarah';
 import type { Availability, Blackout, Booking, Profile, Provider, Service } from '@/lib/types';
 
 type ProfileSnippet = Pick<Profile, 'user_id' | 'display_name' | 'avatar_url'>;
 
 async function loadProfileSnippets(
-  insforge: ReturnType<typeof buildClient>,
+  yarah: ReturnType<typeof buildClient>,
   userIds: string[],
 ): Promise<Map<string, ProfileSnippet>> {
   const unique = Array.from(new Set(userIds.filter(Boolean)));
   if (unique.length === 0) return new Map();
 
-  const { data, error } = await insforge.database
+  const { data, error } = await yarah.database
     .from('profiles')
     .select('user_id, display_name, avatar_url')
     .in('user_id', unique);
@@ -22,7 +22,7 @@ async function loadProfileSnippets(
 }
 
 function buildClient(accessToken: string) {
-  return createInsforgeServerClient({ accessToken });
+  return createYarahServerClient({ accessToken });
 }
 
 function assertNoError(error: { message?: string } | null, fallback: string) {
@@ -30,8 +30,8 @@ function assertNoError(error: { message?: string } | null, fallback: string) {
 }
 
 export async function getMyProvider(accessToken: string, userId: string) {
-  const insforge = buildClient(accessToken);
-  const { data, error } = await insforge.database
+  const yarah = buildClient(accessToken);
+  const { data, error } = await yarah.database
     .from('providers')
     .select('*')
     .eq('user_id', userId)
@@ -42,8 +42,8 @@ export async function getMyProvider(accessToken: string, userId: string) {
 }
 
 export async function getMyServices(providerId: string, accessToken: string) {
-  const insforge = buildClient(accessToken);
-  const { data, error } = await insforge.database
+  const yarah = buildClient(accessToken);
+  const { data, error } = await yarah.database
     .from('services')
     .select('*')
     .eq('provider_id', providerId)
@@ -54,8 +54,8 @@ export async function getMyServices(providerId: string, accessToken: string) {
 }
 
 export async function getMyService(serviceId: string, providerId: string, accessToken: string) {
-  const insforge = buildClient(accessToken);
-  const { data, error } = await insforge.database
+  const yarah = buildClient(accessToken);
+  const { data, error } = await yarah.database
     .from('services')
     .select('*')
     .eq('id', serviceId)
@@ -67,8 +67,8 @@ export async function getMyService(serviceId: string, providerId: string, access
 }
 
 export async function getMyAvailability(providerId: string, accessToken: string) {
-  const insforge = buildClient(accessToken);
-  const { data, error } = await insforge.database
+  const yarah = buildClient(accessToken);
+  const { data, error } = await yarah.database
     .from('availabilities')
     .select('*')
     .eq('provider_id', providerId)
@@ -80,8 +80,8 @@ export async function getMyAvailability(providerId: string, accessToken: string)
 }
 
 export async function getMyBlackouts(providerId: string, accessToken: string) {
-  const insforge = buildClient(accessToken);
-  const { data, error } = await insforge.database
+  const yarah = buildClient(accessToken);
+  const { data, error } = await yarah.database
     .from('blackouts')
     .select('*')
     .eq('provider_id', providerId)
@@ -92,8 +92,8 @@ export async function getMyBlackouts(providerId: string, accessToken: string) {
 }
 
 export async function getMyProviderBookings(providerId: string, accessToken: string) {
-  const insforge = buildClient(accessToken);
-  const { data, error } = await insforge.database
+  const yarah = buildClient(accessToken);
+  const { data, error } = await yarah.database
     .from('bookings')
     .select('*, service:service_id(id, name, duration_min, image_url)')
     .eq('provider_id', providerId)
@@ -102,7 +102,7 @@ export async function getMyProviderBookings(providerId: string, accessToken: str
   assertNoError(error, 'Unable to load bookings.');
 
   const profilesByUserId = await loadProfileSnippets(
-    insforge,
+    yarah,
     (data ?? []).map((row) => row.customer_id as string),
   );
   return (data ?? []).map((row) => ({

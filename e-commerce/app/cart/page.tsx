@@ -22,7 +22,7 @@ export default async function CartPage() {
             actionHref="/auth/sign-in"
             actionLabel="Go to sign in"
             className="mx-auto max-w-xl"
-            description="Cart records are stored per user on InsForge, so authentication is required before we create one."
+            description="Cart records are stored per user on Yarah, so authentication is required before we create one."
             eyebrow="Cart"
             title="Sign in to start your cart."
           />

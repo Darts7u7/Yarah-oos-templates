@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getInsforgeServerClient } from '@/lib/insforge';
+import { getYarahServerClient } from '@/lib/yarah';
 import {
   UPLOAD_BUCKET,
   MAX_FILE_SIZE,
@@ -34,8 +34,8 @@ export async function POST(request: Request) {
       );
     }
 
-    const insforge = getInsforgeServerClient();
-    const { data, error } = await insforge.storage
+    const yarah = getYarahServerClient();
+    const { data, error } = await yarah.storage
       .from(UPLOAD_BUCKET)
       .uploadAuto(file);
 

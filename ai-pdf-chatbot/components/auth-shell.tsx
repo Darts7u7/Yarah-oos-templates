@@ -40,12 +40,12 @@ export function AuthShell({
         <p className="text-center text-xs text-muted-foreground">
           Powered by{' '}
           <a
-            href="https://insforge.dev"
+            href="https://yarah.dev"
             target="_blank"
             rel="noreferrer"
             className="text-foreground underline-offset-4 hover:underline"
           >
-            InsForge
+            Yarah
           </a>{' '}
           · pgvector RAG · streaming citations
         </p>

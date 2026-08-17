@@ -6,7 +6,7 @@ import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
-import { insforge } from '@/lib/insforge'
+import { yarah } from '@/lib/yarah'
 import { useAuth } from '@/lib/auth-context'
 import { useWorkspaceStore } from '@/features/workspaces/workspace-store'
 
@@ -50,7 +50,7 @@ function InvitePage() {
     enabled: !!user, // RLS requires auth to read the invitation
     queryKey: ['invitation-lookup', token],
     queryFn: async (): Promise<InvitationLookup> => {
-      const { data, error } = await insforge.database
+      const { data, error } = await yarah.database
         .from('workspace_invitations')
         .select('id, workspace_id, email, role, token, expires_at, accepted_at, created_by, created_at')
         .eq('token', token)
@@ -67,7 +67,7 @@ function InvitePage() {
       // Fetch workspace name for display. RLS only grants this if the user is
       // already a member; for new invitees this will return no row, which is
       // fine — we'll fall back to a generic label.
-      const { data: wsData } = await insforge.database
+      const { data: wsData } = await yarah.database
         .from('workspaces')
         .select('id, name, slug')
         .eq('id', invitation.workspace_id)
@@ -82,7 +82,7 @@ function InvitePage() {
       if (!user) throw new Error('Not signed in')
 
       // 1. Insert membership row for the current user with the role from the invitation.
-      const { error: memErr } = await insforge.database.from('workspace_members').insert([
+      const { error: memErr } = await yarah.database.from('workspace_members').insert([
         {
           workspace_id: invitation.workspace_id,
           user_id: user.id,
@@ -93,7 +93,7 @@ function InvitePage() {
       if (memErr) throw new Error(memErr.message)
 
       // 2. Mark invitation accepted. RLS allows the invitee (email match) to update.
-      const { error: invErr } = await insforge.database
+      const { error: invErr } = await yarah.database
         .from('workspace_invitations')
         .update({ accepted_at: new Date().toISOString() })
         .eq('id', invitation.id)

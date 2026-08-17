@@ -2,11 +2,11 @@
 
 import { revalidatePath } from "next/cache";
 import { getAccessToken } from "@/lib/auth-cookies";
-import { createInsforgeServerClient } from "@/lib/insforge";
+import { createYarahServerClient } from "@/lib/yarah";
 
 async function getAuthenticatedClient() {
   const accessToken = await getAccessToken();
-  return createInsforgeServerClient({ accessToken: accessToken ?? undefined });
+  return createYarahServerClient({ accessToken: accessToken ?? undefined });
 }
 
 export async function addTodo(formData: FormData) {
@@ -16,8 +16,8 @@ export async function addTodo(formData: FormData) {
     return { error: "Title is required" };
   }
 
-  const insforge = await getAuthenticatedClient();
-  const { error } = await insforge.database
+  const yarah = await getAuthenticatedClient();
+  const { error } = await yarah.database
     .from("todos")
     .insert({ title: title.trim(), is_complete: false });
 
@@ -30,8 +30,8 @@ export async function addTodo(formData: FormData) {
 }
 
 export async function toggleTodo(id: number, isComplete: boolean) {
-  const insforge = await getAuthenticatedClient();
-  const { error } = await insforge.database
+  const yarah = await getAuthenticatedClient();
+  const { error } = await yarah.database
     .from("todos")
     .update({ is_complete: isComplete })
     .eq("id", id);
@@ -45,8 +45,8 @@ export async function toggleTodo(id: number, isComplete: boolean) {
 }
 
 export async function deleteTodo(id: number) {
-  const insforge = await getAuthenticatedClient();
-  const { error } = await insforge.database
+  const yarah = await getAuthenticatedClient();
+  const { error } = await yarah.database
     .from("todos")
     .delete()
     .eq("id", id);

@@ -8,12 +8,12 @@ import {
   setAuthCookies,
   setPkceVerifier,
 } from "@/lib/auth-cookies";
-import { getInsforgeServerClient } from "@/lib/insforge";
+import { getYarahServerClient } from "@/lib/yarah";
 
 type AuthResult = { success: true } | { success: false; error: string };
 
 export async function getAuthConfig() {
-  const baseUrl = process.env.NEXT_PUBLIC_INSFORGE_URL;
+  const baseUrl = process.env.NEXT_PUBLIC_YARAH_URL;
 
   if (!baseUrl) {
     return { oAuthProviders: [] as string[], requireEmailVerification: false, passwordMinLength: 8 };
@@ -35,8 +35,8 @@ export async function getAuthConfig() {
 }
 
 export async function signIn(email: string, password: string): Promise<AuthResult> {
-  const insforge = getInsforgeServerClient();
-  const { data, error } = await insforge.auth.signInWithPassword({ email, password });
+  const yarah = getYarahServerClient();
+  const { data, error } = await yarah.auth.signInWithPassword({ email, password });
 
   if (error) {
     if (error.statusCode === 403) {
@@ -59,8 +59,8 @@ export async function signUp(
   password: string,
   name: string,
 ): Promise<{ success: true; requireVerification: boolean } | { success: false; error: string }> {
-  const insforge = getInsforgeServerClient();
-  const { data, error } = await insforge.auth.signUp({ email, password, name });
+  const yarah = getYarahServerClient();
+  const { data, error } = await yarah.auth.signUp({ email, password, name });
 
   if (error) {
     return { success: false, error: error.message ?? "Sign up failed." };
@@ -79,8 +79,8 @@ export async function signUp(
 }
 
 export async function verifyEmail(email: string, otp: string): Promise<AuthResult> {
-  const insforge = getInsforgeServerClient();
-  const { data, error } = await insforge.auth.verifyEmail({ email, otp });
+  const yarah = getYarahServerClient();
+  const { data, error } = await yarah.auth.verifyEmail({ email, otp });
 
   if (error) {
     return { success: false, error: error.message ?? "Verification failed." };
@@ -94,10 +94,10 @@ export async function verifyEmail(email: string, otp: string): Promise<AuthResul
 }
 
 export async function resendVerification(email: string): Promise<AuthResult> {
-  const insforge = getInsforgeServerClient();
+  const yarah = getYarahServerClient();
 
   try {
-    await insforge.auth.resendVerificationEmail({ email });
+    await yarah.auth.resendVerificationEmail({ email });
     return { success: true };
   } catch {
     return { success: false, error: "Failed to resend verification code." };
@@ -105,10 +105,10 @@ export async function resendVerification(email: string): Promise<AuthResult> {
 }
 
 export async function sendResetEmail(email: string): Promise<AuthResult> {
-  const insforge = getInsforgeServerClient();
+  const yarah = getYarahServerClient();
 
   try {
-    await insforge.auth.sendResetPasswordEmail({ email });
+    await yarah.auth.sendResetPasswordEmail({ email });
     return { success: true };
   } catch {
     return { success: false, error: "Failed to send reset email." };
@@ -119,8 +119,8 @@ export async function exchangeResetCode(
   email: string,
   code: string,
 ): Promise<{ success: true; token: string } | { success: false; error: string }> {
-  const insforge = getInsforgeServerClient();
-  const { data, error } = await insforge.auth.exchangeResetPasswordToken({ email, code });
+  const yarah = getYarahServerClient();
+  const { data, error } = await yarah.auth.exchangeResetPasswordToken({ email, code });
 
   if (error || !data?.token) {
     return { success: false, error: error?.message ?? "Invalid or expired code." };
@@ -130,8 +130,8 @@ export async function exchangeResetCode(
 }
 
 export async function resetPassword(newPassword: string, otp: string): Promise<AuthResult> {
-  const insforge = getInsforgeServerClient();
-  const { error } = await insforge.auth.resetPassword({ newPassword, otp });
+  const yarah = getYarahServerClient();
+  const { error } = await yarah.auth.resetPassword({ newPassword, otp });
 
   if (error) {
     return { success: false, error: error.message ?? "Password reset failed." };
@@ -141,7 +141,7 @@ export async function resetPassword(newPassword: string, otp: string): Promise<A
 }
 
 export async function getOAuthUrl(provider: string): Promise<{ url: string } | { error: string }> {
-  const insforge = getInsforgeServerClient();
+  const yarah = getYarahServerClient();
   const origin =
     process.env.NODE_ENV === "development"
       ? "http://localhost:3000"
@@ -151,9 +151,9 @@ export async function getOAuthUrl(provider: string): Promise<{ url: string } | {
     return { error: "Missing NEXT_PUBLIC_APP_URL." };
   }
 
-  type OAuthProvider = Parameters<typeof insforge.auth.signInWithOAuth>[0]["provider"];
+  type OAuthProvider = Parameters<typeof yarah.auth.signInWithOAuth>[0]["provider"];
 
-  const { data, error } = await insforge.auth.signInWithOAuth({
+  const { data, error } = await yarah.auth.signInWithOAuth({
     provider: provider as OAuthProvider,
     redirectTo: `${origin}/auth/callback`,
     skipBrowserRedirect: true,
@@ -171,9 +171,9 @@ export async function getOAuthUrl(provider: string): Promise<{ url: string } | {
 }
 
 export async function exchangeAuthCode(code: string): Promise<AuthResult> {
-  const insforge = getInsforgeServerClient();
+  const yarah = getYarahServerClient();
   const codeVerifier = await consumePkceVerifier();
-  const { data, error } = await insforge.auth.exchangeOAuthCode(code, codeVerifier ?? undefined);
+  const { data, error } = await yarah.auth.exchangeOAuthCode(code, codeVerifier ?? undefined);
 
   if (error || !data?.accessToken) {
     return { success: false, error: error?.message ?? "Code exchange failed." };
@@ -189,10 +189,10 @@ export async function exchangeAuthCode(code: string): Promise<AuthResult> {
 }
 
 export async function signOut() {
-  const insforge = getInsforgeServerClient();
+  const yarah = getYarahServerClient();
 
   try {
-    await insforge.auth.signOut();
+    await yarah.auth.signOut();
   } catch {
     // Sign out locally even if the server call fails.
   }

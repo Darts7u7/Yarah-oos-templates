@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { createInsforgeServerClient } from '@/lib/insforge';
+import { createYarahServerClient } from '@/lib/yarah';
 import { getCurrentAuthState } from '@/lib/auth-state';
 
 export const runtime = 'nodejs';
@@ -16,7 +16,7 @@ export async function GET(req: Request) {
   const url = new URL(req.url);
   const workspace = url.searchParams.get('workspace');
 
-  const client = createInsforgeServerClient({ accessToken: auth.accessToken });
+  const client = createYarahServerClient({ accessToken: auth.accessToken });
   let query = client.database
     .from('chat_sessions')
     .select('id, workspace_id, title, document_ids, created_at, last_message_at')
@@ -44,7 +44,7 @@ export async function POST(req: Request) {
     documentIds?: string[];
     workspaceId?: string | null;
   };
-  const client = createInsforgeServerClient({ accessToken: auth.accessToken });
+  const client = createYarahServerClient({ accessToken: auth.accessToken });
 
   const { data, error } = await client.database
     .from('chat_sessions')

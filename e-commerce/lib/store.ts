@@ -5,7 +5,7 @@ import {
   STANDARD_SHIPPING_CENTS,
   TAX_RATE,
 } from '@/lib/constants';
-import { createInsforgeServerClient, getInsforgeServerClient } from '@/lib/insforge';
+import { createYarahServerClient, getYarahServerClient } from '@/lib/yarah';
 import type {
   CartItem,
   Category,
@@ -20,7 +20,7 @@ import type {
   WishlistItem,
 } from '@/lib/types';
 
-type InsforgeClient = ReturnType<typeof createInsforgeServerClient>;
+type YarahClient = ReturnType<typeof createYarahServerClient>;
 
 export type AddressInput = {
   label?: string;
@@ -37,12 +37,12 @@ export type AddressInput = {
   is_default_billing?: boolean;
 };
 
-function getInsforge(accessToken?: string | null): InsforgeClient {
+function getYarah(accessToken?: string | null): YarahClient {
   if (accessToken) {
-    return createInsforgeServerClient({ accessToken });
+    return createYarahServerClient({ accessToken });
   }
 
-  return getInsforgeServerClient();
+  return getYarahServerClient();
 }
 
 function assertNoDatabaseError(
@@ -120,8 +120,8 @@ export function calculateCartTotals(items: Pick<CartItem, 'quantity' | 'unit_pri
 }
 
 export async function getCategories(accessToken?: string | null) {
-  const insforge = getInsforge(accessToken);
-  const { data, error } = await insforge.database
+  const yarah = getYarah(accessToken);
+  const { data, error } = await yarah.database
     .from('categories')
     .select('*')
     .eq('is_active', true)
@@ -132,8 +132,8 @@ export async function getCategories(accessToken?: string | null) {
 }
 
 export async function getFeaturedProducts(accessToken?: string | null) {
-  const insforge = getInsforge(accessToken);
-  const { data, error } = await insforge.database
+  const yarah = getYarah(accessToken);
+  const { data, error } = await yarah.database
     .from('products')
     .select('*, category:category_id(id, name, slug, accent_color)')
     .eq('status', 'active')
@@ -151,9 +151,9 @@ export async function getProducts(options?: {
   search?: string | null;
   featuredOnly?: boolean;
 }) {
-  const insforge = getInsforge(options?.accessToken);
+  const yarah = getYarah(options?.accessToken);
 
-  let query = insforge.database
+  let query = yarah.database
     .from('products')
     .select('*, category:category_id(id, name, slug, accent_color)')
     .eq('status', 'active')
@@ -161,7 +161,7 @@ export async function getProducts(options?: {
     .order('created_at', { ascending: false });
 
   if (options?.category) {
-    const { data: category, error: categoryError } = await insforge.database
+    const { data: category, error: categoryError } = await yarah.database
       .from('categories')
       .select('id')
       .eq('slug', options.category)
@@ -191,8 +191,8 @@ export async function getProducts(options?: {
 }
 
 export async function getProductBySlug(slug: string, accessToken?: string | null) {
-  const insforge = getInsforge(accessToken);
-  const { data, error } = await insforge.database
+  const yarah = getYarah(accessToken);
+  const { data, error } = await yarah.database
     .from('products')
     .select('*, category:category_id(id, name, slug, accent_color)')
     .eq('slug', slug)
@@ -206,7 +206,7 @@ export async function getProductBySlug(slug: string, accessToken?: string | null
   }
 
   const product = data as Product;
-  const { data: options, error: optionsError } = await insforge.database
+  const { data: options, error: optionsError } = await yarah.database
     .from('product_options')
     .select('id, product_id, name, presentation, sort_order')
     .eq('product_id', product.id)
@@ -224,12 +224,12 @@ export async function getProductBySlug(slug: string, accessToken?: string | null
 
   const optionIds = (options ?? []).map((option) => option.id);
   const [valuesResult, variantsResult] = await Promise.all([
-    insforge.database
+    yarah.database
       .from('product_option_values')
       .select('id, option_id, label, swatch_value, sort_order')
       .in('option_id', optionIds)
       .order('sort_order', { ascending: true }),
-    insforge.database
+    yarah.database
       .from('product_variants')
       .select(
         'id, product_id, sku, title, option_summary, image_url, price_cents, compare_at_price_cents, inventory_count, is_default, is_active',
@@ -247,7 +247,7 @@ export async function getProductBySlug(slug: string, accessToken?: string | null
   let variantValueLinks: ProductVariantOptionJoin[] = [];
 
   if (variantIds.length) {
-    const { data: links, error: linksError } = await insforge.database
+    const { data: links, error: linksError } = await yarah.database
       .from('product_variant_option_values')
       .select('variant_id, option_value_id')
       .in('variant_id', variantIds);
@@ -266,8 +266,8 @@ export async function getProductBySlug(slug: string, accessToken?: string | null
 }
 
 export async function getActiveCart(userId: string, accessToken: string) {
-  const insforge = getInsforge(accessToken);
-  const { data: cart, error: cartError } = await insforge.database
+  const yarah = getYarah(accessToken);
+  const { data: cart, error: cartError } = await yarah.database
     .from('shopping_carts')
     .select('*')
     .eq('user_id', userId)
@@ -281,7 +281,7 @@ export async function getActiveCart(userId: string, accessToken: string) {
     return null;
   }
 
-  const { data: items, error: itemsError } = await insforge.database
+  const { data: items, error: itemsError } = await yarah.database
     .from('cart_items')
     .select('*, product:product_id(id, name, slug, image_url, image_alt, inventory_count, badge, short_description), variant:variant_id(id, title, option_summary, image_url)')
     .eq('cart_id', cart.id)
@@ -302,8 +302,8 @@ export async function ensureActiveCart(userId: string, accessToken: string) {
     return existing;
   }
 
-  const insforge = getInsforge(accessToken);
-  const { data, error } = await insforge.database
+  const yarah = getYarah(accessToken);
+  const { data, error } = await yarah.database
     .from('shopping_carts')
     .insert([{ user_id: userId, status: 'active' }])
     .select()
@@ -324,10 +324,10 @@ export async function addItemToCart(args: {
   quantity: number;
   variantId?: string;
 }) {
-  const insforge = getInsforge(args.accessToken);
+  const yarah = getYarah(args.accessToken);
   const cart = await ensureActiveCart(args.userId, args.accessToken);
 
-  const { data: product, error: productError } = await insforge.database
+  const { data: product, error: productError } = await yarah.database
     .from('products')
     .select('id, inventory_count, price_cents')
     .eq('id', args.productId)
@@ -344,7 +344,7 @@ export async function addItemToCart(args: {
   let variantId: string | null = null;
 
   if (args.variantId) {
-    const { data: variant, error: variantError } = await insforge.database
+    const { data: variant, error: variantError } = await yarah.database
       .from('product_variants')
       .select('id, product_id, inventory_count, price_cents, is_active')
       .eq('id', args.variantId)
@@ -361,7 +361,7 @@ export async function addItemToCart(args: {
     unitPrice = variant.price_cents ?? product.price_cents;
   }
 
-  let existingQuery = insforge.database
+  let existingQuery = yarah.database
     .from('cart_items')
     .select('*')
     .eq('cart_id', cart.id)
@@ -382,7 +382,7 @@ export async function addItemToCart(args: {
   }
 
   if (existing) {
-    const { error } = await insforge.database
+    const { error } = await yarah.database
       .from('cart_items')
       .update({
         quantity: nextQuantity,
@@ -394,7 +394,7 @@ export async function addItemToCart(args: {
     return;
   }
 
-  const { error } = await insforge.database
+  const { error } = await yarah.database
     .from('cart_items')
     .insert([
       {
@@ -415,10 +415,10 @@ export async function updateCartItemQuantity(args: {
   itemId: string;
   quantity: number;
 }) {
-  const insforge = getInsforge(args.accessToken);
+  const yarah = getYarah(args.accessToken);
 
   if (args.quantity <= 0) {
-    const { error } = await insforge.database
+    const { error } = await yarah.database
       .from('cart_items')
       .delete()
       .eq('id', args.itemId);
@@ -427,7 +427,7 @@ export async function updateCartItemQuantity(args: {
     return;
   }
 
-  const { data: item, error: itemError } = await insforge.database
+  const { data: item, error: itemError } = await yarah.database
     .from('cart_items')
     .select('product_id, variant_id')
     .eq('id', args.itemId)
@@ -440,12 +440,12 @@ export async function updateCartItemQuantity(args: {
   }
 
   const source = item.variant_id
-    ? await insforge.database
+    ? await yarah.database
         .from('product_variants')
         .select('inventory_count')
         .eq('id', item.variant_id)
         .maybeSingle()
-    : await insforge.database
+    : await yarah.database
         .from('products')
         .select('inventory_count')
         .eq('id', item.product_id)
@@ -457,7 +457,7 @@ export async function updateCartItemQuantity(args: {
     throw new Error('Requested quantity exceeds stock.');
   }
 
-  const { error } = await insforge.database
+  const { error } = await yarah.database
     .from('cart_items')
     .update({ quantity: args.quantity })
     .eq('id', args.itemId);
@@ -466,8 +466,8 @@ export async function updateCartItemQuantity(args: {
 }
 
 export async function removeCartItem(accessToken: string, itemId: string) {
-  const insforge = getInsforge(accessToken);
-  const { error } = await insforge.database
+  const yarah = getYarah(accessToken);
+  const { error } = await yarah.database
     .from('cart_items')
     .delete()
     .eq('id', itemId);
@@ -479,8 +479,8 @@ export async function getWishlistProductIds(args: {
   accessToken: string;
   userId: string;
 }): Promise<Set<string>> {
-  const insforge = getInsforge(args.accessToken);
-  const { data, error } = await insforge.database
+  const yarah = getYarah(args.accessToken);
+  const { data, error } = await yarah.database
     .from('wishlists')
     .select('product_id')
     .eq('user_id', args.userId);
@@ -493,8 +493,8 @@ export async function getWishlistWithProducts(args: {
   accessToken: string;
   userId: string;
 }): Promise<WishlistItem[]> {
-  const insforge = getInsforge(args.accessToken);
-  const { data, error } = await insforge.database
+  const yarah = getYarah(args.accessToken);
+  const { data, error } = await yarah.database
     .from('wishlists')
     .select('*, product:products(*)')
     .eq('user_id', args.userId)
@@ -509,8 +509,8 @@ export async function addToWishlist(args: {
   userId: string;
   productId: string;
 }) {
-  const insforge = getInsforge(args.accessToken);
-  const { error } = await insforge.database
+  const yarah = getYarah(args.accessToken);
+  const { error } = await yarah.database
     .from('wishlists')
     .insert({ user_id: args.userId, product_id: args.productId });
 
@@ -533,8 +533,8 @@ export async function removeFromWishlist(args: {
   userId: string;
   productId: string;
 }) {
-  const insforge = getInsforge(args.accessToken);
-  const { error } = await insforge.database
+  const yarah = getYarah(args.accessToken);
+  const { error } = await yarah.database
     .from('wishlists')
     .delete()
     .eq('user_id', args.userId)
@@ -544,8 +544,8 @@ export async function removeFromWishlist(args: {
 }
 
 export async function getSavedAddresses(userId: string, accessToken: string) {
-  const insforge = getInsforge(accessToken);
-  const { data, error } = await insforge.database
+  const yarah = getYarah(accessToken);
+  const { data, error } = await yarah.database
     .from('saved_addresses')
     .select('*')
     .eq('user_id', userId)
@@ -561,10 +561,10 @@ export async function createAddress(args: {
   userId: string;
   input: AddressInput;
 }) {
-  const insforge = getInsforge(args.accessToken);
+  const yarah = getYarah(args.accessToken);
 
   if (args.input.is_default_shipping) {
-    const { error } = await insforge.database
+    const { error } = await yarah.database
       .from('saved_addresses')
       .update({ is_default_shipping: false })
       .eq('user_id', args.userId);
@@ -573,7 +573,7 @@ export async function createAddress(args: {
   }
 
   if (args.input.is_default_billing) {
-    const { error } = await insforge.database
+    const { error } = await yarah.database
       .from('saved_addresses')
       .update({ is_default_billing: false })
       .eq('user_id', args.userId);
@@ -581,7 +581,7 @@ export async function createAddress(args: {
     assertNoDatabaseError(error, 'Unable to save address.');
   }
 
-  const { data, error } = await insforge.database
+  const { data, error } = await yarah.database
     .from('saved_addresses')
     .insert([
       {
@@ -602,17 +602,17 @@ export async function setDefaultSavedAddress(args: {
   addressId: string;
   type: 'shipping' | 'billing';
 }) {
-  const insforge = getInsforge(args.accessToken);
+  const yarah = getYarah(args.accessToken);
   const column = args.type === 'shipping' ? 'is_default_shipping' : 'is_default_billing';
 
-  const { error: resetError } = await insforge.database
+  const { error: resetError } = await yarah.database
     .from('saved_addresses')
     .update({ [column]: false })
     .eq('user_id', args.userId);
 
   assertNoDatabaseError(resetError, 'Unable to update address.');
 
-  const { error } = await insforge.database
+  const { error } = await yarah.database
     .from('saved_addresses')
     .update({ [column]: true })
     .eq('id', args.addressId)
@@ -626,8 +626,8 @@ export async function deleteSavedAddress(args: {
   userId: string;
   addressId: string;
 }) {
-  const insforge = getInsforge(args.accessToken);
-  const { error } = await insforge.database
+  const yarah = getYarah(args.accessToken);
+  const { error } = await yarah.database
     .from('saved_addresses')
     .delete()
     .eq('id', args.addressId)
@@ -662,8 +662,8 @@ export async function placeOrderForUser(args: {
     throw new Error('A shipping address is required.');
   }
 
-  const insforge = getInsforge(args.accessToken);
-  const { data, error } = await insforge.database.rpc('place_order', {
+  const yarah = getYarah(args.accessToken);
+  const { data, error } = await yarah.database.rpc('place_order', {
     p_address_id: addressId,
     p_note: args.note ?? null,
   });
@@ -680,9 +680,9 @@ export async function createCheckoutSessionForOrder(args: {
   orderId: string;
   successOrigin: string;
 }) {
-  const insforge = getInsforge(args.accessToken);
+  const yarah = getYarah(args.accessToken);
 
-  const { data: order, error: orderError } = await insforge.database
+  const { data: order, error: orderError } = await yarah.database
     .from('orders')
     .select('id, total_cents, subtotal_cents, shipping_cents, tax_cents, email')
     .eq('id', args.orderId)
@@ -692,7 +692,7 @@ export async function createCheckoutSessionForOrder(args: {
   assertNoDatabaseError(orderError, 'Unable to load order.');
   if (!order) throw new Error('Order not found.');
 
-  const { data: items, error: itemsError } = await insforge.database
+  const { data: items, error: itemsError } = await yarah.database
     .from('order_items')
     .select('product_id, variant_id, quantity, unit_price_cents, product_name')
     .eq('order_id', args.orderId);
@@ -703,14 +703,14 @@ export async function createCheckoutSessionForOrder(args: {
   const productIds = Array.from(new Set(items.map((i) => i.product_id).filter(Boolean))) as string[];
   const variantIds = Array.from(new Set(items.map((i) => i.variant_id).filter(Boolean))) as string[];
 
-  const { data: products, error: productsError } = await insforge.database
+  const { data: products, error: productsError } = await yarah.database
     .from('products')
     .select('id, stripe_price_id')
     .in('id', productIds);
   assertNoDatabaseError(productsError, 'Unable to load product prices.');
 
   const { data: variants, error: variantsError } = variantIds.length
-    ? await insforge.database
+    ? await yarah.database
         .from('product_variants')
         .select('id, stripe_price_id')
         .in('id', variantIds)
@@ -738,7 +738,7 @@ export async function createCheckoutSessionForOrder(args: {
     return { stripePriceId: priceId, quantity: item.quantity };
   });
 
-  const { data: session, error: sessionError } = await insforge.payments.createCheckoutSession('test', {
+  const { data: session, error: sessionError } = await yarah.payments.createCheckoutSession('test', {
     mode: 'payment',
     lineItems,
     successUrl: `${args.successOrigin}/checkout/success?order_id=${args.orderId}&session_id={CHECKOUT_SESSION_ID}`,
@@ -762,8 +762,8 @@ export async function getOrderPaymentState(args: {
   userId: string;
   orderId: string;
 }) {
-  const insforge = getInsforge(args.accessToken);
-  const { data: order, error } = await insforge.database
+  const yarah = getYarah(args.accessToken);
+  const { data: order, error } = await yarah.database
     .from('orders')
     .select('*')
     .eq('id', args.orderId)
@@ -778,8 +778,8 @@ export async function getOrderPaymentState(args: {
 }
 
 export async function isCurrentUserAdmin(accessToken: string): Promise<boolean> {
-  const insforge = getInsforge(accessToken);
-  const { data, error } = await insforge.database.rpc('current_user_is_admin');
+  const yarah = getYarah(accessToken);
+  const { data, error } = await yarah.database.rpc('current_user_is_admin');
   if (error) return false;
   return data === true;
 }
@@ -789,8 +789,8 @@ export async function markOrderShipped(args: {
   orderId: string;
   trackingNumber?: string | null;
 }) {
-  const insforge = getInsforge(args.accessToken);
-  const { data, error } = await insforge.database.rpc('mark_order_shipped', {
+  const yarah = getYarah(args.accessToken);
+  const { data, error } = await yarah.database.rpc('mark_order_shipped', {
     p_order_id: args.orderId,
     p_tracking_number: args.trackingNumber ?? null,
   });
@@ -802,8 +802,8 @@ export async function markOrderDelivered(args: {
   accessToken: string;
   orderId: string;
 }) {
-  const insforge = getInsforge(args.accessToken);
-  const { data, error } = await insforge.database.rpc('mark_order_delivered', {
+  const yarah = getYarah(args.accessToken);
+  const { data, error } = await yarah.database.rpc('mark_order_delivered', {
     p_order_id: args.orderId,
   });
   assertNoDatabaseError(error, 'Unable to mark order as delivered.');
@@ -815,8 +815,8 @@ export async function getOrders(args: {
   userId: string;
   isAdmin: boolean;
 }) {
-  const insforge = getInsforge(args.accessToken);
-  let query = insforge.database
+  const yarah = getYarah(args.accessToken);
+  let query = yarah.database
     .from('orders')
     .select('*')
     .order('created_at', { ascending: false });
@@ -836,8 +836,8 @@ export async function getOrderById(args: {
   isAdmin: boolean;
   id: string;
 }) {
-  const insforge = getInsforge(args.accessToken);
-  let query = insforge.database
+  const yarah = getYarah(args.accessToken);
+  let query = yarah.database
     .from('orders')
     .select('*, items:order_items(*)')
     .eq('id', args.id);
@@ -855,8 +855,8 @@ export async function getOrderTimeline(args: {
   accessToken: string;
   orderId: string;
 }): Promise<OrderStatusEvent[]> {
-  const insforge = getInsforge(args.accessToken);
-  const { data, error } = await insforge.database
+  const yarah = getYarah(args.accessToken);
+  const { data, error } = await yarah.database
     .from('order_status_events')
     .select('*')
     .eq('order_id', args.orderId)

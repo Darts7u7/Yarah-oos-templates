@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { createInsforgeServerClient } from '@/lib/insforge';
+import { createYarahServerClient } from '@/lib/yarah';
 import { getCurrentAuthState } from '@/lib/auth-state';
 
 export const runtime = 'nodejs';
@@ -15,7 +15,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const client = createInsforgeServerClient({ accessToken: auth.accessToken });
+  const client = createYarahServerClient({ accessToken: auth.accessToken });
 
   const cardsRes = await client.database
     .from('document_flashcards')

@@ -7,7 +7,7 @@ import {
   setAuthCookies,
   setPkceVerifier,
 } from '@/lib/auth-cookies';
-import { getInsforgeServerClient } from '@/lib/insforge';
+import { getYarahServerClient } from '@/lib/yarah';
 
 export type AuthResult = { success: true } | { success: false; error: string };
 
@@ -16,8 +16,8 @@ export type SignUpResult =
   | { success: false; error: string };
 
 export async function signIn(email: string, password: string): Promise<AuthResult> {
-  const insforge = getInsforgeServerClient();
-  const { data, error } = await insforge.auth.signInWithPassword({ email, password });
+  const yarah = getYarahServerClient();
+  const { data, error } = await yarah.auth.signInWithPassword({ email, password });
 
   if (error) {
     return { success: false, error: error.message ?? 'Sign in failed.' };
@@ -31,8 +31,8 @@ export async function signIn(email: string, password: string): Promise<AuthResul
 }
 
 export async function signUp(email: string, password: string): Promise<SignUpResult> {
-  const insforge = getInsforgeServerClient();
-  const { data, error } = await insforge.auth.signUp({ email, password });
+  const yarah = getYarahServerClient();
+  const { data, error } = await yarah.auth.signUp({ email, password });
 
   if (error) {
     return { success: false, error: error.message ?? 'Sign up failed.' };
@@ -51,15 +51,15 @@ export async function signUp(email: string, password: string): Promise<SignUpRes
 export async function getOAuthUrl(
   provider: 'google' | 'github',
 ): Promise<{ url: string } | { error: string }> {
-  const insforge = getInsforgeServerClient();
+  const yarah = getYarahServerClient();
   const origin =
     process.env.NODE_ENV === 'development'
       ? 'http://localhost:3000'
       : (process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000');
 
-  type OAuthProvider = Parameters<typeof insforge.auth.signInWithOAuth>[0]['provider'];
+  type OAuthProvider = Parameters<typeof yarah.auth.signInWithOAuth>[0]['provider'];
 
-  const { data, error } = await insforge.auth.signInWithOAuth({
+  const { data, error } = await yarah.auth.signInWithOAuth({
     provider: provider as OAuthProvider,
     redirectTo: `${origin}/auth/callback`,
     skipBrowserRedirect: true,
@@ -75,9 +75,9 @@ export async function getOAuthUrl(
 }
 
 export async function exchangeAuthCode(code: string): Promise<AuthResult> {
-  const insforge = getInsforgeServerClient();
+  const yarah = getYarahServerClient();
   const codeVerifier = await consumePkceVerifier();
-  const { data, error } = await insforge.auth.exchangeOAuthCode(code, codeVerifier ?? undefined);
+  const { data, error } = await yarah.auth.exchangeOAuthCode(code, codeVerifier ?? undefined);
 
   if (error || !data?.accessToken || !data?.refreshToken) {
     return { success: false, error: error?.message ?? 'Code exchange failed.' };
@@ -87,9 +87,9 @@ export async function exchangeAuthCode(code: string): Promise<AuthResult> {
 }
 
 export async function signOut() {
-  const insforge = getInsforgeServerClient();
+  const yarah = getYarahServerClient();
   try {
-    await insforge.auth.signOut();
+    await yarah.auth.signOut();
   } catch {
     // best-effort — still clear cookies + redirect
   }

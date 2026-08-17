@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
-import { insforge } from './insforge'
+import { yarah } from './yarah'
 
 type AuthUser = { id: string; email: string } | null
 
@@ -17,7 +17,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true)
 
   const refresh = async () => {
-    const { data, error } = await insforge.auth.getCurrentUser()
+    const { data, error } = await yarah.auth.getCurrentUser()
     if (error || !data?.user) {
       setUser(null)
     } else {
@@ -39,7 +39,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const signOut = async () => {
-    await insforge.auth.signOut()
+    await yarah.auth.signOut()
     setUser(null)
   }
 

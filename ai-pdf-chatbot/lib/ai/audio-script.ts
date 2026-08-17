@@ -1,8 +1,8 @@
 import 'server-only';
-import type { createClient } from '@insforge/sdk';
+import type { createClient } from '@yarahdev/sdk';
 import { UTILITY_MODEL } from './constants';
 
-type InsforgeClient = ReturnType<typeof createClient>;
+type YarahClient = ReturnType<typeof createClient>;
 
 export type AudioScriptTurn = {
   speaker: 'Sarah' | 'Mike';
@@ -91,7 +91,7 @@ ${block}`;
 }
 
 export async function generateAudioScript(
-  client: InsforgeClient,
+  client: YarahClient,
   workspaceName: string,
   docs: Array<{ file_name: string; summary: string | null }>,
 ): Promise<AudioScriptTurn[]> {

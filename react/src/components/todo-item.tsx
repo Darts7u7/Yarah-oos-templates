@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getInsforgeClient } from "../lib/insforge";
+import { getYarahClient } from "../lib/yarah";
 
 interface Todo {
   id: number;
@@ -23,8 +23,8 @@ export function TodoItem({ todo, onChanged }: { todo: Todo; onChanged: () => voi
   async function handleToggle() {
     setIsPending(true);
     try {
-      const insforge = getInsforgeClient();
-      await insforge.database
+      const yarah = getYarahClient();
+      await yarah.database
         .from("todos")
         .update({ is_complete: !todo.is_complete })
         .eq("id", todo.id);
@@ -37,8 +37,8 @@ export function TodoItem({ todo, onChanged }: { todo: Todo; onChanged: () => voi
   async function handleDelete() {
     setIsPending(true);
     try {
-      const insforge = getInsforgeClient();
-      await insforge.database
+      const yarah = getYarahClient();
+      await yarah.database
         .from("todos")
         .delete()
         .eq("id", todo.id);

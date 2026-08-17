@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { insforge } from '@/lib/insforge'
+import { yarah } from '@/lib/yarah'
 
 export type App = {
   slug: string
@@ -46,13 +46,13 @@ export function useApps(workspaceId: string | undefined) {
     queryKey: appsKey(workspaceId),
     queryFn: async (): Promise<AppWithConnection[]> => {
       const [catalogRes, connectionsRes] = await Promise.all([
-        insforge.database
+        yarah.database
           .from('apps_catalog')
           .select(
             'slug, name, description, icon_url, composio_toolkit_slug, display_order',
           )
           .order('display_order', { ascending: true }),
-        insforge.database
+        yarah.database
           .from('app_connections')
           .select('id, workspace_id, app_slug, status, connected_at, connected_by, config_json')
           .eq('workspace_id', workspaceId!),

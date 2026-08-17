@@ -24,7 +24,7 @@ function getProjectIdFromLinkFile(): string | null {
     let dir = process.cwd();
     const root = path.parse(dir).root;
     while (dir !== root) {
-      const filePath = path.join(dir, ".insforge", "project.json");
+      const filePath = path.join(dir, ".yarah", "project.json");
       if (fs.existsSync(filePath)) {
         const content = JSON.parse(fs.readFileSync(filePath, "utf-8"));
         return content.project_id ?? null;
@@ -40,9 +40,9 @@ function getProjectIdFromLinkFile(): string | null {
 function getDashboardUrl(): string {
   const projectId = getProjectIdFromLinkFile();
   if (projectId) {
-    return `https://insforge.dev/dashboard/project/${projectId}`;
+    return `https://yarah.dev/dashboard/project/${projectId}`;
   }
-  return "https://insforge.dev/dashboard";
+  return "https://yarah.dev/dashboard";
 }
 
 export function DashboardLink({ children, className }: { children?: React.ReactNode; className?: string }) {
@@ -55,7 +55,7 @@ export function DashboardLink({ children, className }: { children?: React.ReactN
       rel="noreferrer"
       className={className ?? "font-medium text-[var(--foreground)] hover:underline"}
     >
-      {children ?? "InsForge Dashboard"}
+      {children ?? "Yarah Dashboard"}
       <ExternalLinkIcon />
     </a>
   );

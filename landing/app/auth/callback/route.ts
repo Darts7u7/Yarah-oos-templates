@@ -3,9 +3,9 @@ import { exchangeAuthCode } from '@/lib/auth-actions';
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
-  // InsForge OAuth shared callback returns the exchangeable code as `insforge_code`,
+  // Yarah OAuth shared callback returns the exchangeable code as `yarah_code`,
   // not the OAuth-spec `code`.
-  const code = url.searchParams.get('insforge_code');
+  const code = url.searchParams.get('yarah_code');
   const error = url.searchParams.get('error');
 
   const base = process.env.NEXT_PUBLIC_APP_URL ?? url.origin;

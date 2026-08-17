@@ -1,9 +1,9 @@
 import "server-only";
 
-import type { UserSchema } from "@insforge/sdk";
+import type { UserSchema } from "@yarahdev/sdk";
 
 import { getAccessToken, getRefreshToken } from "@/lib/auth-cookies";
-import { createInsforgeServerClient } from "@/lib/insforge";
+import { createYarahServerClient } from "@/lib/yarah";
 
 type AuthViewer = {
   isAuthenticated: boolean;
@@ -38,8 +38,8 @@ function mapUserToViewer(user: UserSchema | null | undefined): AuthViewer {
 }
 
 async function refreshAuthenticatedUser(refreshToken: string) {
-  const insforge = createInsforgeServerClient();
-  const { data, error } = await insforge.auth.refreshSession({ refreshToken });
+  const yarah = createYarahServerClient();
+  const { data, error } = await yarah.auth.refreshSession({ refreshToken });
 
   if (error || !data?.user) {
     return null;
@@ -53,8 +53,8 @@ export async function getCurrentUserDetails(): Promise<UserSchema | null> {
   const refreshToken = await getRefreshToken();
 
   if (accessToken) {
-    const insforge = createInsforgeServerClient({ accessToken });
-    const { data, error } = await insforge.auth.getCurrentUser();
+    const yarah = createYarahServerClient({ accessToken });
+    const { data, error } = await yarah.auth.getCurrentUser();
 
     if (!error && data.user) {
       return data.user;

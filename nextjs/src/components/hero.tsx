@@ -7,19 +7,19 @@ export function Hero() {
     <div className="flex flex-col gap-16 items-center">
       <div className="flex gap-8 justify-center items-center">
         <a
-          href="https://insforge.dev"
+          href="https://yarah.dev"
           target="_blank"
           rel="noreferrer"
           className="flex items-center justify-center gap-3 text-[var(--foreground)]"
         >
           <Image
             src="/favicon.ico"
-            alt="InsForge"
+            alt="Yarah"
             width={60}
             height={60}
             className="h-[44px] w-[44px] rounded-xl"
           />
-          <span className="text-[28px] font-semibold tracking-[-0.03em]">InsForge</span>
+          <span className="text-[28px] font-semibold tracking-[-0.03em]">Yarah</span>
         </a>
         <span className="h-6 rotate-45 border-l border-[var(--border)]" />
         <a href="https://nextjs.org" target="_blank" rel="noreferrer" className="text-[var(--foreground)]">
@@ -27,12 +27,12 @@ export function Hero() {
         </a>
       </div>
 
-      <h1 className="sr-only">InsForge and Next.js Starter Template</h1>
+      <h1 className="sr-only">Yarah and Next.js Starter Template</h1>
 
       <p className="max-w-2xl text-center text-3xl leading-tight text-[var(--foreground)] lg:text-4xl">
         The fastest way to build apps with{" "}
-        <a href="https://insforge.dev" target="_blank" rel="noreferrer" className="font-bold hover:underline">
-          InsForge
+        <a href="https://yarah.dev" target="_blank" rel="noreferrer" className="font-bold hover:underline">
+          Yarah
         </a>{" "}
         and{" "}
         <a href="https://nextjs.org" target="_blank" rel="noreferrer" className="font-bold hover:underline">

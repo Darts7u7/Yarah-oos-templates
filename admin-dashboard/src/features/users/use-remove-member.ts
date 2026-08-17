@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { insforge } from '@/lib/insforge'
+import { yarah } from '@/lib/yarah'
 
 /**
  * Remove a member from a workspace. If the user being removed is the current
@@ -10,7 +10,7 @@ export function useRemoveMember(workspaceId: string | undefined) {
   return useMutation({
     mutationFn: async (input: { userId: string }) => {
       if (!workspaceId) throw new Error('No active workspace')
-      const { error } = await insforge.database
+      const { error } = await yarah.database
         .from('workspace_members')
         .delete()
         .eq('workspace_id', workspaceId)

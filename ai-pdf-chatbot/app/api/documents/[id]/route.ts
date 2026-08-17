@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { createInsforgeServerClient } from '@/lib/insforge';
+import { createYarahServerClient } from '@/lib/yarah';
 import { getCurrentAuthState } from '@/lib/auth-state';
 
 export const runtime = 'nodejs';
@@ -19,7 +19,7 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
     return NextResponse.json({ error: 'No mutable fields provided' }, { status: 400 });
   }
 
-  const client = createInsforgeServerClient({ accessToken: auth.accessToken });
+  const client = createYarahServerClient({ accessToken: auth.accessToken });
   const { error } = await client.database
     .from('documents')
     .update({ workspace_id: body.workspace_id ?? null, updated_at: new Date().toISOString() })
@@ -49,7 +49,7 @@ export async function DELETE(_req: Request, { params }: { params: Promise<{ id: 
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const client = createInsforgeServerClient({ accessToken: auth.accessToken });
+  const client = createYarahServerClient({ accessToken: auth.accessToken });
 
   const docRes = await client.database
     .from('documents')

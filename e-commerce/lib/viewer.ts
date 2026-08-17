@@ -1,6 +1,6 @@
 import 'server-only';
 
-import type { UserSchema } from '@insforge/sdk';
+import type { UserSchema } from '@yarahdev/sdk';
 import type { AuthViewer } from '@/lib/types';
 
 export const VISITOR_VIEWER: AuthViewer = {

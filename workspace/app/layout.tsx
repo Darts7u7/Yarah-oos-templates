@@ -8,8 +8,8 @@ const geist = Geist({ subsets: ['latin'], display: 'swap', variable: '--font-gei
 const geistMono = Geist_Mono({ subsets: ['latin'], display: 'swap', variable: '--font-geist-mono' });
 
 export const metadata: Metadata = {
-  title: 'InsForge Workspace',
-  description: 'A Notion-style collaborative workspace built with InsForge.',
+  title: 'Yarah Workspace',
+  description: 'A Notion-style collaborative workspace built with Yarah.',
   icons: { icon: '/favicon.ico' },
 };
 

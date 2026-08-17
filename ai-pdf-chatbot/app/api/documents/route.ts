@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { createInsforgeServerClient } from '@/lib/insforge';
+import { createYarahServerClient } from '@/lib/yarah';
 import { getCurrentAuthState } from '@/lib/auth-state';
 
 export const runtime = 'nodejs';
@@ -17,7 +17,7 @@ export async function GET(req: Request) {
   const url = new URL(req.url);
   const workspace = url.searchParams.get('workspace');
 
-  const client = createInsforgeServerClient({ accessToken: auth.accessToken });
+  const client = createYarahServerClient({ accessToken: auth.accessToken });
   let query = client.database
     .from('documents')
     .select('id, workspace_id, file_name, file_size, mime_type, status, error, page_count, summary, suggested_questions, created_at')

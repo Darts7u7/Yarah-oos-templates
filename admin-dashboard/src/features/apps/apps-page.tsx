@@ -8,7 +8,7 @@ import { useDisconnectApp } from './use-disconnect-app'
 import { AppsGrid } from './apps-grid'
 
 const COMPOSIO_SETUP_URL =
-  'https://github.com/InsForge/insforge-templates/tree/main/admin-dashboard#connecting-third-party-apps'
+  'https://github.com/Darts7u7/Yarah-oos-templates/tree/main/admin-dashboard#connecting-third-party-apps'
 
 export function AppsPage() {
   const { workspace } = useActiveWorkspace()

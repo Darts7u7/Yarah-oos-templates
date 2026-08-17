@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 import { requireAuthenticatedSession } from '@/lib/auth-session';
-import { createInsforgeServerClient } from '@/lib/insforge';
+import { createYarahServerClient } from '@/lib/yarah';
 
 type Result = { success: true } | { success: false; error: string };
 
@@ -13,13 +13,13 @@ export async function submitReview(input: {
   body?: string;
 }): Promise<Result> {
   const session = await requireAuthenticatedSession();
-  const insforge = createInsforgeServerClient({ accessToken: session.accessToken });
+  const yarah = createYarahServerClient({ accessToken: session.accessToken });
 
   if (input.rating < 1 || input.rating > 5) {
     return { success: false, error: 'Rating must be between 1 and 5.' };
   }
 
-  const { data: existing } = await insforge.database
+  const { data: existing } = await yarah.database
     .from('reviews')
     .select('id')
     .eq('booking_id', input.bookingId)
@@ -34,14 +34,14 @@ export async function submitReview(input: {
   };
 
   if (existing) {
-    const { error } = await insforge.database
+    const { error } = await yarah.database
       .from('reviews')
       .update({ rating: payload.rating, body: payload.body })
       .eq('id', existing.id);
 
     if (error) return { success: false, error: error.message ?? 'Update failed.' };
   } else {
-    const { error } = await insforge.database.from('reviews').insert([payload]);
+    const { error } = await yarah.database.from('reviews').insert([payload]);
     if (error) return { success: false, error: error.message ?? 'Submit failed.' };
   }
 

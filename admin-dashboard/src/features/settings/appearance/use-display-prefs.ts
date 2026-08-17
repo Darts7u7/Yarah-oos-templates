@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
-import { insforge } from '@/lib/insforge'
+import { yarah } from '@/lib/yarah'
 
 export type ThemePref = 'light' | 'dark' | 'system'
 export type FontPref = 'default' | 'serif' | 'mono'
@@ -27,7 +27,7 @@ export function useDisplayPrefs(userId: string | undefined) {
     enabled: !!userId,
     queryKey: displayPrefsKey(userId),
     queryFn: async (): Promise<DisplayPrefs | null> => {
-      const { data, error } = await insforge.database
+      const { data, error } = await yarah.database
         .from('display_prefs')
         .select(COLUMNS)
         .eq('user_id', userId!)
@@ -43,7 +43,7 @@ export function useUpsertDisplayPrefs(userId: string | undefined) {
   return useMutation({
     mutationFn: async (payload: DisplayPrefsPayload): Promise<void> => {
       if (!userId) throw new Error('Not signed in')
-      const { data: existing, error: selErr } = await insforge.database
+      const { data: existing, error: selErr } = await yarah.database
         .from('display_prefs')
         .select('user_id')
         .eq('user_id', userId)
@@ -51,13 +51,13 @@ export function useUpsertDisplayPrefs(userId: string | undefined) {
       if (selErr) throw new Error(selErr.message)
 
       if (existing) {
-        const { error } = await insforge.database
+        const { error } = await yarah.database
           .from('display_prefs')
           .update(payload)
           .eq('user_id', userId)
         if (error) throw new Error(error.message)
       } else {
-        const { error } = await insforge.database
+        const { error } = await yarah.database
           .from('display_prefs')
           .insert([{ user_id: userId, ...payload }])
         if (error) throw new Error(error.message)

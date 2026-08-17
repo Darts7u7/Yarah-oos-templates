@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { insforge } from '@/lib/insforge'
+import { yarah } from '@/lib/yarah'
 
 export type InvitationRole = 'admin' | 'member'
 
@@ -20,7 +20,7 @@ export function useInvitations(workspaceId: string | undefined) {
     enabled: !!workspaceId,
     queryKey: ['workspace-invitations', workspaceId],
     queryFn: async (): Promise<Invitation[]> => {
-      const { data, error } = await insforge.database
+      const { data, error } = await yarah.database
         .from('workspace_invitations')
         .select('id, workspace_id, email, role, token, expires_at, accepted_at, created_by, created_at')
         .eq('workspace_id', workspaceId!)
@@ -45,7 +45,7 @@ export function useInviteMember(workspaceId: string | undefined, userId: string 
         typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
           ? crypto.randomUUID()
           : `${Date.now()}-${Math.random().toString(36).slice(2)}`
-      const { data, error } = await insforge.database
+      const { data, error } = await yarah.database
         .from('workspace_invitations')
         .insert([
           {
@@ -71,7 +71,7 @@ export function useDeleteInvitation(workspaceId: string | undefined) {
   const qc = useQueryClient()
   return useMutation({
     mutationFn: async (invitationId: string) => {
-      const { error } = await insforge.database
+      const { error } = await yarah.database
         .from('workspace_invitations')
         .delete()
         .eq('id', invitationId)

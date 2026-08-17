@@ -1,6 +1,6 @@
 'use client';
 
-import { createClient, type InsForgeClient } from '@insforge/sdk';
+import { createClient, type YarahClient } from '@yarahdev/sdk';
 import { authClient } from './auth-client';
 import { useEffect, useMemo, useState } from 'react';
 
@@ -10,7 +10,7 @@ const REFRESH_INTERVAL_MS = 50 * 60 * 1000; // 50 min for the 1h bridge JWT
 // On SDK ≥ 1.3.0 this is a single client.setAccessToken(token) call.
 // On 1.2.x we update the http client + the realtime token manager separately —
 // realtime needs its own pump or its WebSocket keeps using the anon key.
-function setBridgeToken(client: InsForgeClient, token: string | null) {
+function setBridgeToken(client: YarahClient, token: string | null) {
   if (typeof (client as unknown as { setAccessToken?: unknown }).setAccessToken === 'function') {
     (client as unknown as { setAccessToken: (t: string | null) => void }).setAccessToken(token);
     return;
@@ -22,19 +22,19 @@ function setBridgeToken(client: InsForgeClient, token: string | null) {
     .tokenManager.setAccessToken(token);
 }
 
-// Pattern A — long-lived InsForge client + imperative refresh from the BA session.
-// Fetches /api/insforge-token (same-origin, BA cookie auto-attached) and pipes
+// Pattern A — long-lived Yarah client + imperative refresh from the BA session.
+// Fetches /api/yarah-token (same-origin, BA cookie auto-attached) and pipes
 // the resulting HS256 JWT into the SDK so HTTP (database/storage/functions/AI/
 // emails) and realtime (WebSocket auth) both authenticate as the BA user.
-export function useInsforgeClient(): { client: InsForgeClient; isReady: boolean } {
+export function useYarahClient(): { client: YarahClient; isReady: boolean } {
   const session = authClient.useSession();
   const [isReady, setIsReady] = useState(false);
 
   const client = useMemo(
     () =>
       createClient({
-        baseUrl: process.env.NEXT_PUBLIC_INSFORGE_BASE_URL!,
-        anonKey: process.env.NEXT_PUBLIC_INSFORGE_ANON_KEY!,
+        baseUrl: process.env.NEXT_PUBLIC_YARAH_BASE_URL!,
+        anonKey: process.env.NEXT_PUBLIC_YARAH_ANON_KEY!,
         autoRefreshToken: false,
       }),
     [],
@@ -50,7 +50,7 @@ export function useInsforgeClient(): { client: InsForgeClient; isReady: boolean 
     let cancelled = false;
     const refresh = async () => {
       try {
-        const res = await fetch('/api/insforge-token', { credentials: 'same-origin' });
+        const res = await fetch('/api/yarah-token', { credentials: 'same-origin' });
         if (!res.ok) throw new Error(`bridge ${res.status}`);
         const { token } = (await res.json()) as { token?: string };
         if (cancelled) return;

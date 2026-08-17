@@ -135,9 +135,9 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-# InsForge & AI agent skills
-.insforge
-insforge.toml
+# Yarah & AI agent skills
+.yarah
+yarah.toml
 skills/
 skills-lock.json
 docs/superpowers/

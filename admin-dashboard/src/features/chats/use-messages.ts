@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
-import { insforge } from '@/lib/insforge'
+import { yarah } from '@/lib/yarah'
 
 export type Message = {
   id: string
@@ -40,7 +40,7 @@ export function useMessages(conversationId: string | undefined) {
     enabled: !!conversationId,
     queryKey: messagesKey(conversationId),
     queryFn: async (): Promise<Message[]> => {
-      const { data, error } = await insforge.database
+      const { data, error } = await yarah.database
         .from('messages')
         .select('id, conversation_id, sender_id, body, created_at')
         .eq('conversation_id', conversationId!)
@@ -74,18 +74,18 @@ export function useMessages(conversationId: string | undefined) {
 
     void (async () => {
       try {
-        await insforge.realtime.connect()
+        await yarah.realtime.connect()
         if (cancelled) return
-        const res = await insforge.realtime.subscribe(channel)
+        const res = await yarah.realtime.subscribe(channel)
         if (cancelled) {
-          insforge.realtime.unsubscribe(channel)
+          yarah.realtime.unsubscribe(channel)
           return
         }
         if (!res.ok) {
           toast.error(`Realtime: ${res.error.message}`)
           return
         }
-        insforge.realtime.on('new_message', onMessage)
+        yarah.realtime.on('new_message', onMessage)
       } catch (err) {
         if (!cancelled) {
           toast.error(err instanceof Error ? err.message : 'Realtime connection failed')
@@ -95,8 +95,8 @@ export function useMessages(conversationId: string | undefined) {
 
     return () => {
       cancelled = true
-      insforge.realtime.off('new_message', onMessage)
-      insforge.realtime.unsubscribe(channel)
+      yarah.realtime.off('new_message', onMessage)
+      yarah.realtime.unsubscribe(channel)
     }
   }, [conversationId, qc])
 

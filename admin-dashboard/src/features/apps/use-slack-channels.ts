@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { insforge } from '@/lib/insforge'
+import { yarah } from '@/lib/yarah'
 
 export type SlackChannel = {
   id: string
@@ -15,7 +15,7 @@ export function useSlackChannels(workspaceId: string | undefined, enabled: boole
     enabled: !!workspaceId && enabled,
     queryKey: slackChannelsKey(workspaceId),
     queryFn: async (): Promise<SlackChannel[]> => {
-      const { data, error } = await insforge.functions.invoke('apps-slack-list-channels', {
+      const { data, error } = await yarah.functions.invoke('apps-slack-list-channels', {
         method: 'POST',
         body: { workspace_id: workspaceId },
       })

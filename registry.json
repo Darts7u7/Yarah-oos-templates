@@ -8,8 +8,8 @@
     "features": ["Stripe Checkout", "Order Timeline", "Wishlist", "Admin Fulfillment", "shadcn/ui", "Auth"],
     "tags": ["e-commerce", "storefront", "stripe", "payments", "wishlist"],
     "cover": "assets/covers/e-commerce.png",
-    "demo_url": "https://ecommerce-stripe.insforge.site/",
-    "author": "InsForge",
+    "demo_url": "https://ecommerce-stripe.yarah.dev/",
+    "author": "Yarah",
     "added_at": "2026-05-20"
   },
   {
@@ -21,8 +21,8 @@
     "features": ["Waitlist Capture", "Pricing Page", "shadcn/ui", "Auth"],
     "tags": ["landing", "saas", "marketing", "waitlist", "shadcn"],
     "cover": "assets/covers/landing.png",
-    "demo_url": "https://marketing.insforge.site",
-    "author": "InsForge",
+    "demo_url": "https://marketing.yarah.dev",
+    "author": "Yarah",
     "added_at": "2026-05-23"
   },
   {
@@ -34,8 +34,8 @@
     "features": ["dnd-kit", "Kanban Pipeline", "Auth"],
     "tags": ["crm", "sales", "pipeline", "leads"],
     "cover": "assets/covers/crm.png",
-    "demo_url": "https://democrm.insforge.site",
-    "author": "InsForge",
+    "demo_url": "https://democrm.yarah.dev",
+    "author": "Yarah",
     "added_at": "2026-05-24"
   },
   {
@@ -47,8 +47,8 @@
     "features": ["Availability Scheduling", "Provider Reviews", "Auth"],
     "tags": ["booking", "appointments", "marketplace", "scheduling", "calendly"],
     "cover": "assets/covers/booking.png",
-    "demo_url": "https://booking.insforge.site",
-    "author": "InsForge",
+    "demo_url": "https://booking.yarah.dev",
+    "author": "Yarah",
     "added_at": "2026-05-23"
   },
   {
@@ -60,21 +60,21 @@
     "features": ["RAG", "react-pdf", "OpenAI TTS", "Better Auth"],
     "tags": ["pdf", "study-tool", "notebooklm", "rag", "flashcards", "pgvector"],
     "cover": "assets/covers/ai-pdf-chatbot.png",
-    "demo_url": "https://aipdfchat.insforge.site",
-    "author": "InsForge",
+    "demo_url": "https://aipdfchat.yarah.dev",
+    "author": "Yarah",
     "added_at": "2026-05-25"
   },
   {
     "slug": "admin-dashboard",
     "name": "Admin Dashboard",
-    "description": "Multi-user SaaS admin with workspace invites, sortable tables, real-time chat, charts, and a Composio-powered apps grid that pushes tasks to a chosen channel with two clicks. Vite + React + InsForge auth, database, RLS, storage, and realtime.",
+    "description": "Multi-user SaaS admin with workspace invites, sortable tables, real-time chat, charts, and a Composio-powered apps grid that pushes tasks to a chosen channel with two clicks. Vite + React + Yarah auth, database, RLS, storage, and realtime.",
     "category": "admin",
     "framework": "react",
     "features": ["TanStack Table", "Recharts", "Real-time Chat", "Auth", "Composio Integrations", "Outbound Actions"],
     "tags": ["admin", "dashboard", "shadcn", "tanstack-table", "workspace", "saas", "composio", "oauth"],
     "cover": "assets/covers/admin-dashboard.png",
-    "demo_url": "https://admindashboard.insforge.site",
-    "author": "InsForge",
+    "demo_url": "https://admindashboard.yarah.dev",
+    "author": "Yarah",
     "added_at": "2026-05-25"
   },
   {
@@ -86,8 +86,8 @@
     "features": ["BlockNote", "Nested Pages", "Public Share Links"],
     "tags": ["notion", "workspace", "docs", "wiki", "blocknote"],
     "cover": "assets/covers/workspace.png",
-    "demo_url": "https://workspace.insforge.site",
-    "author": "InsForge",
+    "demo_url": "https://workspace.yarah.dev",
+    "author": "Yarah",
     "added_at": "2026-05-25"
   }
 ]

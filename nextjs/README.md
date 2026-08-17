@@ -1,7 +1,7 @@
-<h1 align="center">Next.js InsForge Starter</h1>
+<h1 align="center">Next.js Yarah Starter</h1>
 
 <p align="center">
-  The fastest way to build apps with Next.js and InsForge
+  The fastest way to build apps with Next.js and Yarah
 </p>
 
 <p align="center">
@@ -13,13 +13,13 @@
 </p>
 
 <p align="center">
-  <img alt="Next.js InsForge Starter homepage" src="./assets/nextjs-starter.png">
+  <img alt="Next.js Yarah Starter homepage" src="./assets/nextjs-starter.png">
 </p>
 <br />
 
 ## Demo
 
-Check out the live demo: [demonextjs.insforge.site](https://demonextjs.insforge.site)
+Check out the live demo: [demonextjs.yarah.dev](https://demonextjs.yarah.dev)
 
 ## Features
 
@@ -30,8 +30,8 @@ Check out the live demo: [demonextjs.insforge.site](https://demonextjs.insforge.
   - Route Handlers
   - Server Actions
   - It just works
-- [InsForge](https://insforge.dev) auth configured to use cookies across the app
-- Server-side auth actions using `@insforge/sdk`
+- [Yarah](https://yarah.dev) auth configured to use cookies across the app
+- Server-side auth actions using `@yarahdev/sdk`
 - Optional Google and GitHub OAuth providers
 - Starter homepage with environment setup guidance
 - Protected example route that displays the signed-in user
@@ -40,18 +40,18 @@ Check out the live demo: [demonextjs.insforge.site](https://demonextjs.insforge.
 
 ## Quick launch
 
-If you want the fastest path, use the InsForge CLI and follow the prompts:
+If you want the fastest path, use the Yarah CLI and follow the prompts:
 
 ```bash
-npx @insforge/cli create
+npx @yarahdev/cli create
 ```
 
 From there:
 
 1. Choose the Next.js starter template
-2. Follow the prompt flow to create or connect your InsForge project
+2. Follow the prompt flow to create or connect your Yarah project
 3. Let the CLI handle the initial setup
-4. Choose to deploy with [InsForge](https://insforge.dev) from the guided flow
+4. Choose to deploy with [Yarah](https://yarah.dev) from the guided flow
 
 Use the sections below if you want to set up the starter manually.
 
@@ -60,8 +60,8 @@ Use the sections below if you want to set up the starter manually.
 1. Clone this repository and move into the starter directory.
 
 ```bash
-git clone https://github.com/InsForge/insforge-templates.git
-cd insforge-templates/nextjs
+git clone https://github.com/Darts7u7/Yarah-oos-templates.git
+cd yarah-templates/nextjs
 ```
 
 2. Install dependencies.
@@ -70,13 +70,13 @@ cd insforge-templates/nextjs
 npm install
 ```
 
-3. Go to the [InsForge dashboard](https://insforge.dev), create a project, and click **Connect** → **CLI** to get the link command:
+3. Go to the [Yarah dashboard](https://yarah.dev), create a project, and click **Connect** → **CLI** to get the link command:
 
 ```bash
-npx @insforge/cli link --project-id <your-project-id>
+npx @yarahdev/cli link --project-id <your-project-id>
 ```
 
-4. Copy `.env.example` to `.env.local` and update the values with your InsForge project settings (find these in the InsForge dashboard under **Connect** → **API Keys**):
+4. Copy `.env.example` to `.env.local` and update the values with your Yarah project settings (find these in the Yarah dashboard under **Connect** → **API Keys**):
 
 ```bash
 cp .env.example .env.local
@@ -85,12 +85,12 @@ cp .env.example .env.local
 Set the following values in `.env.local`:
 
 ```env
-NEXT_PUBLIC_INSFORGE_URL=https://your-project.region.insforge.app
-NEXT_PUBLIC_INSFORGE_ANON_KEY=your-anon-key
-NEXT_PUBLIC_APP_URL=https://your-project.insforge.site
+NEXT_PUBLIC_YARAH_URL=https://your-project.region.apps.yarah.dev
+NEXT_PUBLIC_YARAH_ANON_KEY=your-anon-key
+NEXT_PUBLIC_APP_URL=https://your-project.yarah.dev
 ```
 
-You can find the project URL and anon key in your InsForge project settings.
+You can find the project URL and anon key in your Yarah project settings.
 
 5. Start the development server.
 
@@ -102,12 +102,12 @@ The starter should now be running on [localhost:3000](http://localhost:3000).
 
 ## Deploy to Vercel
 
-Click [Deploy with Vercel](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FInsForge%2Finsforge-templates%2Ftree%2Fmain&root-directory=nextjs&project-name=insforge-nextjs-starter&repository-name=insforge-nextjs-starter&env=NEXT_PUBLIC_INSFORGE_URL,NEXT_PUBLIC_INSFORGE_ANON_KEY,NEXT_PUBLIC_APP_URL&envDescription=Connect%20your%20InsForge%20project%20URL%2C%20anon%20key%2C%20and%20app%20URL.&external-id=https%3A%2F%2Fgithub.com%2FInsForge%2Finsforge-templates%2Ftree%2Fmain%2Fnextjs&demo-title=Next.js%20InsForge%20Starter&demo-description=A%20clean%20Next.js%20starter%20with%20InsForge%20auth%20and%20Tailwind%20CSS.&demo-image=https%3A%2F%2Fraw.githubusercontent.com%2FInsForge%2Finsforge-templates%2Fmain%2Fnextjs%2Fassets%2Fnextjs-starter.png), then fill in the required environment variables during the setup flow:
+Click [Deploy with Vercel](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FYarah%2Fyarah-templates%2Ftree%2Fmain&root-directory=nextjs&project-name=yarah-nextjs-starter&repository-name=yarah-nextjs-starter&env=NEXT_PUBLIC_YARAH_URL,NEXT_PUBLIC_YARAH_ANON_KEY,NEXT_PUBLIC_APP_URL&envDescription=Connect%20your%20Yarah%20project%20URL%2C%20anon%20key%2C%20and%20app%20URL.&external-id=https%3A%2F%2Fgithub.com%2FYarah%2Fyarah-templates%2Ftree%2Fmain%2Fnextjs&demo-title=Next.js%20Yarah%20Starter&demo-description=A%20clean%20Next.js%20starter%20with%20Yarah%20auth%20and%20Tailwind%20CSS.&demo-image=https%3A%2F%2Fraw.githubusercontent.com%2FYarah%2Fyarah-templates%2Fmain%2Fnextjs%2Fassets%2Fnextjs-starter.png), then fill in the required environment variables during the setup flow:
 
-- `NEXT_PUBLIC_INSFORGE_URL`
-- `NEXT_PUBLIC_INSFORGE_ANON_KEY`
+- `NEXT_PUBLIC_YARAH_URL`
+- `NEXT_PUBLIC_YARAH_ANON_KEY`
 - `NEXT_PUBLIC_APP_URL` with your production Vercel URL, for example `https://your-project.vercel.app`
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FInsForge%2Finsforge-templates%2Ftree%2Fmain&root-directory=nextjs&project-name=insforge-nextjs-starter&repository-name=insforge-nextjs-starter&env=NEXT_PUBLIC_INSFORGE_URL,NEXT_PUBLIC_INSFORGE_ANON_KEY,NEXT_PUBLIC_APP_URL&envDescription=Connect%20your%20InsForge%20project%20URL%2C%20anon%20key%2C%20and%20app%20URL.&external-id=https%3A%2F%2Fgithub.com%2FInsForge%2Finsforge-templates%2Ftree%2Fmain%2Fnextjs&demo-title=Next.js%20InsForge%20Starter&demo-description=A%20clean%20Next.js%20starter%20with%20InsForge%20auth%20and%20Tailwind%20CSS.&demo-image=https%3A%2F%2Fraw.githubusercontent.com%2FInsForge%2Finsforge-templates%2Fmain%2Fnextjs%2Fassets%2Fnextjs-starter.png)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FYarah%2Fyarah-templates%2Ftree%2Fmain&root-directory=nextjs&project-name=yarah-nextjs-starter&repository-name=yarah-nextjs-starter&env=NEXT_PUBLIC_YARAH_URL,NEXT_PUBLIC_YARAH_ANON_KEY,NEXT_PUBLIC_APP_URL&envDescription=Connect%20your%20Yarah%20project%20URL%2C%20anon%20key%2C%20and%20app%20URL.&external-id=https%3A%2F%2Fgithub.com%2FYarah%2Fyarah-templates%2Ftree%2Fmain%2Fnextjs&demo-title=Next.js%20Yarah%20Starter&demo-description=A%20clean%20Next.js%20starter%20with%20Yarah%20auth%20and%20Tailwind%20CSS.&demo-image=https%3A%2F%2Fraw.githubusercontent.com%2FYarah%2Fyarah-templates%2Fmain%2Fnextjs%2Fassets%2Fnextjs-starter.png)
 
 The above will also clone the starter kit to your GitHub, so you can clone it locally and continue development there.

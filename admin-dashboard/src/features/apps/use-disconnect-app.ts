@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
-import { insforge } from '@/lib/insforge'
+import { yarah } from '@/lib/yarah'
 import { appsKey, type AppWithConnection } from './use-apps'
 
 type DisconnectArgs = { app: AppWithConnection }
@@ -12,9 +12,9 @@ export function useDisconnectApp(workspaceId: string | undefined) {
     mutationFn: async ({ app }: DisconnectArgs): Promise<void> => {
       if (!workspaceId) throw new Error('No active workspace')
       if (app.integration_kind !== 'composio') {
-        throw new Error('Native integrations are managed in the InsForge dashboard')
+        throw new Error('Native integrations are managed in the Yarah dashboard')
       }
-      const { error } = await insforge.functions.invoke('apps-disconnect', {
+      const { error } = await yarah.functions.invoke('apps-disconnect', {
         method: 'POST',
         body: { app_slug: app.slug, workspace_id: workspaceId },
       })

@@ -1,11 +1,11 @@
 import { TutorialStep } from "@/components/tutorial/tutorial-step";
 
-export function ConnectInsforgeSteps() {
+export function ConnectYarahSteps() {
   return (
     <ol className="flex flex-col gap-6">
-      <TutorialStep title="Create an InsForge project">
+      <TutorialStep title="Create an Yarah project">
         <p>
-          Create a project in the InsForge dashboard, then copy your project URL and anon key
+          Create a project in the Yarah dashboard, then copy your project URL and anon key
           into this app&apos;s environment variables.
         </p>
       </TutorialStep>
@@ -17,8 +17,8 @@ export function ConnectInsforgeSteps() {
           set the following values:
         </p>
         <ul className="space-y-2 font-mono text-xs text-[var(--muted-foreground)]">
-          <li>NEXT_PUBLIC_INSFORGE_URL</li>
-          <li>NEXT_PUBLIC_INSFORGE_ANON_KEY</li>
+          <li>NEXT_PUBLIC_YARAH_URL</li>
+          <li>NEXT_PUBLIC_YARAH_ANON_KEY</li>
           <li>NEXT_PUBLIC_APP_URL <span className="text-[var(--muted-foreground)]/60">(http://localhost:3000 for dev, your actual URL for production)</span></li>
         </ul>
       </TutorialStep>

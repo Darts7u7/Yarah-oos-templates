@@ -1,4 +1,4 @@
--- InsForge Booking — schema, RLS, triggers, seed data
+-- Yarah Booking — schema, RLS, triggers, seed data
 -- Multi-provider booking marketplace: customers browse providers, book services,
 -- exchange messages, and leave reviews after completion.
 

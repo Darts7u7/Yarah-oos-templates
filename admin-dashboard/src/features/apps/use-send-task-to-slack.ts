@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
-import { insforge } from '@/lib/insforge'
+import { yarah } from '@/lib/yarah'
 
 type SendArgs = {
   taskId: string
@@ -13,7 +13,7 @@ export function useSendTaskToSlack(workspaceId: string | undefined) {
   return useMutation({
     mutationFn: async (args: SendArgs) => {
       if (!workspaceId) throw new Error('No active workspace')
-      const { error } = await insforge.functions.invoke('apps-slack-send-task', {
+      const { error } = await yarah.functions.invoke('apps-slack-send-task', {
         method: 'POST',
         body: {
           task_id: args.taskId,

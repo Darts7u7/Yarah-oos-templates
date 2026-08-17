@@ -140,7 +140,7 @@ function ThemeToggle() {
   );
 }
 
-function InsforgeBadge() {
+function YarahBadge() {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -150,19 +150,19 @@ function InsforgeBadge() {
 
   const badgeSrc =
     mounted && resolvedTheme === 'dark'
-      ? 'https://insforge.dev/badge-made-with-insforge-dark.svg'
-      : 'https://insforge.dev/badge-made-with-insforge.svg';
+      ? 'https://yarah.dev/badge-made-with-yarah-dark.svg'
+      : 'https://yarah.dev/badge-made-with-yarah.svg';
 
   return (
     <a
-      href="https://insforge.dev"
+      href="https://yarah.dev"
       target="_blank"
       rel="noreferrer noopener"
       className="inline-flex items-center"
     >
       <img
         src={badgeSrc}
-        alt="Made with InsForge"
+        alt="Made with Yarah"
         className="h-8 w-auto rounded-md"
       />
     </a>
@@ -893,7 +893,7 @@ export function ChatShell({ initialViewer }: { initialViewer: AuthViewer }) {
           </Button>
           <div className="ml-auto flex items-center gap-2">
             <ThemeToggle />
-            <InsforgeBadge />
+            <YarahBadge />
           </div>
         </header>
 

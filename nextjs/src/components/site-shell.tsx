@@ -14,7 +14,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
         <nav className="h-16 w-full border-b border-[var(--border)]">
           <div className="mx-auto flex h-full w-full max-w-5xl items-center justify-between px-5 text-sm">
             <div className="flex items-center gap-5 font-semibold text-[var(--foreground)]">
-              <Link href="/">Next.js InsForge Starter</Link>
+              <Link href="/">Next.js Yarah Starter</Link>
               <DeployButton />
             </div>
             {hasEnvVars ? (
@@ -32,8 +32,8 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
         <footer className="mx-auto flex w-full items-center justify-center gap-8 border-t border-[var(--border)] py-16 text-center text-xs">
           <p>
             Powered by{" "}
-            <a href="https://insforge.dev" target="_blank" rel="noreferrer" className="font-bold hover:underline">
-              InsForge
+            <a href="https://yarah.dev" target="_blank" rel="noreferrer" className="font-bold hover:underline">
+              Yarah
             </a>
           </p>
           <ThemeSwitcher />

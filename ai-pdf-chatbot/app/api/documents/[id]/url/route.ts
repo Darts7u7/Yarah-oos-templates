@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { createInsforgeServerClient } from '@/lib/insforge';
+import { createYarahServerClient } from '@/lib/yarah';
 import { getCurrentAuthState } from '@/lib/auth-state';
 
 export const runtime = 'nodejs';
@@ -17,7 +17,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const client = createInsforgeServerClient({ accessToken: auth.accessToken });
+  const client = createYarahServerClient({ accessToken: auth.accessToken });
   const { data, error } = await client.database
     .from('documents')
     .select('storage_bucket, storage_key')
@@ -29,7 +29,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
   }
   const doc = data as { storage_bucket: string; storage_key: string };
 
-  const baseUrl = process.env.NEXT_PUBLIC_INSFORGE_BASE_URL!;
+  const baseUrl = process.env.NEXT_PUBLIC_YARAH_BASE_URL!;
   const strategyRes = await fetch(
     `${baseUrl}/api/storage/buckets/${doc.storage_bucket}/objects/${encodeURIComponent(doc.storage_key)}/download-strategy`,
     {

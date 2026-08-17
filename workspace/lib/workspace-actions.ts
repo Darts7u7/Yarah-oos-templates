@@ -3,13 +3,13 @@
 import { revalidatePath } from 'next/cache';
 import { customAlphabet } from 'nanoid';
 import { getAccessToken } from '@/lib/auth-cookies';
-import { createInsforgeServerClient } from '@/lib/insforge';
+import { createYarahServerClient } from '@/lib/yarah';
 
 const nanoidToken = customAlphabet('ABCDEFGHJKMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789', 24);
 
 async function authedClient() {
   const accessToken = await getAccessToken();
-  return createInsforgeServerClient(accessToken ? { accessToken } : undefined);
+  return createYarahServerClient(accessToken ? { accessToken } : undefined);
 }
 
 export async function getCurrentUser() {

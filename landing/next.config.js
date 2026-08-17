@@ -2,7 +2,7 @@
 const nextConfig = {
   images: {
     remotePatterns: [
-      { protocol: 'https', hostname: 'cdn.insforge.dev' },
+      { protocol: 'https', hostname: 'cdn.yarah.dev' },
     ],
   },
 };

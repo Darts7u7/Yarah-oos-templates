@@ -33,7 +33,7 @@ export function AuthShell({
                   Build a quieter way to buy.
                 </h1>
                 <p className="max-w-md text-base text-white/72 sm:text-lg">
-                  Secure sign-in, saved orders, and a storefront backed by InsForge from the first migration onward.
+                  Secure sign-in, saved orders, and a storefront backed by Yarah from the first migration onward.
                 </p>
               </div>
             </div>

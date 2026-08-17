@@ -1,10 +1,10 @@
-# InsForge E-Commerce
+# Yarah E-Commerce
 
-A full-stack e-commerce starter built with Next.js, Tailwind CSS, and InsForge.
+A full-stack e-commerce starter built with Next.js, Tailwind CSS, and Yarah.
 
 **[Features](#features)** · **[Demo](#demo)** · **[Quick Launch](#quick-launch)** · **[Run locally](#run-locally)** · **[Deploy to Vercel](#deploy-to-vercel)** · **[First Try](#first-try)** · **[Vercel Analytics](#vercel-analytics)** · **[Customize](#customize)**
 
-![InsForge E-Commerce starter preview](public/e-commerce-readme-cover.png)
+![Yarah E-Commerce starter preview](public/e-commerce-readme-cover.png)
 
 This starter includes a public storefront, seeded catalog data, customer authentication, cart and checkout flows, saved addresses, order history, and the database + storage setup needed to run it from one migration file.
 
@@ -13,34 +13,34 @@ This starter includes a public storefront, seeded catalog data, customer authent
 - Seeded storefront with featured products, categories, and search
 - Variant-aware product pages and customer shopping flow
 - Authenticated cart, checkout, saved addresses, and order history
-- [InsForge](https://insforge.dev) authentication, database, storage, and Row Level Security
+- [Yarah](https://yarah.dev) authentication, database, storage, and Row Level Security
 - [Vercel Analytics](https://vercel.com/docs/analytics) for page-level traffic insights
 - Built with [Next.js](https://nextjs.org), React 19, and [Tailwind CSS](https://tailwindcss.com)
-- Real Stripe Checkout with Apple Pay, Google Pay, and Link via InsForge Payments
+- Real Stripe Checkout with Apple Pay, Google Pay, and Link via Yarah Payments
 - Promotion codes redeemable at Stripe Checkout (configured in your Stripe dashboard, see Stripe setup section)
 - Order status timeline: placed, payment confirmed, preparing, shipped, delivered
 - Wishlist with optimistic heart toggle and a dedicated `/account/wishlist` page
 
 ## Demo
 
-Demo: [demoecommerce.insforge.site](https://demoecommerce.insforge.site)
+Demo: [demoecommerce.yarah.dev](https://demoecommerce.yarah.dev)
 
 The live demo includes a seeded storefront, category browsing, product detail pages, cart and checkout flows, and customer account pages so you can evaluate the starter before making any changes.
 
 ## Quick Launch
 
-If you want the fastest path, use the InsForge CLI and follow the prompts:
+If you want the fastest path, use the Yarah CLI and follow the prompts:
 
 ```bash
-npx @insforge/cli create
+npx @yarahdev/cli create
 ```
 
 From there:
 
 1. Choose the e-commerce template
-2. Create or connect your InsForge project
+2. Create or connect your Yarah project
 3. Let the CLI set up the project files
-4. Choose to deploy with [InsForge](https://insforge.dev) automatically from the guided flow
+4. Choose to deploy with [Yarah](https://yarah.dev) automatically from the guided flow
 
 Use the local setup below if you want to inspect the repo, edit environment variables manually, or control the setup step by step.
 
@@ -49,8 +49,8 @@ Use the local setup below if you want to inspect the repo, edit environment vari
 1. Clone the repository and move into the e-commerce template:
 
    ```bash
-   git clone https://github.com/InsForge/insforge-templates.git
-   cd insforge-templates/e-commerce
+   git clone https://github.com/Darts7u7/Yarah-oos-templates.git
+   cd yarah-templates/e-commerce
    ```
 
 2. Install dependencies:
@@ -59,10 +59,10 @@ Use the local setup below if you want to inspect the repo, edit environment vari
    npm install
    ```
 
-3. Go to the [InsForge dashboard](https://insforge.dev), create a project, and click **Connect** → **CLI** to get the link command:
+3. Go to the [Yarah dashboard](https://yarah.dev), create a project, and click **Connect** → **CLI** to get the link command:
 
    ```bash
-   npx @insforge/cli link --project-id <your-project-id>
+   npx @yarahdev/cli link --project-id <your-project-id>
    ```
 
 4. Copy the example environment file:
@@ -71,22 +71,22 @@ Use the local setup below if you want to inspect the repo, edit environment vari
    cp .env.example .env.local
    ```
 
-5. Fill in the required values (find these in the InsForge dashboard under **Connect** → **API Keys**):
+5. Fill in the required values (find these in the Yarah dashboard under **Connect** → **API Keys**):
 
    ```env
-   NEXT_PUBLIC_INSFORGE_URL=https://your-project.region.insforge.app
-   NEXT_PUBLIC_INSFORGE_ANON_KEY=your-anon-key
+   NEXT_PUBLIC_YARAH_URL=https://your-project.region.apps.yarah.dev
+   NEXT_PUBLIC_YARAH_ANON_KEY=your-anon-key
    NEXT_PUBLIC_APP_URL=http://localhost:3000
    ```
 
-6. Apply the included schema and seed data to your InsForge project. You can either ask your agent using this prompt:
+6. Apply the included schema and seed data to your Yarah project. You can either ask your agent using this prompt:
 
    > help me create table and seed data from migrations/db_init.sql
 
    Or run the command directly:
 
    ```bash
-   npx @insforge/cli db import migrations/db_init.sql
+   npx @yarahdev/cli db import migrations/db_init.sql
    ```
 
    This migration creates the storefront tables, checkout functions, RLS policies, the `product-images` storage bucket record, and the seeded 15-product catalog.
@@ -101,23 +101,23 @@ Use the local setup below if you want to inspect the repo, edit environment vari
 
 ## Configure Stripe payments
 
-This template uses InsForge's managed Stripe integration. The Stripe secret key is stored on the InsForge backend, never in your frontend.
+This template uses Yarah's managed Stripe integration. The Stripe secret key is stored on the Yarah backend, never in your frontend.
 
-1. Add your Stripe test key to InsForge:
+1. Add your Stripe test key to Yarah:
 
    ```bash
-   npx @insforge/cli payments config set test sk_test_xxx
+   npx @yarahdev/cli payments config set test sk_test_xxx
    ```
 
 2. Create one Stripe product + price per row in `public.products` (and per row in `public.product_variants` if you sell variants). The CLI mirrors them into `payments.products` and `payments.prices`:
 
    ```bash
-   npx @insforge/cli payments products create \
+   npx @yarahdev/cli payments products create \
      --environment test \
      --name "Linen sofa" \
      --idempotency-key "product:linen-sofa"
 
-   npx @insforge/cli payments prices create \
+   npx @yarahdev/cli payments prices create \
      --environment test \
      --product prod_xxx \
      --currency usd \
@@ -136,7 +136,7 @@ This template uses InsForge's managed Stripe integration. The Stripe secret key 
 
 ### Promotion codes
 
-Promotion codes are not enabled by the template today because the InsForge SDK does not yet expose the `allowPromotionCodes` flag on the create-checkout-session call. Once the SDK adds the flag, this template will pass it through automatically. Until then:
+Promotion codes are not enabled by the template today because the Yarah SDK does not yet expose the `allowPromotionCodes` flag on the create-checkout-session call. Once the SDK adds the flag, this template will pass it through automatically. Until then:
 
 1. In your Stripe dashboard, create a Coupon, then create a Promotion Code from that coupon (e.g. `SUMMER10` for 10 percent off).
 2. Configure your Stripe Checkout settings to allow promotion codes by default at the account level, or pass the discount via the `discounts` parameter once the SDK supports it. The promo code input box on the Stripe Checkout page is controlled by Stripe, not by this template.
@@ -145,7 +145,7 @@ Promotion codes are not enabled by the template today because the InsForge SDK d
 ## Order lifecycle
 
 1. The `place_order` PL/pgSQL function creates a `pending` order and records an `order_placed` event in `order_status_events`. It does not deduct inventory and does not convert the cart yet.
-2. The `placeOrderAction` server action creates a Stripe Checkout Session via `insforge.payments.createCheckoutSession`.
+2. The `placeOrderAction` server action creates a Stripe Checkout Session via `yarah.payments.createCheckoutSession`.
 3. The user is redirected to Stripe to enter a card or apply a promotion code.
 4. Stripe redirects back to `/checkout/success?order_id=...&session_id=...`.
 5. The success page polls `finalizeOrderAction`, which reads `payments.checkout_sessions.payment_status`. When `paid`, it calls the `finalize_order` RPC, which marks the order as paid + confirmed + processing, decrements inventory, converts the cart, and appends `payment_succeeded` + `fulfillment_processing` events.
@@ -155,14 +155,14 @@ Promotion codes are not enabled by the template today because the InsForge SDK d
 
 After cloning the repo and running the starter locally, you can deploy it on Vercel:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FInsForge%2Finsforge-templates%2Ftree%2Fmain%2Fe-commerce&root-directory=e-commerce&project-name=insforge-ecommerce&repository-name=insforge-ecommerce&env=NEXT_PUBLIC_INSFORGE_URL,NEXT_PUBLIC_INSFORGE_ANON_KEY&envDescription=Connect%20your%20InsForge%20project%20URL%20and%20anon%20key.&external-id=https%3A%2F%2Fgithub.com%2FInsForge%2Finsforge-templates%2Ftree%2Fmain%2Fe-commerce&demo-title=InsForge%20E-Commerce&demo-description=A%20full-stack%20e-commerce%20starter%20built%20with%20Next.js%2C%20Tailwind%20CSS%2C%20and%20InsForge.&demo-image=https%3A%2F%2Fraw.githubusercontent.com%2FInsForge%2Finsforge-templates%2Fmain%2Fe-commerce%2Fpublic%2Fe-commerce-readme-cover.png)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FYarah%2Fyarah-templates%2Ftree%2Fmain%2Fe-commerce&root-directory=e-commerce&project-name=yarah-ecommerce&repository-name=yarah-ecommerce&env=NEXT_PUBLIC_YARAH_URL,NEXT_PUBLIC_YARAH_ANON_KEY&envDescription=Connect%20your%20Yarah%20project%20URL%20and%20anon%20key.&external-id=https%3A%2F%2Fgithub.com%2FYarah%2Fyarah-templates%2Ftree%2Fmain%2Fe-commerce&demo-title=Yarah%20E-Commerce&demo-description=A%20full-stack%20e-commerce%20starter%20built%20with%20Next.js%2C%20Tailwind%20CSS%2C%20and%20Yarah.&demo-image=https%3A%2F%2Fraw.githubusercontent.com%2FYarah%2Fyarah-templates%2Fmain%2Fe-commerce%2Fpublic%2Fe-commerce-readme-cover.png)
 
-1. Set `NEXT_PUBLIC_INSFORGE_URL`
-2. Set `NEXT_PUBLIC_INSFORGE_ANON_KEY`
+1. Set `NEXT_PUBLIC_YARAH_URL`
+2. Set `NEXT_PUBLIC_YARAH_ANON_KEY`
 3. Deploy the project
 4. In Vercel, open your project, go to `Settings` → `Environment Variables`, and set `NEXT_PUBLIC_APP_URL` to your deployed app URL
 5. Redeploy the project
-6. In the InsForge dashboard, open `Authentication` → `General` → `Allowed Redirect URLs`, then add:
+6. In the Yarah dashboard, open `Authentication` → `General` → `Allowed Redirect URLs`, then add:
    - `http://localhost:3000/auth/callback`
    - `https://your-project.vercel.app/auth/callback`
 
@@ -200,4 +200,4 @@ toast.success('Added to cart.');
 - The seeded catalog uses remote placeholder furniture photography through `image_url`, so the storefront works immediately before any bucket uploads.
 - In production, replace the placeholder photography with your own assets and update each product or variant `image_url`.
 - Checkout is written through the `place_order` database function for an atomic order write.
-- The app uses server-side [InsForge](https://insforge.dev) SDK calls with `httpOnly` auth cookies.
+- The app uses server-side [Yarah](https://yarah.dev) SDK calls with `httpOnly` auth cookies.

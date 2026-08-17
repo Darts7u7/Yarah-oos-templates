@@ -1,5 +1,5 @@
 import { getAccessToken } from "@/lib/auth-cookies";
-import { createInsforgeServerClient } from "@/lib/insforge";
+import { createYarahServerClient } from "@/lib/yarah";
 import { TodoSetupSteps, DebugPromptBlock } from "@/components/tutorial/todo-setup-steps";
 import { AddTodoForm } from "@/components/add-todo-form";
 import { TodoItem } from "@/components/todo-item";
@@ -94,9 +94,9 @@ function ErrorState({ error }: { error: string }) {
 
 export async function TodosDisplay() {
   const accessToken = await getAccessToken();
-  const insforge = createInsforgeServerClient({ accessToken: accessToken ?? undefined });
+  const yarah = createYarahServerClient({ accessToken: accessToken ?? undefined });
 
-  const { data, error } = await insforge.database
+  const { data, error } = await yarah.database
     .from("todos")
     .select("*")
     .order("created_at", { ascending: false });

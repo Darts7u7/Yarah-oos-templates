@@ -1,10 +1,10 @@
 import 'server-only';
 
-import { createInsforgeServerClient } from '@/lib/insforge';
+import { createYarahServerClient } from '@/lib/yarah';
 import type { Booking, BookingMessage, Profile, Review } from '@/lib/types';
 
 function buildClient(accessToken: string) {
-  return createInsforgeServerClient({ accessToken });
+  return createYarahServerClient({ accessToken });
 }
 
 function assertNoError(error: { message?: string } | null, fallback: string) {
@@ -16,13 +16,13 @@ function assertNoError(error: { message?: string } | null, fallback: string) {
 type ProfileSnippet = Pick<Profile, 'user_id' | 'display_name' | 'avatar_url'>;
 
 async function loadProfileSnippets(
-  insforge: ReturnType<typeof buildClient>,
+  yarah: ReturnType<typeof buildClient>,
   userIds: string[],
 ): Promise<Map<string, ProfileSnippet>> {
   const unique = Array.from(new Set(userIds.filter(Boolean)));
   if (unique.length === 0) return new Map();
 
-  const { data, error } = await insforge.database
+  const { data, error } = await yarah.database
     .from('profiles')
     .select('user_id, display_name, avatar_url')
     .in('user_id', unique);
@@ -38,8 +38,8 @@ const BOOKING_DETAIL_SELECT = `
 `;
 
 export async function getMyBookings(accessToken: string) {
-  const insforge = buildClient(accessToken);
-  const { data, error } = await insforge.database
+  const yarah = buildClient(accessToken);
+  const { data, error } = await yarah.database
     .from('bookings')
     .select(BOOKING_DETAIL_SELECT)
     .order('start_at', { ascending: false });
@@ -51,8 +51,8 @@ export async function getMyBookings(accessToken: string) {
 }
 
 export async function getBookingForViewer(bookingId: string, accessToken: string) {
-  const insforge = buildClient(accessToken);
-  const { data, error } = await insforge.database
+  const yarah = buildClient(accessToken);
+  const { data, error } = await yarah.database
     .from('bookings')
     .select(BOOKING_DETAIL_SELECT)
     .eq('id', bookingId)
@@ -63,8 +63,8 @@ export async function getBookingForViewer(bookingId: string, accessToken: string
 }
 
 export async function getBookingMessages(bookingId: string, accessToken: string) {
-  const insforge = buildClient(accessToken);
-  const { data, error } = await insforge.database
+  const yarah = buildClient(accessToken);
+  const { data, error } = await yarah.database
     .from('booking_messages')
     .select('*')
     .eq('booking_id', bookingId)
@@ -73,7 +73,7 @@ export async function getBookingMessages(bookingId: string, accessToken: string)
   assertNoError(error, 'Unable to load messages.');
 
   const profilesByUserId = await loadProfileSnippets(
-    insforge,
+    yarah,
     (data ?? []).map((row) => row.sender_id as string),
   );
   return (data ?? []).map((row) => ({
@@ -83,8 +83,8 @@ export async function getBookingMessages(bookingId: string, accessToken: string)
 }
 
 export async function getBookingReview(bookingId: string, accessToken: string) {
-  const insforge = buildClient(accessToken);
-  const { data, error } = await insforge.database
+  const yarah = buildClient(accessToken);
+  const { data, error } = await yarah.database
     .from('reviews')
     .select('*')
     .eq('booking_id', bookingId)
@@ -95,8 +95,8 @@ export async function getBookingReview(bookingId: string, accessToken: string) {
 }
 
 export async function getMyProfile(accessToken: string, userId: string) {
-  const insforge = buildClient(accessToken);
-  const { data, error } = await insforge.database
+  const yarah = buildClient(accessToken);
+  const { data, error } = await yarah.database
     .from('profiles')
     .select('*')
     .eq('user_id', userId)

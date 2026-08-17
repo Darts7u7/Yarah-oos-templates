@@ -22,7 +22,7 @@ export default async function ProvidersPage({ searchParams }: { searchParams: Se
           <p className="text-sm uppercase tracking-[0.3em] text-muted-foreground">Marketplace</p>
           <h1 className="font-display text-5xl">Browse providers</h1>
           <p className="max-w-2xl text-muted-foreground">
-            Independent providers running their booking workflow on InsForge. Tap any card to see services, availability, and reviews.
+            Independent providers running their booking workflow on Yarah. Tap any card to see services, availability, and reviews.
           </p>
 
           <Suspense fallback={null}>

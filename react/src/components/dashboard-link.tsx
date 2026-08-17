@@ -1,4 +1,4 @@
-declare const __INSFORGE_PROJECT_ID__: string | null;
+declare const __YARAH_PROJECT_ID__: string | null;
 
 function ExternalLinkIcon() {
   return (
@@ -11,10 +11,10 @@ function ExternalLinkIcon() {
 }
 
 function getDashboardUrl(): string {
-  if (__INSFORGE_PROJECT_ID__) {
-    return `https://insforge.dev/dashboard/project/${__INSFORGE_PROJECT_ID__}`;
+  if (__YARAH_PROJECT_ID__) {
+    return `https://yarah.dev/dashboard/project/${__YARAH_PROJECT_ID__}`;
   }
-  return "https://insforge.dev/dashboard";
+  return "https://yarah.dev/dashboard";
 }
 
 export function DashboardLink({ children, className }: { children?: React.ReactNode; className?: string }) {
@@ -25,7 +25,7 @@ export function DashboardLink({ children, className }: { children?: React.ReactN
       rel="noreferrer"
       className={className ?? "font-medium text-[var(--foreground)] hover:underline"}
     >
-      {children ?? "InsForge Dashboard"}
+      {children ?? "Yarah Dashboard"}
       <ExternalLinkIcon />
     </a>
   );

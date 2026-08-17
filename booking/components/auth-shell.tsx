@@ -33,7 +33,7 @@ export function AuthShell({
                   Book the people you trust.
                 </h1>
                 <p className="max-w-md text-base text-white/72 sm:text-lg">
-                  Discover providers, pick a time that works, and message them after — all powered by an InsForge backend.
+                  Discover providers, pick a time that works, and message them after — all powered by an Yarah backend.
                 </p>
               </div>
             </div>

@@ -13,7 +13,7 @@ const VISITOR_VIEWER: AuthViewer = {
 };
 
 // Server-side read of the current viewer + a freshly-minted HS256 bridge
-// JWT to authenticate downstream InsForge calls. The route consumers
+// JWT to authenticate downstream Yarah calls. The route consumers
 // pattern-match `auth.viewer.isAuthenticated`, `auth.viewer.id`, and
 // `auth.accessToken` — keep those fields stable.
 export async function getCurrentAuthState(): Promise<{
@@ -29,9 +29,9 @@ export async function getCurrentAuthState(): Promise<{
     {
       sub: session.user.id,
       role: 'authenticated',
-      aud: 'insforge-api',
+      aud: 'yarah-api',
     },
-    process.env.INSFORGE_JWT_SECRET!,
+    process.env.YARAH_JWT_SECRET!,
     { algorithm: 'HS256', expiresIn: '1h' },
   );
 

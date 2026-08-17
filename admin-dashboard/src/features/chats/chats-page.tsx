@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { useAuth } from '@/lib/auth-context'
-import { insforge } from '@/lib/insforge'
+import { yarah } from '@/lib/yarah'
 import { useActiveWorkspace } from '@/features/dashboard/use-active-workspace'
 import { ConversationList } from './conversation-list'
 import { Composer } from './composer'
@@ -34,7 +34,7 @@ export function ChatsPage() {
   // Disconnect realtime entirely when leaving the chats page.
   useEffect(() => {
     return () => {
-      insforge.realtime.disconnect()
+      yarah.realtime.disconnect()
     }
   }, [])
 

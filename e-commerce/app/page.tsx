@@ -81,10 +81,10 @@ export default async function HomePage() {
                   </ul>
                 </div>
                 <div className="rounded-[24px] bg-primary p-5 text-primary-foreground">
-                  <p className="text-sm uppercase tracking-[0.25em] text-primary-foreground/60">Built by InsForge</p>
+                  <p className="text-sm uppercase tracking-[0.25em] text-primary-foreground/60">Built by Yarah</p>
                   <p className="mt-4 font-display text-4xl">Simple flow</p>
                   <p className="mt-2 text-sm text-primary-foreground/72">
-                    Browse, save, and order through a clean customer experience powered by InsForge.
+                    Browse, save, and order through a clean customer experience powered by Yarah.
                   </p>
                 </div>
               </div>

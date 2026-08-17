@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { createInsforgeServerClient } from '@/lib/insforge';
+import { createYarahServerClient } from '@/lib/yarah';
 import { getCurrentAuthState } from '@/lib/auth-state';
 import { generateAudioScript } from '@/lib/ai/audio-script';
 import { synthesizeScript } from '@/lib/audio/tts';
@@ -35,7 +35,7 @@ export async function POST(_req: Request, { params }: { params: Promise<{ id: st
     );
   }
 
-  const client = createInsforgeServerClient({ accessToken: auth.accessToken });
+  const client = createYarahServerClient({ accessToken: auth.accessToken });
 
   const wsRes = await client.database
     .from('workspaces')

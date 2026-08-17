@@ -1,5 +1,5 @@
 {
-  "name": "insforge-admin-dashboard",
+  "name": "yarah-admin-dashboard",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -10,12 +10,12 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "setup": "npm run setup:storage && npm run setup:realtime",
-    "setup:storage": "npx @insforge/cli storage create-bucket avatars --public",
-    "setup:realtime": "npx @insforge/cli db query \"insert into realtime.channels (pattern, description, enabled) values ('chat:%', 'Chat conversation channels (chat:{conversation_id})', true) on conflict do nothing;\""
+    "setup:storage": "npx @yarahdev/cli storage create-bucket avatars --public",
+    "setup:realtime": "npx @yarahdev/cli db query \"insert into realtime.channels (pattern, description, enabled) values ('chat:%', 'Chat conversation channels (chat:{conversation_id})', true) on conflict do nothing;\""
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
-    "@insforge/sdk": "latest",
+    "@yarahdev/sdk": "^1.5.2",
     "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-alert-dialog": "^1.1.15",
     "@radix-ui/react-avatar": "^1.1.11",

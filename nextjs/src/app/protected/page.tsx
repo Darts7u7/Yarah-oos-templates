@@ -37,7 +37,7 @@ export default async function ProtectedPage() {
             <path d="M12 16v-4" />
             <path d="M12 8h.01" />
           </svg>
-          <span>This is a protected page that is only visible to authenticated InsForge users.</span>
+          <span>This is a protected page that is only visible to authenticated Yarah users.</span>
         </span>
       </div>
 

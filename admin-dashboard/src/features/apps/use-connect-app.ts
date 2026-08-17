@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
-import { insforge } from '@/lib/insforge'
+import { yarah } from '@/lib/yarah'
 import { appsKey, type AppWithConnection } from './use-apps'
 
 const POLL_INTERVAL_MS = 1500
@@ -18,7 +18,7 @@ async function connectComposio(args: {
   if (!popup) throw new Error('Popup blocked — allow popups for this site and try again.')
 
   try {
-    const { data: initData, error: initErr } = await insforge.functions.invoke('apps-connect', {
+    const { data: initData, error: initErr } = await yarah.functions.invoke('apps-connect', {
       method: 'POST',
       body: { app_slug: args.appSlug, workspace_id: args.workspaceId },
     })
@@ -36,7 +36,7 @@ async function connectComposio(args: {
     while (Date.now() < deadline) {
       await sleep(POLL_INTERVAL_MS)
 
-      const { data: pollData, error: pollErr } = await insforge.functions.invoke('apps-poll', {
+      const { data: pollData, error: pollErr } = await yarah.functions.invoke('apps-poll', {
         method: 'POST',
         body: {
           request_id,

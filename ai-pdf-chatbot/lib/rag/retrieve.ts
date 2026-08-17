@@ -1,5 +1,5 @@
 import 'server-only';
-import type { createClient } from '@insforge/sdk';
+import type { createClient } from '@yarahdev/sdk';
 import { embedTexts } from '@/lib/ai/embeddings';
 import { MATCH_CHUNK_COUNT } from '@/lib/ai/constants';
 import type { RetrievedChunk } from './format';
@@ -7,10 +7,10 @@ import type { RetrievedChunk } from './format';
 export type { Citation, RetrievedChunk } from './format';
 export { buildContextString, toCitations } from './format';
 
-type InsforgeClient = ReturnType<typeof createClient>;
+type YarahClient = ReturnType<typeof createClient>;
 
 export async function retrieveForQuestion(
-  client: InsforgeClient,
+  client: YarahClient,
   ownerId: string,
   question: string,
   documentIds?: string[],

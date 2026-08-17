@@ -1,8 +1,8 @@
 import 'server-only';
-import type { createClient } from '@insforge/sdk';
+import type { createClient } from '@yarahdev/sdk';
 import { FLASHCARD_COUNT, SUGGESTED_QUESTION_COUNT, UTILITY_MODEL } from './constants';
 
-type InsforgeClient = ReturnType<typeof createClient>;
+type YarahClient = ReturnType<typeof createClient>;
 
 // Cap the prompt context: 4 pages or ~12k chars is enough for a summary
 // and to anchor question/flashcard generation. Saves cost; full ingestion
@@ -17,7 +17,7 @@ function buildContext(fullText: string): string {
 // One-shot summary + suggested-questions for a PDF. The model returns a
 // strict JSON envelope so we can store both fields without a second call.
 export async function generateDocumentInsights(
-  client: InsforgeClient,
+  client: YarahClient,
   fileName: string,
   fullText: string,
 ): Promise<{ summary: string; questions: string[] }> {
@@ -41,7 +41,7 @@ ${context}`;
 }
 
 export async function generateFlashcards(
-  client: InsforgeClient,
+  client: YarahClient,
   fileName: string,
   fullText: string,
 ): Promise<Array<{ question: string; answer: string }>> {

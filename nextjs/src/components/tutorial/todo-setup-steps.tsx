@@ -2,9 +2,9 @@ import { DashboardLink } from "@/components/tutorial/dashboard-link";
 import { PromptBlock } from "@/components/tutorial/prompt-block";
 import { RefreshButton } from "@/components/refresh-button";
 
-const linkProjectPrompt = `npx @insforge/cli link`.trim();
+const linkProjectPrompt = `npx @yarahdev/cli link`.trim();
 
-const createSchemaPrompt = `Create a todos table in my InsForge project with Row Level Security:
+const createSchemaPrompt = `Create a todos table in my Yarah project with Row Level Security:
 
 - Table name: todos
 - Columns (use exactly these names):
@@ -22,7 +22,7 @@ const createSchemaPrompt = `Create a todos table in my InsForge project with Row
 
 export const debugPrompt = `My todos page is showing an error. Please help me debug:
 
-1. Fetch the todos table schema from my InsForge project
+1. Fetch the todos table schema from my Yarah project
 2. Compare it with what the frontend expects:
    - user_id (UUID, references auth.users)
    - title (text)
@@ -103,9 +103,9 @@ export function TodoSetupSteps({ tableExists, hasData, playground }: TodoSetupSt
     <div className="space-y-4">
       <h3 className="text-sm font-medium text-[var(--foreground)]">Setup Steps</h3>
       <ol className="space-y-4">
-        <Step number={1} title="Link your project to InsForge" isComplete={step1Done}>
+        <Step number={1} title="Link your project to Yarah" isComplete={step1Done}>
           <p>
-            Connect your AI agent to this project. This installs the InsForge CLI and skills.
+            Connect your AI agent to this project. This installs the Yarah CLI and skills.
           </p>
           <PromptBlock prompt={linkProjectPrompt} label="Run in your terminal" variant="terminal" />
         </Step>

@@ -17,9 +17,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'InsForge Chatbot',
+  title: 'Yarah Chatbot',
   description:
-    'A Next.js chatbot inspired by the Vercel Chat template, backed by InsForge database and AI routes.',
+    'A Next.js chatbot inspired by the Vercel Chat template, backed by Yarah database and AI routes.',
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon.ico',

@@ -8,8 +8,8 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# InsForge & AI agent skills
-.insforge
+# Yarah & AI agent skills
+.yarah
 .agent
 .agents
 .augment

@@ -1,6 +1,6 @@
 import { randomBytes } from 'node:crypto';
 import { NextResponse } from 'next/server';
-import { createInsforgeServerClient } from '@/lib/insforge';
+import { createYarahServerClient } from '@/lib/yarah';
 import { getCurrentAuthState } from '@/lib/auth-state';
 
 export const runtime = 'nodejs';
@@ -12,7 +12,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ chatId:
   if (!auth.viewer.isAuthenticated || !auth.accessToken) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
-  const client = createInsforgeServerClient({ accessToken: auth.accessToken });
+  const client = createYarahServerClient({ accessToken: auth.accessToken });
 
   const chatRes = await client.database
     .from('chat_sessions')
@@ -64,7 +64,7 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ chatId
     return NextResponse.json({ error: 'Nothing to update' }, { status: 400 });
   }
 
-  const client = createInsforgeServerClient({ accessToken: auth.accessToken });
+  const client = createYarahServerClient({ accessToken: auth.accessToken });
   const { data, error } = await client.database
     .from('chat_sessions')
     .update(patch)
@@ -88,7 +88,7 @@ export async function DELETE(_req: Request, { params }: { params: Promise<{ chat
   if (!auth.viewer.isAuthenticated || !auth.accessToken) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
-  const client = createInsforgeServerClient({ accessToken: auth.accessToken });
+  const client = createYarahServerClient({ accessToken: auth.accessToken });
 
   const del = await client.database.from('chat_sessions').delete().eq('id', chatId);
   if (del.error) return NextResponse.json({ error: del.error.message }, { status: 500 });

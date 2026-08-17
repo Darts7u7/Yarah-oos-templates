@@ -1,11 +1,11 @@
 import 'server-only';
-import type { createClient } from '@insforge/sdk';
+import type { createClient } from '@yarahdev/sdk';
 import { EMBEDDING_MODEL, EMBEDDING_BATCH_SIZE } from './constants';
 
-type InsforgeClient = ReturnType<typeof createClient>;
+type YarahClient = ReturnType<typeof createClient>;
 
 export async function embedTexts(
-  client: InsforgeClient,
+  client: YarahClient,
   texts: string[],
 ): Promise<number[][]> {
   if (texts.length === 0) return [];
@@ -20,7 +20,7 @@ export async function embedTexts(
 }
 
 async function embedWithRetry(
-  client: InsforgeClient,
+  client: YarahClient,
   inputs: string[],
   attempt = 1,
 ): Promise<number[][]> {

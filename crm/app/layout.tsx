@@ -17,9 +17,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'InsForge CRM',
+  title: 'Yarah CRM',
   description:
-    'A Next.js CRM template backed by InsForge database, auth, and storage.',
+    'A Next.js CRM template backed by Yarah database, auth, and storage.',
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon.ico',

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { createInsforgeServerClient } from '@/lib/insforge';
+import { createYarahServerClient } from '@/lib/yarah';
 import { getCurrentAuthState } from '@/lib/auth-state';
 import { ingestPdf } from '@/lib/rag/ingest';
 import { getPostHogClient } from '@/lib/posthog-server';
@@ -40,7 +40,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'File exceeds 10 MB limit' }, { status: 400 });
   }
 
-  const client = createInsforgeServerClient({ accessToken: auth.accessToken });
+  const client = createYarahServerClient({ accessToken: auth.accessToken });
 
   const insertRes = await client.database
     .from('documents')

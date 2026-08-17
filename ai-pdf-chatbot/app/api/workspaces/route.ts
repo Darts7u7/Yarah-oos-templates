@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { createInsforgeServerClient } from '@/lib/insforge';
+import { createYarahServerClient } from '@/lib/yarah';
 import { getCurrentAuthState } from '@/lib/auth-state';
 import { getPostHogClient } from '@/lib/posthog-server';
 
@@ -12,7 +12,7 @@ export async function GET() {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const client = createInsforgeServerClient({ accessToken: auth.accessToken });
+  const client = createYarahServerClient({ accessToken: auth.accessToken });
   const { data, error } = await client.database
     .from('workspaces')
     .select('id, name, description, mindmap_generated_at, audio_url, audio_generated_at, created_at, updated_at')
@@ -37,7 +37,7 @@ export async function POST(req: Request) {
   const description =
     typeof body.description === 'string' ? body.description.trim() || null : null;
 
-  const client = createInsforgeServerClient({ accessToken: auth.accessToken });
+  const client = createYarahServerClient({ accessToken: auth.accessToken });
   const { data, error } = await client.database
     .from('workspaces')
     .insert({

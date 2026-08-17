@@ -1,36 +1,36 @@
-# SaaS Landing — InsForge Template
+# SaaS Landing — Yarah Template
 
-A production-ready SaaS marketing site with waitlist signup, pricing, FAQ, dark mode, and an optional auth scaffold. Built with Next.js 16, Tailwind CSS 4, shadcn/ui, and `@insforge/sdk`.
+A production-ready SaaS marketing site with waitlist signup, pricing, FAQ, dark mode, and an optional auth scaffold. Built with Next.js 16, Tailwind CSS 4, shadcn/ui, and `@yarahdev/sdk`.
 
-[**Live demo →**](https://marketing.insforge.site)
+[**Live demo →**](https://marketing.yarah.dev)
 
 ## Features
 
 - Animated hero with a hand-built dashboard mockup
 - Logo cloud (real brand SVGs from simple-icons), features grid, how-it-works, pricing with monthly/yearly toggle
 - Testimonials, FAQ accordion, waitlist signup
-- Optional sign-in / sign-up / protected dashboard wired to InsForge auth (deletable)
+- Optional sign-in / sign-up / protected dashboard wired to Yarah auth (deletable)
 - Dark mode default (`next-themes`, system-aware)
 - SEO: Open Graph image, `robots.txt`, `sitemap.xml`
 - All marketing copy centralized in `lib/content.ts` — fork-and-rebrand in one file
 
 ## Quick start
 
-1. **Create an InsForge project** at https://app.insforge.dev and copy the project URL + anon key.
+1. **Create an Yarah project** at https://app.yarah.dev and copy the project URL + anon key.
 2. **Configure env vars:**
 
    ```bash
    cp .env.example .env.local
-   # edit .env.local with your InsForge URL and anon key
+   # edit .env.local with your Yarah URL and anon key
    ```
 
 3. **Apply the database migration:**
 
    ```bash
-   npx @insforge/cli db import migrations/db_init.sql
+   npx @yarahdev/cli db import migrations/db_init.sql
    ```
 
-4. **Add redirect URLs in the InsForge dashboard** — under Auth → Settings, add:
+4. **Add redirect URLs in the Yarah dashboard** — under Auth → Settings, add:
    - `http://localhost:3000`
    - `http://localhost:3000/dashboard`
    - `http://localhost:3000/auth/callback`
@@ -61,7 +61,7 @@ The fastest path is Vercel:
 1. Push this directory to a GitHub repo.
 2. Import the repo into Vercel.
 3. Set the same env vars from `.env.example` in Vercel's project settings.
-4. After the first deploy, add your production URL to the redirect-URLs list in the InsForge dashboard (Auth → Settings).
+4. After the first deploy, add your production URL to the redirect-URLs list in the Yarah dashboard (Auth → Settings).
 
 ## Scripts
 

@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
-import { insforge } from '@/lib/insforge'
+import { yarah } from '@/lib/yarah'
 import { useAuth } from '@/lib/auth-context'
 import { conversationsKey, type Conversation } from './use-conversations'
 
@@ -19,7 +19,7 @@ export function useCreateConversation(workspaceId: string | undefined) {
       const trimmed = name.trim()
       if (!trimmed) throw new Error('Name is required')
 
-      const { data: convo, error: convoErr } = await insforge.database
+      const { data: convo, error: convoErr } = await yarah.database
         .from('conversations')
         .insert([
           {
@@ -35,7 +35,7 @@ export function useCreateConversation(workspaceId: string | undefined) {
 
       const created = convo as Conversation
 
-      const { error: memberErr } = await insforge.database
+      const { error: memberErr } = await yarah.database
         .from('conversation_members')
         .insert([{ conversation_id: created.id, user_id: user.id }])
       if (memberErr) throw new Error(memberErr.message)

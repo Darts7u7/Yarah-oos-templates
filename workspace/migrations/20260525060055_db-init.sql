@@ -1,5 +1,5 @@
 -- ============================================================================
--- InsForge Workspace template — initial schema
+-- Yarah Workspace template — initial schema
 -- ============================================================================
 -- DO NOT write to storage.*, auth.*, or realtime.* schemas here.
 -- The workspace-files bucket is created via `npm run setup` (CLI).

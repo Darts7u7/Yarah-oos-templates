@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { getInsforgeClient } from "../lib/insforge";
+import { getYarahClient } from "../lib/yarah";
 import { TodoSetupSteps, DebugPromptBlock } from "./todo-setup-steps";
 import { AddTodoForm } from "./add-todo-form";
 import { TodoItem } from "./todo-item";
@@ -89,8 +89,8 @@ export function TodosDisplay() {
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   const fetchTodos = useCallback(async () => {
-    const insforge = getInsforgeClient();
-    const { data, error: dbError } = await insforge.database
+    const yarah = getYarahClient();
+    const { data, error: dbError } = await yarah.database
       .from("todos")
       .select("*")
       .order("created_at", { ascending: false });

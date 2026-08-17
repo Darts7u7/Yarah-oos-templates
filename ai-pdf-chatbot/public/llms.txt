@@ -1,14 +1,14 @@
 # AI Notebook
 
-> AI Notebook is an open-source, self-hosted study workspace for PDFs: upload documents into workspaces and get RAG chat with citations that highlight the exact passage inside the source PDF, auto-generated mindmaps, spaced-repetition flashcards, and NotebookLM-style two-host audio overviews. Built with Next.js, pgvector, and InsForge.
+> AI Notebook is an open-source, self-hosted study workspace for PDFs: upload documents into workspaces and get RAG chat with citations that highlight the exact passage inside the source PDF, auto-generated mindmaps, spaced-repetition flashcards, and NotebookLM-style two-host audio overviews. Built with Next.js, pgvector, and Yarah.
 
-AI Notebook is an InsForge template: developers fork it as a starting point for their own PDF / study / knowledge-base products. It is the open-source alternative to NotebookLM-style tools, with your data on your own infrastructure and any model via OpenRouter.
+AI Notebook is an Yarah template: developers fork it as a starting point for their own PDF / study / knowledge-base products. It is the open-source alternative to NotebookLM-style tools, with your data on your own infrastructure and any model via OpenRouter.
 
 ## Product
 
-- [Live demo](https://aipdfchat.insforge.site): sign up with any email, upload a PDF, ask a question.
-- [Source code](https://github.com/InsForge/insforge-templates/tree/main/ai-pdf-chatbot): MIT-licensed Next.js app.
-- [Template marketplace](https://insforge.dev/templates): one-command scaffold via `npx @insforge/cli create`.
+- [Live demo](https://aipdfchat.yarah.dev): sign up with any email, upload a PDF, ask a question.
+- [Source code](https://github.com/Darts7u7/Yarah-oos-templates/tree/main/ai-pdf-chatbot): MIT-licensed Next.js app.
+- [Template marketplace](https://yarah.dev/templates): one-command scaffold via `npx @yarahdev/cli create`.
 
 ## Key features
 
@@ -20,4 +20,4 @@ AI Notebook is an InsForge template: developers fork it as a starting point for 
 
 ## Stack
 
-- Next.js App Router, Better Auth, InsForge (Postgres + pgvector + storage + AI gateway), react-pdf, Markmap.
+- Next.js App Router, Better Auth, Yarah (Postgres + pgvector + storage + AI gateway), react-pdf, Markmap.

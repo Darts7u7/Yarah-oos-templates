@@ -1,22 +1,22 @@
 import 'server-only';
 
-import { createClient } from '@insforge/sdk';
+import { createClient } from '@yarahdev/sdk';
 
 let cached: ReturnType<typeof createClient> | null = null;
 let cachedConfig: { baseUrl: string; anonKey: string } | null = null;
 
 function readConfig() {
-  const baseUrl = process.env.NEXT_PUBLIC_INSFORGE_URL;
-  const anonKey = process.env.NEXT_PUBLIC_INSFORGE_ANON_KEY;
+  const baseUrl = process.env.NEXT_PUBLIC_YARAH_URL;
+  const anonKey = process.env.NEXT_PUBLIC_YARAH_ANON_KEY;
   if (!baseUrl || !anonKey) {
     throw new Error(
-      'Missing InsForge config. Set NEXT_PUBLIC_INSFORGE_URL and NEXT_PUBLIC_INSFORGE_ANON_KEY in .env.local.',
+      'Missing Yarah config. Set NEXT_PUBLIC_YARAH_URL and NEXT_PUBLIC_YARAH_ANON_KEY in .env.local.',
     );
   }
   return { baseUrl, anonKey };
 }
 
-export function createInsforgeServerClient(options?: { accessToken?: string }) {
+export function createYarahServerClient(options?: { accessToken?: string }) {
   const { baseUrl, anonKey } = readConfig();
   return createClient({
     baseUrl,
@@ -26,7 +26,7 @@ export function createInsforgeServerClient(options?: { accessToken?: string }) {
   });
 }
 
-export function getInsforgeServerClient() {
+export function getYarahServerClient() {
   const config = readConfig();
   if (
     !cached ||
@@ -34,7 +34,7 @@ export function getInsforgeServerClient() {
     cachedConfig.baseUrl !== config.baseUrl ||
     cachedConfig.anonKey !== config.anonKey
   ) {
-    cached = createInsforgeServerClient();
+    cached = createYarahServerClient();
     cachedConfig = config;
   }
   return cached;

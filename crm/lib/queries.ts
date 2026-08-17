@@ -1,13 +1,13 @@
 import { UPLOAD_BUCKET } from '@/lib/constants';
-import { createInsforgeServerClient, getInsforgeServerClient } from '@/lib/insforge';
+import { createYarahServerClient, getYarahServerClient } from '@/lib/yarah';
 
-type InsforgeClient = ReturnType<typeof createInsforgeServerClient>;
+type YarahClient = ReturnType<typeof createYarahServerClient>;
 
-function getInsforge(accessToken?: string | null): InsforgeClient {
+function getYarah(accessToken?: string | null): YarahClient {
   if (accessToken) {
-    return createInsforgeServerClient({ accessToken });
+    return createYarahServerClient({ accessToken });
   }
-  return getInsforgeServerClient();
+  return getYarahServerClient();
 }
 
 function assertNoDatabaseError(
@@ -28,8 +28,8 @@ export async function getClients(
   page?: number,
   itemsPerPage?: number,
 ) {
-  const insforge = getInsforge(accessToken);
-  let query = insforge.database
+  const yarah = getYarah(accessToken);
+  let query = yarah.database
     .from('clients')
     .select('*', { count: 'exact' })
     .eq('is_deleted', false)
@@ -46,8 +46,8 @@ export async function getClients(
 }
 
 export async function getClientById(id: string, accessToken?: string | null) {
-  const insforge = getInsforge(accessToken);
-  const { data, error } = await insforge.database
+  const yarah = getYarah(accessToken);
+  const { data, error } = await yarah.database
     .from('clients')
     .select('*')
     .eq('id', id)
@@ -62,8 +62,8 @@ export async function addClient(
   clientData: { name: string; client_code: string; address?: string; postal_code?: string; country_code?: string; user_id: string },
   accessToken?: string | null,
 ) {
-  const insforge = getInsforge(accessToken);
-  const { data, error } = await insforge.database
+  const yarah = getYarah(accessToken);
+  const { data, error } = await yarah.database
     .from('clients')
     .insert([clientData])
     .select();
@@ -77,8 +77,8 @@ export async function updateClient(
   clientData: Record<string, unknown>,
   accessToken?: string | null,
 ) {
-  const insforge = getInsforge(accessToken);
-  const { data, error } = await insforge.database
+  const yarah = getYarah(accessToken);
+  const { data, error } = await yarah.database
     .from('clients')
     .update(clientData)
     .eq('id', id)
@@ -93,8 +93,8 @@ export async function updateClient(
 // ============================================================
 
 export async function getLeadSources(accessToken?: string | null) {
-  const insforge = getInsforge(accessToken);
-  const { data, error } = await insforge.database
+  const yarah = getYarah(accessToken);
+  const { data, error } = await yarah.database
     .from('lead_sources')
     .select('*')
     .eq('is_active', true)
@@ -109,8 +109,8 @@ export async function getLeadSources(accessToken?: string | null) {
 // ============================================================
 
 export async function getLeadStages(accessToken?: string | null) {
-  const insforge = getInsforge(accessToken);
-  const { data, error } = await insforge.database
+  const yarah = getYarah(accessToken);
+  const { data, error } = await yarah.database
     .from('lead_stages')
     .select('*')
     .eq('is_active', true)
@@ -129,8 +129,8 @@ export async function getLeads(
   page?: number,
   itemsPerPage?: number,
 ) {
-  const insforge = getInsforge(accessToken);
-  let query = insforge.database
+  const yarah = getYarah(accessToken);
+  let query = yarah.database
     .from('leads')
     .select('*, source:source_id(name), current_stage:current_stage_id(name)', { count: 'exact' })
     .order('created_at', { ascending: false });
@@ -146,8 +146,8 @@ export async function getLeads(
 }
 
 export async function getLead(id: string, accessToken?: string | null) {
-  const insforge = getInsforge(accessToken);
-  const { data, error } = await insforge.database
+  const yarah = getYarah(accessToken);
+  const { data, error } = await yarah.database
     .from('leads')
     .select('*, source:source_id(name), current_stage:current_stage_id(name)')
     .eq('id', id)
@@ -174,8 +174,8 @@ export async function addLead(
   },
   accessToken?: string | null,
 ) {
-  const insforge = getInsforge(accessToken);
-  const { data, error } = await insforge.database
+  const yarah = getYarah(accessToken);
+  const { data, error } = await yarah.database
     .from('leads')
     .insert([leadData])
     .select();
@@ -189,8 +189,8 @@ export async function updateLead(
   leadData: Record<string, unknown>,
   accessToken?: string | null,
 ) {
-  const insforge = getInsforge(accessToken);
-  const { data, error } = await insforge.database
+  const yarah = getYarah(accessToken);
+  const { data, error } = await yarah.database
     .from('leads')
     .update(leadData)
     .eq('id', id)
@@ -201,8 +201,8 @@ export async function updateLead(
 }
 
 export async function getLeadsByStage(accessToken?: string | null) {
-  const insforge = getInsforge(accessToken);
-  const { data, error } = await insforge.database
+  const yarah = getYarah(accessToken);
+  const { data, error } = await yarah.database
     .from('leads')
     .select('*, source:source_id(name), current_stage:current_stage_id(name, order_index)')
     .eq('is_converted', false)
@@ -219,8 +219,8 @@ export async function updateLeadStage(
   notes?: string,
   accessToken?: string | null,
 ) {
-  const insforge = getInsforge(accessToken);
-  const { error } = await insforge.database.rpc('update_lead_stage', {
+  const yarah = getYarah(accessToken);
+  const { error } = await yarah.database.rpc('update_lead_stage', {
     p_lead_id: leadId,
     p_to_stage_id: toStageId,
     p_user_id: userId,
@@ -235,8 +235,8 @@ export async function updateLeadStage(
 // ============================================================
 
 export async function getLeadActivities(leadId: string, accessToken?: string | null) {
-  const insforge = getInsforge(accessToken);
-  const { data, error } = await insforge.database
+  const yarah = getYarah(accessToken);
+  const { data, error } = await yarah.database
     .from('lead_activities')
     .select('*')
     .eq('lead_id', leadId)
@@ -259,8 +259,8 @@ export async function addLeadActivity(
   },
   accessToken?: string | null,
 ) {
-  const insforge = getInsforge(accessToken);
-  const { data, error } = await insforge.database
+  const yarah = getYarah(accessToken);
+  const { data, error } = await yarah.database
     .from('lead_activities')
     .insert([activityData])
     .select();
@@ -274,8 +274,8 @@ export async function addLeadActivity(
 // ============================================================
 
 export async function getLeadDocuments(leadId: string, accessToken?: string | null) {
-  const insforge = getInsforge(accessToken);
-  const { data, error } = await insforge.database
+  const yarah = getYarah(accessToken);
+  const { data, error } = await yarah.database
     .from('lead_documents')
     .select('*')
     .eq('lead_id', leadId)
@@ -291,12 +291,12 @@ export async function addLeadDocument(
   userId: string,
   accessToken?: string | null,
 ) {
-  const insforge = getInsforge(accessToken);
+  const yarah = getYarah(accessToken);
   const filePath = `leads/${leadId}/${Date.now()}-${file.name}`;
 
   const buffer = await file.arrayBuffer();
   const blob = new Blob([buffer], { type: file.type });
-  const { error: uploadError } = await insforge.storage
+  const { error: uploadError } = await yarah.storage
     .from(UPLOAD_BUCKET)
     .upload(filePath, blob);
 
@@ -304,11 +304,11 @@ export async function addLeadDocument(
     throw new Error(`Upload failed: ${uploadError.message}`);
   }
 
-  const publicUrl = insforge.storage
+  const publicUrl = yarah.storage
     .from(UPLOAD_BUCKET)
     .getPublicUrl(filePath);
 
-  const { data, error } = await insforge.database
+  const { data, error } = await yarah.database
     .from('lead_documents')
     .insert([{
       lead_id: leadId,
@@ -329,11 +329,11 @@ export async function deleteLeadDocument(
   filePath: string,
   accessToken?: string | null,
 ) {
-  const insforge = getInsforge(accessToken);
+  const yarah = getYarah(accessToken);
 
-  await insforge.storage.from(UPLOAD_BUCKET).remove(filePath);
+  await yarah.storage.from(UPLOAD_BUCKET).remove(filePath);
 
-  const { error } = await insforge.database
+  const { error } = await yarah.database
     .from('lead_documents')
     .delete()
     .eq('id', documentId);
@@ -346,8 +346,8 @@ export async function deleteLeadDocument(
 // ============================================================
 
 export async function getLeadFollowUps(leadId: string, accessToken?: string | null) {
-  const insforge = getInsforge(accessToken);
-  const { data, error } = await insforge.database
+  const yarah = getYarah(accessToken);
+  const { data, error } = await yarah.database
     .from('lead_follow_ups')
     .select('*')
     .eq('lead_id', leadId)
@@ -367,8 +367,8 @@ export async function addLeadFollowUp(
   },
   accessToken?: string | null,
 ) {
-  const insforge = getInsforge(accessToken);
-  const { data, error } = await insforge.database
+  const yarah = getYarah(accessToken);
+  const { data, error } = await yarah.database
     .from('lead_follow_ups')
     .insert([{ ...followUpData, status: 'pending' }])
     .select();
@@ -378,8 +378,8 @@ export async function addLeadFollowUp(
 }
 
 export async function completeFollowUp(id: string, accessToken?: string | null) {
-  const insforge = getInsforge(accessToken);
-  const { error } = await insforge.database
+  const yarah = getYarah(accessToken);
+  const { error } = await yarah.database
     .from('lead_follow_ups')
     .update({ status: 'completed', completed_at: new Date().toISOString() })
     .eq('id', id);
@@ -398,10 +398,10 @@ export async function convertLeadToClient(
   notes?: string,
   accessToken?: string | null,
 ) {
-  const insforge = getInsforge(accessToken);
+  const yarah = getYarah(accessToken);
 
   // Create client
-  const { data: clientResult, error: clientError } = await insforge.database
+  const { data: clientResult, error: clientError } = await yarah.database
     .from('clients')
     .insert([clientData])
     .select();
@@ -411,7 +411,7 @@ export async function convertLeadToClient(
   if (!client) throw new Error('Client creation returned no data.');
 
   // Record conversion
-  const { error: convError } = await insforge.database
+  const { error: convError } = await yarah.database
     .from('lead_conversions')
     .insert([{
       lead_id: leadId,
@@ -425,7 +425,7 @@ export async function convertLeadToClient(
   assertNoDatabaseError(convError, 'Unable to record conversion.');
 
   // Mark lead as converted
-  const { error: leadError } = await insforge.database
+  const { error: leadError } = await yarah.database
     .from('leads')
     .update({
       is_converted: true,
@@ -448,8 +448,8 @@ export async function getProjects(
   page?: number,
   itemsPerPage?: number,
 ) {
-  const insforge = getInsforge(accessToken);
-  let query = insforge.database
+  const yarah = getYarah(accessToken);
+  let query = yarah.database
     .from('projects')
     .select('*, client:client_id(*)', { count: 'exact' })
     .order('created_at', { ascending: false });
@@ -465,8 +465,8 @@ export async function getProjects(
 }
 
 export async function getProject(id: string, accessToken?: string | null) {
-  const insforge = getInsforge(accessToken);
-  const { data, error } = await insforge.database
+  const yarah = getYarah(accessToken);
+  const { data, error } = await yarah.database
     .from('projects')
     .select('*, client:client_id(*)')
     .eq('id', id)
@@ -491,8 +491,8 @@ export async function addProject(
   },
   accessToken?: string | null,
 ) {
-  const insforge = getInsforge(accessToken);
-  const { data, error } = await insforge.database
+  const yarah = getYarah(accessToken);
+  const { data, error } = await yarah.database
     .from('projects')
     .insert([projectData])
     .select();
@@ -506,8 +506,8 @@ export async function updateProject(
   projectData: Record<string, unknown>,
   accessToken?: string | null,
 ) {
-  const insforge = getInsforge(accessToken);
-  const { data, error } = await insforge.database
+  const yarah = getYarah(accessToken);
+  const { data, error } = await yarah.database
     .from('projects')
     .update(projectData)
     .eq('id', id)
@@ -522,8 +522,8 @@ export async function updateProject(
 // ============================================================
 
 export async function seedDefaults(userId: string, accessToken?: string | null) {
-  const insforge = getInsforge(accessToken);
-  const { error } = await insforge.database.rpc('seed_crm_defaults', {
+  const yarah = getYarah(accessToken);
+  const { error } = await yarah.database.rpc('seed_crm_defaults', {
     p_user_id: userId,
   });
 

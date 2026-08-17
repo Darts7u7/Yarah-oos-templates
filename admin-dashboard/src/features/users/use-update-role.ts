@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { insforge } from '@/lib/insforge'
+import { yarah } from '@/lib/yarah'
 import type { MemberRole } from './use-members'
 
 export function useUpdateRole(workspaceId: string | undefined) {
@@ -7,7 +7,7 @@ export function useUpdateRole(workspaceId: string | undefined) {
   return useMutation({
     mutationFn: async (input: { userId: string; role: MemberRole }) => {
       if (!workspaceId) throw new Error('No active workspace')
-      const { error } = await insforge.database
+      const { error } = await yarah.database
         .from('workspace_members')
         .update({ role: input.role })
         .eq('workspace_id', workspaceId)

@@ -1,12 +1,12 @@
 import { notFound } from 'next/navigation';
-import { createInsforgeServerClient } from '@/lib/insforge';
+import { createYarahServerClient } from '@/lib/yarah';
 import { getAccessToken } from '@/lib/auth-cookies';
 import { ShareDialog } from '@/components/share/ShareDialog';
 import { PageEditor } from '@/components/editor/PageEditorClient';
 
 async function authedClient() {
   const accessToken = await getAccessToken();
-  return createInsforgeServerClient({ accessToken: accessToken ?? undefined });
+  return createYarahServerClient({ accessToken: accessToken ?? undefined });
 }
 
 export default async function PageRoute({

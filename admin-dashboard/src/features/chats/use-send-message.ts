@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
-import { insforge } from '@/lib/insforge'
+import { yarah } from '@/lib/yarah'
 import { useAuth } from '@/lib/auth-context'
 import { messagesKey, type Message } from './use-messages'
 
@@ -15,7 +15,7 @@ export function useSendMessage(conversationId: string | undefined) {
       const trimmed = body.trim()
       if (!trimmed) throw new Error('Message cannot be empty')
 
-      const { data, error } = await insforge.database
+      const { data, error } = await yarah.database
         .from('messages')
         .insert([
           {

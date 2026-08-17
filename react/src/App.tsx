@@ -9,10 +9,10 @@ import { TodosDisplay } from './components/todos-display';
 import { TutorialStep } from './components/tutorial-step';
 import { exchangeAuthCode, getAuthConfig } from './lib/auth';
 import { useAuth } from './lib/auth-context';
-import { getInsforgeConfig } from './lib/insforge';
+import { getYarahConfig } from './lib/yarah';
 
 const deployUrl =
-  'https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FInsForge%2Finsforge-templates&root-directory=react&project-name=insforge-react-starter&repository-name=insforge-react-starter&env=VITE_INSFORGE_BASE_URL,VITE_INSFORGE_ANON_KEY&envDescription=Connect%20your%20InsForge%20project%20URL%20and%20anon%20key.&external-id=https%3A%2F%2Fgithub.com%2FInsForge%2Finsforge-templates%2Ftree%2Fmain%2Freact&demo-title=React%20InsForge%20Starter&demo-description=A%20clean%20React%20and%20Vite%20starter%20with%20InsForge%20auth%20and%20Tailwind%20CSS.&demo-image=https%3A%2F%2Fraw.githubusercontent.com%2FInsForge%2Finsforge-templates%2Fmain%2Freact%2Freact-starter.png';
+  'https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FYarah%2Fyarah-templates&root-directory=react&project-name=yarah-react-starter&repository-name=yarah-react-starter&env=VITE_YARAH_BASE_URL,VITE_YARAH_ANON_KEY&envDescription=Connect%20your%20Yarah%20project%20URL%20and%20anon%20key.&external-id=https%3A%2F%2Fgithub.com%2FYarah%2Fyarah-templates%2Ftree%2Fmain%2Freact&demo-title=React%20Yarah%20Starter&demo-description=A%20clean%20React%20and%20Vite%20starter%20with%20Yarah%20auth%20and%20Tailwind%20CSS.&demo-image=https%3A%2F%2Fraw.githubusercontent.com%2FYarah%2Fyarah-templates%2Fmain%2Freact%2Freact-starter.png';
 
 const isVercelDeployment =
   import.meta.env.VERCEL_ENV === 'preview' || import.meta.env.VERCEL_ENV === 'production';
@@ -34,7 +34,7 @@ function AppLayout({ children }: { children: React.ReactNode }) {
           <div className="app-nav__inner">
             <div className="app-nav__left">
               <Link to="/" className="app-title">
-                React InsForge Starter
+                React Yarah Starter
               </Link>
               <a href={deployUrl} target="_blank" rel="noreferrer" className="app-button app-button--primary">
                 Deploy to Vercel
@@ -67,8 +67,8 @@ function AppLayout({ children }: { children: React.ReactNode }) {
         <footer className="app-footer">
           <span className="app-footer__text">
             Powered by{' '}
-            <a href="https://insforge.dev" target="_blank" rel="noreferrer">
-              InsForge
+            <a href="https://yarah.dev" target="_blank" rel="noreferrer">
+              Yarah
             </a>
           </span>
           <ThemeToggle />
@@ -79,16 +79,16 @@ function AppLayout({ children }: { children: React.ReactNode }) {
 }
 
 function HomePage() {
-  const { isConfigured } = getInsforgeConfig();
+  const { isConfigured } = getYarahConfig();
 
   return (
     <AppLayout>
       <div className="app-content">
         <section className="app-hero">
           <div className="app-badge-row">
-            <a href="https://insforge.dev" target="_blank" rel="noreferrer" className="app-badge">
-              <img src="/favicon.ico" alt="InsForge" className="app-badge__icon" />
-              <span className="app-badge__label">InsForge</span>
+            <a href="https://yarah.dev" target="_blank" rel="noreferrer" className="app-badge">
+              <img src="/favicon.ico" alt="Yarah" className="app-badge__icon" />
+              <span className="app-badge__label">Yarah</span>
             </a>
             <span className="app-badge__divider" />
             <a href="https://react.dev" target="_blank" rel="noreferrer" className="app-badge__react">
@@ -96,10 +96,10 @@ function HomePage() {
             </a>
           </div>
 
-          <h1 className="app-sr-only">InsForge and React Starter Template</h1>
+          <h1 className="app-sr-only">Yarah and React Starter Template</h1>
 
           <p className="app-hero__title">
-            The fastest way to build apps with <strong>InsForge</strong> and <strong>React</strong>
+            The fastest way to build apps with <strong>Yarah</strong> and <strong>React</strong>
           </p>
 
           <p className="app-hero__body">
@@ -118,7 +118,7 @@ function HomePage() {
                 {isVercelDeployment ? (
                   <TutorialStep title="Set up redirect URLs">
                     <p>
-                      If you enable email links or OAuth, configure redirect URLs in your InsForge
+                      If you enable email links or OAuth, configure redirect URLs in your Yarah
                       auth settings for localhost and Vercel deployments.
                     </p>
                   </TutorialStep>
@@ -133,9 +133,9 @@ function HomePage() {
               </>
             ) : (
               <>
-                <TutorialStep title="Create an InsForge project">
+                <TutorialStep title="Create an Yarah project">
                   <p>
-                    Create a project in the InsForge dashboard, then copy your project URL and anon
+                    Create a project in the Yarah dashboard, then copy your project URL and anon
                     key into this app&apos;s environment variables.
                   </p>
                 </TutorialStep>
@@ -146,10 +146,10 @@ function HomePage() {
                   </p>
                   <ul>
                     <li>
-                      <code className="app-code">VITE_INSFORGE_BASE_URL</code>
+                      <code className="app-code">VITE_YARAH_BASE_URL</code>
                     </li>
                     <li>
-                      <code className="app-code">VITE_INSFORGE_ANON_KEY</code>
+                      <code className="app-code">VITE_YARAH_ANON_KEY</code>
                     </li>
                   </ul>
                 </TutorialStep>
@@ -201,7 +201,7 @@ function ProtectedPage() {
               <path d="M12 8h.01" />
             </svg>
           </span>
-          <span>This is a protected page that is only visible to authenticated InsForge users.</span>
+          <span>This is a protected page that is only visible to authenticated Yarah users.</span>
         </div>
 
         <section className="app-section app-section--compact">
@@ -232,7 +232,7 @@ function AuthPageShell({
         <div className="auth-shell__brand">
           <Link to="/" className="auth-shell__brand-pill">
             <span className="auth-shell__brand-dot" />
-            <span>React InsForge Starter</span>
+            <span>React Yarah Starter</span>
           </Link>
         </div>
         <div className="auth-card">
@@ -306,7 +306,7 @@ function AuthCallbackPage() {
     if (isLoading || exchangeStarted.current) return;
 
     const url = new URL(window.location.href);
-    const code = url.searchParams.get('insforge_code');
+    const code = url.searchParams.get('yarah_code');
 
     if (!code) {
       if (!viewer.isAuthenticated) {

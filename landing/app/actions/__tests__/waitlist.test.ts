@@ -3,8 +3,8 @@ import { describe, expect, it, vi, beforeEach } from 'vitest';
 const insertMock = vi.fn();
 const fromMock = vi.fn(() => ({ insert: insertMock }));
 
-vi.mock('@/lib/insforge', () => ({
-  getInsforgeServerClient: () => ({ database: { from: fromMock } }),
+vi.mock('@/lib/yarah', () => ({
+  getYarahServerClient: () => ({ database: { from: fromMock } }),
 }));
 
 import { submitWaitlist } from '../waitlist';

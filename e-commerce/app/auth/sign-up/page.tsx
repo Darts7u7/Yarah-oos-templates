@@ -12,7 +12,7 @@ export default async function SignUpPage() {
     <AuthShell
       eyebrow="Create account"
       title="Start shopping"
-      description="Email/password, verification codes, and OAuth all map directly into the InsForge-backed customer profile."
+      description="Email/password, verification codes, and OAuth all map directly into the Yarah-backed customer profile."
     >
       <SignUpForm
         providers={config.oAuthProviders ?? []}

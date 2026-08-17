@@ -3,8 +3,8 @@ const nextConfig = {
   allowedDevOrigins: ['localhost', '127.0.0.1'],
   images: {
     remotePatterns: [
-      { protocol: 'https', hostname: '**.insforge.app' },
-      { protocol: 'https', hostname: '**.insforge.dev' },
+      { protocol: 'https', hostname: '**.apps.yarah.dev' },
+      { protocol: 'https', hostname: '**.yarah.dev' },
     ],
   },
 };

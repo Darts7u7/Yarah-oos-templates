@@ -1,5 +1,5 @@
-<a href="https://insforge.dev">
-  <h1 align="center">InsForge AI Notebook</h1>
+<a href="https://yarah.dev">
+  <h1 align="center">Yarah AI Notebook</h1>
 </a>
 
 <p align="center">
@@ -29,15 +29,15 @@ Production-grade plumbing under the hood:
 
 - Next.js 16 App Router
 - PDF upload (≤ 10 MB) with server-side extraction via `pdfjs-dist`
-- Vector search on InsForge pgvector (`vector(1536)` + ivfflat cosine)
+- Vector search on Yarah pgvector (`vector(1536)` + ivfflat cosine)
 - Streaming RAG chat with bracketed `[n]` source citations (NDJSON)
-- **Better Auth** for email + password sign-in. User/session tables live in your InsForge Postgres.
-- HS256 bridge JWT from BA → InsForge: RLS reads `requesting_user_id()` so every user only sees their own data.
+- **Better Auth** for email + password sign-in. User/session tables live in your Yarah Postgres.
+- HS256 bridge JWT from BA → Yarah: RLS reads `requesting_user_id()` so every user only sees their own data.
 - shadcn/ui + Tailwind 4 design tokens
 
 ## Demo
 
-[aipdfchat.insforge.site](https://aipdfchat.insforge.site) — sign up with any email, upload a PDF, ask away.
+[aipdfchat.yarah.dev](https://aipdfchat.yarah.dev) — sign up with any email, upload a PDF, ask away.
 
 ## Why this template
 
@@ -60,12 +60,12 @@ If you want to fork a NotebookLM-style study tool and run it on infrastructure y
 Fastest path:
 
 ```bash
-npx @insforge/cli create
+npx @yarahdev/cli create
 ```
 
 1. Pick the **AI PDF Chatbot** template.
-2. Create or connect your InsForge project.
-3. The CLI provisions the project and fills the `NEXT_PUBLIC_INSFORGE_*` and `DATABASE_URL` values into `.env.local`.
+2. Create or connect your Yarah project.
+3. The CLI provisions the project and fills the `NEXT_PUBLIC_YARAH_*` and `DATABASE_URL` values into `.env.local`.
 4. Fill in the remaining BA secrets (see below), then `npm run setup && npm run dev`.
 
 ## Run Locally
@@ -73,16 +73,16 @@ npx @insforge/cli create
 If you'd rather clone manually:
 
 ```bash
-git clone https://github.com/InsForge/insforge-templates.git
-cd insforge-templates/ai-pdf-chatbot
+git clone https://github.com/Darts7u7/Yarah-oos-templates.git
+cd yarah-templates/ai-pdf-chatbot
 npm install
 ```
 
-1. Create a project at [insforge.dev](https://insforge.dev) and copy its **URL** and **anon key** from **Connect → API Keys**.
+1. Create a project at [yarah.dev](https://yarah.dev) and copy its **URL** and **anon key** from **Connect → API Keys**.
 2. Link this directory:
 
    ```bash
-   npx @insforge/cli link --project-id <your-project-id>
+   npx @yarahdev/cli link --project-id <your-project-id>
    ```
 
 3. Copy the env example and fill in:
@@ -91,11 +91,11 @@ npm install
    cp .env.example .env.local
    ```
 
-   - `NEXT_PUBLIC_INSFORGE_BASE_URL`, `NEXT_PUBLIC_INSFORGE_ANON_KEY` — from the dashboard
-   - `DATABASE_URL` — the Postgres connection string for the BA tables (cloud: from the dashboard; self-hosted: the default `postgresql://postgres:postgres@127.0.0.1:5432/insforge` works against the local stack)
+   - `NEXT_PUBLIC_YARAH_BASE_URL`, `NEXT_PUBLIC_YARAH_ANON_KEY` — from the dashboard
+   - `DATABASE_URL` — the Postgres connection string for the BA tables (cloud: from the dashboard; self-hosted: the default `postgresql://postgres:postgres@127.0.0.1:5432/yarah` works against the local stack)
    - `BETTER_AUTH_SECRET` — `openssl rand -hex 32`
    - `BETTER_AUTH_URL` and `NEXT_PUBLIC_BETTER_AUTH_URL` — `http://localhost:3000` for dev
-   - `INSFORGE_JWT_SECRET` — `npx @insforge/cli secrets get JWT_SECRET`
+   - `YARAH_JWT_SECRET` — `npx @yarahdev/cli secrets get JWT_SECRET`
 
 4. Generate the BA tables and create the storage bucket:
 
@@ -103,7 +103,7 @@ npm install
    npm run setup
    ```
 
-   `npx @insforge/cli link` (step 2) already applied `migrations/db_init.sql`, which created the `better_auth` schema, the `requesting_user_id()` helper, the app tables (`documents`, `document_chunks`, `chat_sessions`, `chat_messages`), all RLS policies, and the per-bucket storage grants. `npm run setup` now only runs `better-auth migrate` to populate `better_auth.{user,session,account,verification}` and creates the `pdf-documents` storage bucket.
+   `npx @yarahdev/cli link` (step 2) already applied `migrations/db_init.sql`, which created the `better_auth` schema, the `requesting_user_id()` helper, the app tables (`documents`, `document_chunks`, `chat_sessions`, `chat_messages`), all RLS policies, and the per-bucket storage grants. `npm run setup` now only runs `better-auth migrate` to populate `better_auth.{user,session,account,verification}` and creates the `pdf-documents` storage bucket.
 
 5. Start the dev server:
 
@@ -115,19 +115,19 @@ npm install
 
 ## Prerequisites
 
-- **InsForge project with AI billing enabled.** The template calls `client.ai.embeddings.create` and `client.ai.chat.completions.create`; both route through OpenRouter under the hood. Free-tier quota runs out quickly under regular use.
-- **pgvector extension** — the migration runs `create extension if not exists vector;` against the `public` schema. Supported on any standard InsForge project.
+- **Yarah project with AI billing enabled.** The template calls `client.ai.embeddings.create` and `client.ai.chat.completions.create`; both route through OpenRouter under the hood. Free-tier quota runs out quickly under regular use.
+- **pgvector extension** — the migration runs `create extension if not exists vector;` against the `public` schema. Supported on any standard Yarah project.
 - **Node 18+** for `node:test` and the ESM `pdfjs-dist` build.
-- **InsForge SMTP** configured if you want password resets to send mail. Cloud projects: configured automatically. Self-hosted: `PUT /api/auth/smtp-config`.
+- **Yarah SMTP** configured if you want password resets to send mail. Cloud projects: configured automatically. Self-hosted: `PUT /api/auth/smtp-config`.
 - **OpenAI API key (optional)** — required only for the Audio Overview tab. Set `OPENAI_API_KEY` in `.env.local`; without it the workspace audio tab shows a friendly "configure to enable" prompt and everything else still works.
 
 ## Architecture
 
 ```
-Sign in (Better Auth) ──► same-origin cookie ──► /api/insforge-token signs HS256
+Sign in (Better Auth) ──► same-origin cookie ──► /api/yarah-token signs HS256
                                                             │
                                                             ▼
-                                  edgeFunctionToken on InsForge client
+                                  edgeFunctionToken on Yarah client
                                                             │
                                                             ▼
                               RLS policies read `sub` via requesting_user_id()
@@ -161,12 +161,12 @@ The Audio tab generates a NotebookLM-style two-host podcast summary of every PDF
 
 **How it works:**
 
-1. `lib/ai/audio-script.ts` calls InsForge AI (chat completion) with a producer-style prompt adapted from [open-notebooklm](https://github.com/gabrielchua/open-notebooklm). Sarah hosts and interviews Mike, a subject-matter expert. The asymmetric framing prevents the "two co-hosts agreeing with each other" failure mode.
+1. `lib/ai/audio-script.ts` calls Yarah AI (chat completion) with a producer-style prompt adapted from [open-notebooklm](https://github.com/gabrielchua/open-notebooklm). Sarah hosts and interviews Mike, a subject-matter expert. The asymmetric framing prevents the "two co-hosts agreeing with each other" failure mode.
 2. `lib/audio/tts.ts` synthesizes each turn through OpenAI TTS (`gpt-4o-mini-tts`, `nova` voice for Sarah, `onyx` for Mike), 4 turns in parallel.
 3. mp3 frames are concatenated naively (good enough for a study tool; swap in `ffmpeg.wasm` if you need gapless playback).
 4. The final mp3 lands in the `audio-overviews` storage bucket (public read), and `workspaces.audio_url` + `audio_script` are cached so the tab renders instantly on revisit.
 
-**Cost:** about $0.006 per regeneration (700 chars TTS at `tts-1` pricing). The chat completion that drafts the script runs on InsForge AI and counts against your existing AI quota.
+**Cost:** about $0.006 per regeneration (700 chars TTS at `tts-1` pricing). The chat completion that drafts the script runs on Yarah AI and counts against your existing AI quota.
 
 **Without `OPENAI_API_KEY`:** the Audio tab shows a friendly "configure to enable" prompt. Every other feature works.
 

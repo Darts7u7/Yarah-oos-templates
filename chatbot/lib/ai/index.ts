@@ -2,29 +2,29 @@ import type { AIProvider } from '@/lib/ai/types';
 
 export type { AIProvider, AIChatMessage, UserContentPart, FileParserOptions, StreamCompletionParams } from '@/lib/ai/types';
 
-type ProviderName = 'insforge' | 'vercel';
+type ProviderName = 'yarah' | 'vercel';
 
 export function getAIProviderName(): ProviderName {
   const raw = process.env.AI_PROVIDER?.trim().toLowerCase();
 
-  if (!raw || raw === 'insforge') return 'insforge';
+  if (!raw || raw === 'yarah') return 'yarah';
   if (raw === 'vercel') return 'vercel';
 
   throw new Error(
-    `Unknown AI_PROVIDER "${raw}". Supported values: insforge, vercel.`,
+    `Unknown AI_PROVIDER "${raw}". Supported values: yarah, vercel.`,
   );
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function createAIProvider(insforgeClient?: any): Promise<AIProvider> {
+export async function createAIProvider(yarahClient?: any): Promise<AIProvider> {
   const name = getAIProviderName();
 
-  if (name === 'insforge') {
-    if (!insforgeClient) {
-      throw new Error('InsForge client is required for the insforge AI provider.');
+  if (name === 'yarah') {
+    if (!yarahClient) {
+      throw new Error('Yarah client is required for the yarah AI provider.');
     }
-    const { createInsforgeAIProvider } = await import('@/lib/ai/providers/insforge');
-    return createInsforgeAIProvider(insforgeClient as Parameters<typeof createInsforgeAIProvider>[0]);
+    const { createYarahAIProvider } = await import('@/lib/ai/providers/yarah');
+    return createYarahAIProvider(yarahClient as Parameters<typeof createYarahAIProvider>[0]);
   }
 
   const { createVercelAIProvider } = await import('@/lib/ai/providers/vercel');

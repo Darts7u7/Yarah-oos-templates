@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
-import { insforge } from '@/lib/insforge'
+import { yarah } from '@/lib/yarah'
 import { useAuth } from '@/lib/auth-context'
 import { ensureWorkspace } from '@/features/auth/ensure-workspace'
 import { useWorkspaceStore } from '@/features/workspaces/workspace-store'
@@ -30,9 +30,9 @@ function OAuthCallbackPage() {
         return
       }
 
-      // The SDK auto-detects `insforge_code` on init and exchanges it; getCurrentUser
+      // The SDK auto-detects `yarah_code` on init and exchanges it; getCurrentUser
       // waits for that pending exchange to settle before returning.
-      const { data, error } = await insforge.auth.getCurrentUser()
+      const { data, error } = await yarah.auth.getCurrentUser()
       if (error || !data?.user) {
         toast.error(error?.message ?? 'Sign-in failed')
         navigate({ to: '/sign-in' })

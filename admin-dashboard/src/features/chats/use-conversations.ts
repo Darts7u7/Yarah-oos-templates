@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { insforge } from '@/lib/insforge'
+import { yarah } from '@/lib/yarah'
 
 export type Conversation = {
   id: string
@@ -23,7 +23,7 @@ export function useConversations(workspaceId: string | undefined) {
     enabled: !!workspaceId,
     queryKey: conversationsKey(workspaceId),
     queryFn: async (): Promise<ConversationListItem[]> => {
-      const { data, error } = await insforge.database
+      const { data, error } = await yarah.database
         .from('conversations')
         .select('id, workspace_id, name, type, created_by, created_at')
         .eq('workspace_id', workspaceId!)
@@ -36,7 +36,7 @@ export function useConversations(workspaceId: string | undefined) {
       // simply return no rows here.
       const withLast = await Promise.all(
         conversations.map(async (c): Promise<ConversationListItem> => {
-          const { data: msgs } = await insforge.database
+          const { data: msgs } = await yarah.database
             .from('messages')
             .select('body, created_at')
             .eq('conversation_id', c.id)

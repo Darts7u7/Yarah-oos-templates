@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
-import { createInsforgeServerClient } from '@/lib/insforge';
+import { createYarahServerClient } from '@/lib/yarah';
 import { getAccessToken } from '@/lib/auth-cookies';
 import { ProfileSection } from '@/components/settings/ProfileSection';
 import { MembersSection } from '@/components/settings/MembersSection';
@@ -14,7 +14,7 @@ import {
 
 async function authedClient() {
   const accessToken = await getAccessToken();
-  return createInsforgeServerClient({ accessToken: accessToken ?? undefined });
+  return createYarahServerClient({ accessToken: accessToken ?? undefined });
 }
 
 export default async function SettingsPage() {

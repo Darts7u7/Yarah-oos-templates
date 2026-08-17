@@ -9,8 +9,8 @@ dist-ssr
 
 .DS_Store
 
-# InsForge & AI agent skills
-.insforge
+# Yarah & AI agent skills
+.yarah
 .agent
 .agents
 .augment

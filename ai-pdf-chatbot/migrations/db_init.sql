@@ -1,4 +1,4 @@
--- Single bootstrap file auto-applied by `npx @insforge/cli link`. Order:
+-- Single bootstrap file auto-applied by `npx @yarahdev/cli link`. Order:
 -- 1) Extensions + Better Auth schema + requesting_user_id() helper
 -- 2) App tables, indexes, triggers, the match_document_chunks RPC
 -- 3) RLS policies on app tables AND on storage.objects (per-bucket grants)
@@ -7,7 +7,7 @@
 -- session,account,verification} via Better Auth's own Kysely migrations.
 
 -- ivfflat index creation on document_chunks.embedding needs more than the
--- 16MB default maintenance_work_mem on InsForge cloud. Bump it for this
+-- 16MB default maintenance_work_mem on Yarah cloud. Bump it for this
 -- session so `CREATE INDEX ... ivfflat` doesn't fail with "memory required".
 set maintenance_work_mem = '128MB';
 
@@ -16,12 +16,12 @@ create extension if not exists vector;
 
 -- Better Auth's tables live in a dedicated schema. PostgREST exposes only
 -- `public` by default, so anything under `better_auth` is hidden from the
--- InsForge data API automatically — no REVOKE step needed.
+-- Yarah data API automatically — no REVOKE step needed.
 create schema if not exists better_auth;
 
 -- RLS policies read the BA-signed `sub` claim via auth.jwt(). The HS256
--- bridge JWT minted by /api/insforge-token (and lib/auth-state.ts) carries
--- `{ sub: <BA user.id>, role: "authenticated", aud: "insforge-api" }`.
+-- bridge JWT minted by /api/yarah-token (and lib/auth-state.ts) carries
+-- `{ sub: <BA user.id>, role: "authenticated", aud: "yarah-api" }`.
 create or replace function public.requesting_user_id()
 returns text
 language sql stable
@@ -338,7 +338,7 @@ $$;
 
 grant execute on function public.get_shared_chat(text) to anon, authenticated;
 
--- storage.objects RLS — InsForge fresh projects only ship a project_admin
+-- storage.objects RLS — Yarah fresh projects only ship a project_admin
 -- policy on storage.objects, so authenticated users can't upload even into
 -- buckets they "own". Add per-bucket policies scoped to uploaded_by =
 -- requesting_user_id() (the JWT sub) so a signed-in user can manage their

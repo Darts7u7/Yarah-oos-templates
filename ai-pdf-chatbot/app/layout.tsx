@@ -51,7 +51,7 @@ const JSON_LD = {
     price: '0',
     priceCurrency: 'USD',
   },
-  sameAs: ['https://github.com/InsForge/insforge-templates'],
+  sameAs: ['https://github.com/Darts7u7/Yarah-oos-templates'],
 };
 
 export default function RootLayout({

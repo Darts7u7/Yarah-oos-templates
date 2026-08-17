@@ -1,5 +1,5 @@
 import { getAccessToken, getRefreshToken, setAuthCookies } from '@/lib/auth-cookies';
-import { createInsforgeServerClient } from '@/lib/insforge';
+import { createYarahServerClient } from '@/lib/yarah';
 import type { ChatOwner } from '@/lib/types';
 
 export const CHAT_OWNER_REQUIRED_ERROR = 'userId is required.';
@@ -11,8 +11,8 @@ async function resolveAccessToken(): Promise<string | null> {
   const refreshToken = await getRefreshToken();
   if (!refreshToken) return null;
 
-  const insforge = createInsforgeServerClient();
-  const { data, error } = await insforge.auth.refreshSession({ refreshToken });
+  const yarah = createYarahServerClient();
+  const { data, error } = await yarah.auth.refreshSession({ refreshToken });
 
   if (error || !data?.accessToken || !data.refreshToken) {
     return null;

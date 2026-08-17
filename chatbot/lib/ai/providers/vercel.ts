@@ -51,7 +51,7 @@ function buildByokOptions(): Record<string, Record<string, Array<{ apiKey: strin
 }
 
 /**
- * Convert InsForge-shaped multipart content to Vercel AI SDK format.
+ * Convert Yarah-shaped multipart content to Vercel AI SDK format.
  */
 function convertContent(
   content: string | UserContentPart[],

@@ -1,12 +1,12 @@
 import { notFound, redirect } from 'next/navigation';
 import { Sidebar } from '@/components/sidebar/Sidebar';
 import { getCurrentUser } from '@/lib/workspace-actions';
-import { createInsforgeServerClient } from '@/lib/insforge';
+import { createYarahServerClient } from '@/lib/yarah';
 import { getAccessToken } from '@/lib/auth-cookies';
 
 async function authedClient() {
   const accessToken = await getAccessToken();
-  return createInsforgeServerClient({ accessToken: accessToken ?? undefined });
+  return createYarahServerClient({ accessToken: accessToken ?? undefined });
 }
 
 export default async function WorkspaceLayout({

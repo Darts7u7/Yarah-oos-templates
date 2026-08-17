@@ -1,6 +1,6 @@
-# Contributing a template to the InsForge marketplace
+# Contributing a template to the Yarah marketplace
 
-Templates listed on https://insforge.dev/templates live in this repo. Adding one is a single PR.
+Templates listed on https://yarah.dev/templates live in this repo. Adding one is a single PR.
 
 ## Quick start
 
@@ -25,7 +25,7 @@ Templates listed on https://insforge.dev/templates live in this repo. Adding one
      "features": ["auth", "ai"],
      "tags": ["my-tag"],
      "cover": "assets/covers/my-template.png",
-     "demo_url": "https://my-demo.us-east.insforge.app",
+     "demo_url": "https://my-demo.us-east.apps.yarah.dev",
      "author": "Your Name",
      "added_at": "YYYY-MM-DD"
    }

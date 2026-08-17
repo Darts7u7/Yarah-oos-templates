@@ -4,7 +4,7 @@ import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { insforge } from '@/lib/insforge'
+import { yarah } from '@/lib/yarah'
 
 export const Route = createFileRoute('/(auth)/otp')({
   component: OtpPage,
@@ -20,7 +20,7 @@ function OtpPage() {
     e.preventDefault()
     setLoading(true)
     try {
-      const { error } = await insforge.auth.resetPassword({ newPassword, otp })
+      const { error } = await yarah.auth.resetPassword({ newPassword, otp })
       if (error) {
         toast.error(error.message ?? 'Invalid or expired code')
         return

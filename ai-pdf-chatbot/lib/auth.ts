@@ -19,7 +19,7 @@ function readEnv(name: string, buildFallback: string): string {
 
 // Better Auth's tables live in a dedicated `better_auth` schema, not `public`.
 // PostgREST exposes only `public` by default, so the schema is hidden from
-// the InsForge data API by construction — no REVOKE step needed.
+// the Yarah data API by construction — no REVOKE step needed.
 //
 // `pg.Pool` doesn't take a `schema` option, so we scope BA's queries via
 // Postgres `search_path` as a startup option (`-c search_path=…`). A
@@ -29,7 +29,7 @@ function readEnv(name: string, buildFallback: string): string {
 // `gen_random_uuid()` and other extensions.
 //
 // pg-connection-string v2 treats `sslmode=require` as `verify-full`, which
-// rejects InsForge cloud's self-signed Postgres cert with
+// rejects Yarah cloud's self-signed Postgres cert with
 // `DEPTH_ZERO_SELF_SIGNED_CERT`. Strip the param via the URL API (regex
 // would leave a stray `&`) and apply our `rejectUnauthorized: false`
 // override explicitly. Local stacks (no sslmode) get a plain non-TLS
@@ -51,11 +51,11 @@ export const auth = betterAuth({
 
   emailAndPassword: {
     enabled: true,
-    // Wire BA's password-reset email through InsForge's email service.
-    // Requires SMTP configured on the InsForge side (cloud: automatic;
+    // Wire BA's password-reset email through Yarah's email service.
+    // Requires SMTP configured on the Yarah side (cloud: automatic;
     // self-hosted: PUT /api/auth/smtp-config).
     sendResetPassword: async ({ user, url }) => {
-      const { serverMailer } = await import('./insforge-server-mailer');
+      const { serverMailer } = await import('./yarah-server-mailer');
       const c = serverMailer();
       const { error } = await c.emails.send({
         to: user.email,

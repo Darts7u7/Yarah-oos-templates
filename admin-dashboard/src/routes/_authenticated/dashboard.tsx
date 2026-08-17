@@ -13,7 +13,7 @@ import {
 } from 'recharts'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
-import { insforge } from '@/lib/insforge'
+import { yarah } from '@/lib/yarah'
 import { useActiveWorkspace } from '@/features/dashboard/use-active-workspace'
 
 export const Route = createFileRoute('/_authenticated/dashboard')({
@@ -36,7 +36,7 @@ function DashboardPage() {
     enabled: !!workspace,
     queryKey: ['dashboard', workspace?.id],
     queryFn: async (): Promise<Task[]> => {
-      const { data, error } = await insforge.database
+      const { data, error } = await yarah.database
         .from('tasks')
         .select('id, title, status, created_at')
         .eq('workspace_id', workspace!.id)

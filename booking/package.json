@@ -1,5 +1,5 @@
 {
-  "name": "insforge-booking",
+  "name": "yarah-booking",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -7,10 +7,10 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "setup": "npx @insforge/cli storage create-bucket provider-images --public && npx @insforge/cli storage create-bucket service-images --public"
+    "setup": "npx @yarahdev/cli storage create-bucket provider-images --public && npx @yarahdev/cli storage create-bucket service-images --public"
   },
   "dependencies": {
-    "@insforge/sdk": "latest",
+    "@yarahdev/sdk": "^1.5.2",
     "@radix-ui/react-slot": "^1.2.4",
     "@vercel/analytics": "^2.0.1",
     "class-variance-authority": "^0.7.1",

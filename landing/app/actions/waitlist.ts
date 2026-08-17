@@ -1,6 +1,6 @@
 'use server';
 
-import { getInsforgeServerClient } from '@/lib/insforge';
+import { getYarahServerClient } from '@/lib/yarah';
 
 export type WaitlistState =
   | { ok: false; error?: string }
@@ -21,8 +21,8 @@ export async function submitWaitlist(
     return { ok: false, error: 'Enter a valid email.' };
   }
 
-  const insforge = getInsforgeServerClient();
-  const { error } = await insforge.database.from('waitlist').insert([{ email, source }]);
+  const yarah = getYarahServerClient();
+  const { error } = await yarah.database.from('waitlist').insert([{ email, source }]);
 
   if (error?.code === '23505') {
     return { ok: true, message: "You're already on the list." };

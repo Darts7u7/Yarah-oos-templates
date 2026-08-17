@@ -1,11 +1,11 @@
 <h1 align="center">To Do List</h1>
 
 <p align="center">
-  A simple to-do list app built with Next.js and InsForge
+  A simple to-do list app built with Next.js and Yarah
 </p>
 
 <p align="center">
-  <a href="https://demotodo.insforge.site"><strong>Live Demo</strong></a> ·
+  <a href="https://demotodo.yarah.dev"><strong>Live Demo</strong></a> ·
   <a href="#features"><strong>Features</strong></a> ·
   <a href="#quick-launch"><strong>Quick launch</strong></a> ·
   <a href="#database-setup"><strong>Database setup</strong></a> ·
@@ -17,15 +17,15 @@
 
 - Simple to-do list UI with add, toggle, and display
 - Built with [Next.js](https://nextjs.org) App Router and [Tailwind CSS](https://tailwindcss.com)
-- [InsForge](https://insforge.dev) database for persistent storage
+- [Yarah](https://yarah.dev) database for persistent storage
 
 
 ## Quick launch
 
-Use the InsForge CLI to get started:
+Use the Yarah CLI to get started:
 
 ```bash
-npx @insforge/cli create
+npx @yarahdev/cli create
 ```
 
 Choose the **To Do List** template and follow the prompts.
@@ -35,7 +35,7 @@ Choose the **To Do List** template and follow the prompts.
 Apply the database schema (creates the `todo` table, grants permissions, and sets up the storage bucket):
 
 ```bash
-npx @insforge/cli db import migrations/db_init.sql
+npx @yarahdev/cli db import migrations/db_init.sql
 ```
 
 ## Clone and run locally
@@ -43,8 +43,8 @@ npx @insforge/cli db import migrations/db_init.sql
 1. Clone this repository:
 
 ```bash
-git clone https://github.com/InsForge/insforge-templates.git
-cd insforge-templates/todo
+git clone https://github.com/Darts7u7/Yarah-oos-templates.git
+cd yarah-templates/todo
 ```
 
 2. Install dependencies:
@@ -53,10 +53,10 @@ cd insforge-templates/todo
 npm install
 ```
 
-3. Link your InsForge project:
+3. Link your Yarah project:
 
 ```bash
-npx @insforge/cli link --project-id <your-project-id>
+npx @yarahdev/cli link --project-id <your-project-id>
 ```
 
 4. Copy `.env.example` to `.env.local` and fill in your project settings:

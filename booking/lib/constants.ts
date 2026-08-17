@@ -1,6 +1,6 @@
-export const SITE_NAME = 'InsForge Booking';
+export const SITE_NAME = 'Yarah Booking';
 export const SITE_DESCRIPTION =
-  'A two-sided booking marketplace where customers discover providers and book services. Built by InsForge.';
+  'A two-sided booking marketplace where customers discover providers and book services. Built by Yarah.';
 export const BOOKING_STATUSES = [
   { value: 'pending', label: 'Pending' },
   { value: 'confirmed', label: 'Confirmed' },

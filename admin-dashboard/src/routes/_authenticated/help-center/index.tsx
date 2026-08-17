@@ -35,19 +35,19 @@ const FAQS: Faq[] = [
   },
   {
     q: 'How does realtime chat work?',
-    a: 'Conversations stream over an InsForge realtime channel scoped to each chat. Messages are delivered instantly to everyone subscribed to that channel, and history is persisted in the database for late joiners.',
+    a: 'Conversations stream over an Yarah realtime channel scoped to each chat. Messages are delivered instantly to everyone subscribed to that channel, and history is persisted in the database for late joiners.',
   },
   {
     q: 'Where is my data stored?',
-    a: 'All application data lives in your InsForge project: rows in PostgreSQL, files in Storage buckets, and auth state managed by the InsForge SDK. You can export at any time using the InsForge CLI.',
+    a: 'All application data lives in your Yarah project: rows in PostgreSQL, files in Storage buckets, and auth state managed by the Yarah SDK. You can export at any time using the Yarah CLI.',
   },
   {
     q: 'How do I deploy this dashboard to production?',
-    a: 'Run npm run build to produce a static bundle in dist/. Deploy it to any static host (Vercel, Netlify, Cloudflare Pages, or InsForge Hosting) and point your environment variables at your production InsForge project.',
+    a: 'Run npm run build to produce a static bundle in dist/. Deploy it to any static host (Vercel, Netlify, Cloudflare Pages, or Yarah Hosting) and point your environment variables at your production Yarah project.',
   },
   {
     q: 'How do I contact support?',
-    a: 'Email support@insforge.dev with your project ID and a description of the issue. For urgent outages, check the status page first to see whether the problem is already being tracked.',
+    a: 'Email support@yarah.dev with your project ID and a description of the issue. For urgent outages, check the status page first to see whether the problem is already being tracked.',
   },
 ]
 
@@ -115,17 +115,17 @@ function HelpCenter() {
         <CardContent>
           <div className="grid gap-3 sm:grid-cols-3">
             <a
-              href="mailto:support@insforge.dev"
+              href="mailto:support@yarah.dev"
               className="flex items-start gap-3 rounded-lg border p-4 transition-colors hover:bg-accent hover:text-accent-foreground"
             >
               <Mail className="mt-0.5 h-5 w-5 text-muted-foreground" />
               <div className="space-y-0.5">
                 <div className="text-sm font-medium">Email support</div>
-                <div className="text-xs text-muted-foreground">support@insforge.dev</div>
+                <div className="text-xs text-muted-foreground">support@yarah.dev</div>
               </div>
             </a>
             <a
-              href="https://docs.insforge.dev"
+              href="https://docs.yarah.dev"
               target="_blank"
               rel="noreferrer"
               className="flex items-start gap-3 rounded-lg border p-4 transition-colors hover:bg-accent hover:text-accent-foreground"
@@ -137,7 +137,7 @@ function HelpCenter() {
               </div>
             </a>
             <a
-              href="https://status.insforge.dev"
+              href="https://status.yarah.dev"
               target="_blank"
               rel="noreferrer"
               className="flex items-start gap-3 rounded-lg border p-4 transition-colors hover:bg-accent hover:text-accent-foreground"

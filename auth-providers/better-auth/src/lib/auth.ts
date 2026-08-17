@@ -13,7 +13,7 @@ function requireEnv(name: string): string {
 
 // Better Auth's tables live in a dedicated `better_auth` schema, not `public`.
 // PostgREST exposes only `public` by default, so the schema is hidden from
-// the InsForge data API by construction — no REVOKE step needed. The InsForge
+// the Yarah data API by construction — no REVOKE step needed. The Yarah
 // dashboard reaches `better_auth.*` through its admin route (postgres
 // superuser pool), so Studio inspection still works.
 //
@@ -28,10 +28,10 @@ function requireEnv(name: string): string {
 // the path for `gen_random_uuid()` etc.
 //
 // pg-connection-string v2 treats `sslmode=require` as `verify-full`, which
-// rejects InsForge cloud's self-signed Postgres cert with
+// rejects Yarah cloud's self-signed Postgres cert with
 // `DEPTH_ZERO_SELF_SIGNED_CERT`. The explicit `ssl: { rejectUnauthorized:
 // false }` we set below SHOULD override the parsed value, but in practice
-// (verified empirically against InsForge cloud Postgres) the parsed
+// (verified empirically against Yarah cloud Postgres) the parsed
 // `sslmode=require` wins and our override is silently dropped: 0/5
 // connections succeed with `sslmode=` in the URL, 5/5 succeed when it is
 // stripped. So we strip it via the URL API (which handles param ordering
@@ -55,15 +55,15 @@ export const auth = betterAuth({
   baseURL: requireEnv('BETTER_AUTH_URL'),
 
   // ─────────────────────────────────────────────────────────────────────────
-  // Optional: route BA's verification + reset emails through InsForge.
+  // Optional: route BA's verification + reset emails through Yarah.
   // Enable by uncommenting and configuring SMTP via PUT /api/auth/smtp-config
-  // (or use cloud-hosted InsForge where PROJECT_ID is set).
+  // (or use cloud-hosted Yarah where PROJECT_ID is set).
   //
   // emailAndPassword: {
   //   enabled: true,
   //   requireEmailVerification: true,
   //   sendResetPassword: async ({ user, url }) => {
-  //     const c = await import('./insforge-server-mailer').then(m => m.serverMailer());
+  //     const c = await import('./yarah-server-mailer').then(m => m.serverMailer());
   //     const { error } = await c.emails.send({
   //       to: user.email,
   //       subject: 'Reset your password',
@@ -75,7 +75,7 @@ export const auth = betterAuth({
   // emailVerification: {
   //   sendOnSignUp: true,
   //   sendVerificationEmail: async ({ user, url }) => {
-  //     const c = await import('./insforge-server-mailer').then(m => m.serverMailer());
+  //     const c = await import('./yarah-server-mailer').then(m => m.serverMailer());
   //     const { error } = await c.emails.send({
   //       to: user.email,
   //       subject: 'Verify your email',

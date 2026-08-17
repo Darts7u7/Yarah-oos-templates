@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { insforge } from '@/lib/insforge'
+import { yarah } from '@/lib/yarah'
 
 export type AppsConfig = {
   composio_enabled: boolean
@@ -12,7 +12,7 @@ export function useAppsConfig() {
   return useQuery({
     queryKey: appsConfigKey,
     queryFn: async (): Promise<AppsConfig> => {
-      const { data, error } = await insforge.functions.invoke('apps-config', {
+      const { data, error } = await yarah.functions.invoke('apps-config', {
         method: 'GET',
       })
       if (error) throw new Error(error.message ?? 'Failed to load apps config')

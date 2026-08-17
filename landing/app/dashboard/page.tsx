@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { Button } from '@/components/ui/button';
 import { SiteHeader } from '@/components/site-header';
 import { getAccessToken } from '@/lib/auth-cookies';
-import { createInsforgeServerClient } from '@/lib/insforge';
+import { createYarahServerClient } from '@/lib/yarah';
 import { signOut } from '@/lib/auth-actions';
 
 export const metadata: Metadata = { title: 'Dashboard' };
@@ -14,8 +14,8 @@ export default async function DashboardPage() {
     redirect('/sign-in');
   }
 
-  const insforge = createInsforgeServerClient({ accessToken });
-  const { data, error } = await insforge.auth.getCurrentUser();
+  const yarah = createYarahServerClient({ accessToken });
+  const { data, error } = await yarah.auth.getCurrentUser();
 
   if (error || !data?.user) {
     redirect('/sign-in');

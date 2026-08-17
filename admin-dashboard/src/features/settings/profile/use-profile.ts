@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
-import { insforge } from '@/lib/insforge'
+import { yarah } from '@/lib/yarah'
 
 export type Profile = {
   user_id: string
@@ -31,7 +31,7 @@ export function useProfile(userId: string | undefined) {
     enabled: !!userId,
     queryKey: profileKey(userId),
     queryFn: async (): Promise<Profile | null> => {
-      const { data, error } = await insforge.database
+      const { data, error } = await yarah.database
         .from('profiles')
         .select(COLUMNS)
         .eq('user_id', userId!)
@@ -49,7 +49,7 @@ export function useUpsertProfile(userId: string | undefined) {
   return useMutation({
     mutationFn: async (payload: ProfilePayload): Promise<void> => {
       if (!userId) throw new Error('Not signed in')
-      const { data: existing, error: selErr } = await insforge.database
+      const { data: existing, error: selErr } = await yarah.database
         .from('profiles')
         .select('user_id')
         .eq('user_id', userId)
@@ -57,13 +57,13 @@ export function useUpsertProfile(userId: string | undefined) {
       if (selErr) throw new Error(selErr.message)
 
       if (existing) {
-        const { error } = await insforge.database
+        const { error } = await yarah.database
           .from('profiles')
           .update(payload)
           .eq('user_id', userId)
         if (error) throw new Error(error.message)
       } else {
-        const { error } = await insforge.database
+        const { error } = await yarah.database
           .from('profiles')
           .insert([{ user_id: userId, ...payload }])
         if (error) throw new Error(error.message)

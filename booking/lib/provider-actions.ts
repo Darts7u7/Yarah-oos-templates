@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 import { requireAuthenticatedSession } from '@/lib/auth-session';
-import { createInsforgeServerClient } from '@/lib/insforge';
+import { createYarahServerClient } from '@/lib/yarah';
 
 type Result = { success: true } | { success: false; error: string };
 
@@ -30,7 +30,7 @@ export async function upsertMyProvider(input: {
   is_published?: boolean;
 }): Promise<Result> {
   const session = await requireAuthenticatedSession();
-  const insforge = createInsforgeServerClient({ accessToken: session.accessToken });
+  const yarah = createYarahServerClient({ accessToken: session.accessToken });
 
   const businessName = input.business_name.trim();
   if (!businessName) {
@@ -39,7 +39,7 @@ export async function upsertMyProvider(input: {
 
   const slug = (input.slug?.trim() ? slugify(input.slug) : slugify(businessName)) || `provider-${Date.now()}`;
 
-  const { data: existing } = await insforge.database
+  const { data: existing } = await yarah.database
     .from('providers')
     .select('id')
     .eq('user_id', session.viewer.id)
@@ -59,14 +59,14 @@ export async function upsertMyProvider(input: {
   };
 
   if (existing) {
-    const { error } = await insforge.database
+    const { error } = await yarah.database
       .from('providers')
       .update(payload)
       .eq('id', existing.id);
 
     if (error) return { success: false, error: error.message ?? 'Update failed.' };
   } else {
-    const { error } = await insforge.database.from('providers').insert([payload]);
+    const { error } = await yarah.database.from('providers').insert([payload]);
     if (error) return { success: false, error: error.message ?? 'Create failed.' };
   }
 
@@ -88,14 +88,14 @@ export async function createService(input: {
   is_active?: boolean;
 }): Promise<Result> {
   const session = await requireAuthenticatedSession();
-  const insforge = createInsforgeServerClient({ accessToken: session.accessToken });
+  const yarah = createYarahServerClient({ accessToken: session.accessToken });
 
   const name = input.name.trim();
   if (!name) return { success: false, error: 'Name is required.' };
 
   const slug = slugify(name) || `service-${Date.now()}`;
 
-  const { error } = await insforge.database.from('services').insert([
+  const { error } = await yarah.database.from('services').insert([
     {
       provider_id: input.providerId,
       name,
@@ -125,9 +125,9 @@ export async function updateService(input: {
   is_active?: boolean;
 }): Promise<Result> {
   const session = await requireAuthenticatedSession();
-  const insforge = createInsforgeServerClient({ accessToken: session.accessToken });
+  const yarah = createYarahServerClient({ accessToken: session.accessToken });
 
-  const { error } = await insforge.database
+  const { error } = await yarah.database
     .from('services')
     .update({
       name: input.name.trim(),
@@ -148,9 +148,9 @@ export async function updateService(input: {
 
 export async function deleteService(serviceId: string): Promise<Result> {
   const session = await requireAuthenticatedSession();
-  const insforge = createInsforgeServerClient({ accessToken: session.accessToken });
+  const yarah = createYarahServerClient({ accessToken: session.accessToken });
 
-  const { error } = await insforge.database
+  const { error } = await yarah.database
     .from('services')
     .delete()
     .eq('id', serviceId);
@@ -171,9 +171,9 @@ export async function setAvailability(input: {
   windows: AvailabilityInput[];
 }): Promise<Result> {
   const session = await requireAuthenticatedSession();
-  const insforge = createInsforgeServerClient({ accessToken: session.accessToken });
+  const yarah = createYarahServerClient({ accessToken: session.accessToken });
 
-  const { error: deleteError } = await insforge.database
+  const { error: deleteError } = await yarah.database
     .from('availabilities')
     .delete()
     .eq('provider_id', input.providerId);
@@ -194,7 +194,7 @@ export async function setAvailability(input: {
     end_time: w.end_time.length === 5 ? `${w.end_time}:00` : w.end_time,
   }));
 
-  const { error } = await insforge.database.from('availabilities').insert(rows);
+  const { error } = await yarah.database.from('availabilities').insert(rows);
 
   if (error) return { success: false, error: error.message ?? 'Save failed.' };
   revalidatePath('/dashboard/availability');
@@ -208,9 +208,9 @@ export async function addBlackout(input: {
   reason?: string;
 }): Promise<Result> {
   const session = await requireAuthenticatedSession();
-  const insforge = createInsforgeServerClient({ accessToken: session.accessToken });
+  const yarah = createYarahServerClient({ accessToken: session.accessToken });
 
-  const { error } = await insforge.database.from('blackouts').insert([
+  const { error } = await yarah.database.from('blackouts').insert([
     {
       provider_id: input.providerId,
       start_at: input.start_at,
@@ -226,9 +226,9 @@ export async function addBlackout(input: {
 
 export async function removeBlackout(blackoutId: string): Promise<Result> {
   const session = await requireAuthenticatedSession();
-  const insforge = createInsforgeServerClient({ accessToken: session.accessToken });
+  const yarah = createYarahServerClient({ accessToken: session.accessToken });
 
-  const { error } = await insforge.database.from('blackouts').delete().eq('id', blackoutId);
+  const { error } = await yarah.database.from('blackouts').delete().eq('id', blackoutId);
   if (error) return { success: false, error: error.message ?? 'Remove blackout failed.' };
   revalidatePath('/dashboard/availability');
   return { success: true };

@@ -1,7 +1,7 @@
+import { auth } from '@/lib/auth';
 import jwt from 'jsonwebtoken';
 import { headers } from 'next/headers';
 import { NextResponse } from 'next/server';
-import { auth } from '@/lib/auth';
 
 function requireEnv(name: string): string {
   const value = process.env[name];
@@ -12,24 +12,24 @@ function requireEnv(name: string): string {
 }
 
 // Reads the Better Auth session from the cookie, signs an HS256 JWT
-// with the InsForge JWT secret, returns it for client-side InsForge
-// SDK usage (when a template needs realtime / browser-driven SDK
-// calls). Server routes use getCurrentAuthState() directly instead.
+// with the Yarah JWT secret, returns it. ~20 lines.
 export async function GET() {
   const session = await auth.api.getSession({ headers: await headers() });
   if (!session?.user) {
     return NextResponse.json({ error: 'not signed in' }, { status: 401 });
   }
-  // Keep the claim set minimal — RLS only needs `sub`.
+  // Mint the smallest claim set Yarah needs. Don't add email or other
+  // PII — RLS reads sub via auth.jwt() ->> 'sub' and that's all that matters.
   const token = jwt.sign(
     {
       sub: session.user.id,
       role: 'authenticated',
-      aud: 'insforge-api',
+      aud: 'yarah-api',
     },
-    requireEnv('INSFORGE_JWT_SECRET'),
+    requireEnv('YARAH_JWT_SECRET'),
     { algorithm: 'HS256', expiresIn: '1h' },
   );
+  // no-store: bridge tokens are short-lived and per-session — never cache.
   return NextResponse.json(
     { token },
     { headers: { 'Cache-Control': 'no-store' } },

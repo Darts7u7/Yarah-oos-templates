@@ -1,9 +1,9 @@
-<a href="https://insforge.dev">
-  <h1 align="center">InsForge Chatbot Starter</h1>
+<a href="https://yarah.dev">
+  <h1 align="center">Yarah Chatbot Starter</h1>
 </a>
 
 <p align="center">
-  A Next.js chatbot starter with InsForge auth, database, storage, and optional Vercel AI Gateway support.
+  A Next.js chatbot starter with Yarah auth, database, storage, and optional Vercel AI Gateway support.
 </p>
 
 <p align="center">
@@ -16,7 +16,7 @@
   <a href="#first-try"><strong>First Try</strong></a>
 </p>
 
-<img alt="InsForge Chatbot template preview" src="./public/chatbot-readme-cover.png" />
+<img alt="Yarah Chatbot template preview" src="./public/chatbot-readme-cover.png" />
 
 <br/>
 
@@ -24,7 +24,7 @@
 
 - [Next.js](https://nextjs.org) App Router
 - Streaming chat UI with persisted history and file attachments
-- [InsForge](https://insforge.dev) auth, database, storage, and AI
+- [Yarah](https://yarah.dev) auth, database, storage, and AI
 - Optional routing through [Vercel AI Gateway](https://vercel.com/docs/ai-gateway)
 - Multi-provider model selection with `provider/model` IDs
 - [shadcn/ui](https://ui.shadcn.com) components
@@ -32,24 +32,24 @@
 
 ## Demo
 
-Demo: [demochatbot.insforge.site](https://demochatbot.insforge.site)
+Demo: [demochatbot.yarah.dev](https://demochatbot.yarah.dev)
 
 The starter includes a simple first-try chat experience, persisted history, file uploads, authentication, and optional routing through the Vercel AI Gateway.
 
 ## Quick Launch
 
-If you want the fastest path, use the InsForge CLI and follow the prompts:
+If you want the fastest path, use the Yarah CLI and follow the prompts:
 
 ```bash
-npx @insforge/cli create
+npx @yarahdev/cli create
 ```
 
 From there:
 
 1. Choose the chatbot template
-2. Create or connect your InsForge project
+2. Create or connect your Yarah project
 3. Let the CLI set up the project files
-4. Choose to deploy with [InsForge](https://insforge.dev) automatically from the guided flow
+4. Choose to deploy with [Yarah](https://yarah.dev) automatically from the guided flow
 
 Use the local setup below if you want to inspect the repo, edit environment variables manually, or control the setup step by step.
 
@@ -58,8 +58,8 @@ Use the local setup below if you want to inspect the repo, edit environment vari
 1. Clone the repository and move into the chatbot template:
 
    ```bash
-   git clone https://github.com/InsForge/insforge-templates.git
-   cd insforge-templates/chatbot
+   git clone https://github.com/Darts7u7/Yarah-oos-templates.git
+   cd yarah-templates/chatbot
    ```
 
 2. Install dependencies:
@@ -68,10 +68,10 @@ Use the local setup below if you want to inspect the repo, edit environment vari
    npm install
    ```
 
-3. Go to the [InsForge dashboard](https://insforge.dev), create a project, and click **Connect** → **CLI** to get the link command:
+3. Go to the [Yarah dashboard](https://yarah.dev), create a project, and click **Connect** → **CLI** to get the link command:
 
    ```bash
-   npx @insforge/cli link --project-id <your-project-id>
+   npx @yarahdev/cli link --project-id <your-project-id>
    ```
 
 5. Copy the example environment file:
@@ -80,22 +80,22 @@ Use the local setup below if you want to inspect the repo, edit environment vari
    cp .env.example .env.local
    ```
 
-6. Fill in the required values (find these in the InsForge dashboard under **Connect** → **API Keys**):
+6. Fill in the required values (find these in the Yarah dashboard under **Connect** → **API Keys**):
 
    ```env
-   NEXT_PUBLIC_INSFORGE_URL=https://your-project.region.insforge.app
-   NEXT_PUBLIC_INSFORGE_ANON_KEY=your-public-anon-key
+   NEXT_PUBLIC_YARAH_URL=https://your-project.region.apps.yarah.dev
+   NEXT_PUBLIC_YARAH_ANON_KEY=your-public-anon-key
    NEXT_PUBLIC_APP_URL=http://localhost:3000
    ```
 
-7. Apply the included schema and seed data to your InsForge project. You can either ask your agent using this prompt:
+7. Apply the included schema and seed data to your Yarah project. You can either ask your agent using this prompt:
 
    > help me create table and seed data from migrations/db_init.sql
 
    Or run the command directly:
 
    ```bash
-   npx @insforge/cli db import migrations/db_init.sql
+   npx @yarahdev/cli db import migrations/db_init.sql
    ```
 
    This migration creates the chat tables and also inserts the `chat-attachments` storage bucket record used by file uploads.
@@ -110,7 +110,7 @@ Use the local setup below if you want to inspect the repo, edit environment vari
 
 ## Vercel AI Gateway
 
-To route AI requests through the [Vercel AI Gateway](https://vercel.com/docs/ai-gateway) instead of InsForge AI:
+To route AI requests through the [Vercel AI Gateway](https://vercel.com/docs/ai-gateway) instead of Yarah AI:
 
 1. Enable the provider:
 
@@ -132,21 +132,21 @@ To route AI requests through the [Vercel AI Gateway](https://vercel.com/docs/ai-
    Alternatively, if deploying on Vercel, you can configure provider keys in the Vercel dashboard under AI Gateway settings instead of using environment variables.
 
 **Current limitations:**
-- PDF file parsing (`fileParser`) is InsForge-only. PDFs are forwarded as base64 file parts, but results depend on the model. A toast warning is shown when this applies.
-- InsForge is still required for auth, database, storage, and file uploads regardless of AI provider.
+- PDF file parsing (`fileParser`) is Yarah-only. PDFs are forwarded as base64 file parts, but results depend on the model. A toast warning is shown when this applies.
+- Yarah is still required for auth, database, storage, and file uploads regardless of AI provider.
 
 ## Deploy to Vercel
 
 After cloning the repo and running the starter locally, you can deploy it on Vercel:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FInsForge%2Finsforge-templates%2Ftree%2Fmain%2Fchatbot&root-directory=chatbot&project-name=insforge-chatbot&repository-name=insforge-chatbot&env=NEXT_PUBLIC_INSFORGE_URL,NEXT_PUBLIC_INSFORGE_ANON_KEY&envDescription=Connect%20your%20InsForge%20project%20URL%20and%20anon%20key.&external-id=https%3A%2F%2Fgithub.com%2FInsForge%2Finsforge-templates%2Ftree%2Fmain%2Fchatbot&demo-title=InsForge%20Chatbot%20Starter&demo-description=A%20Next.js%20chatbot%20starter%20with%20InsForge%20auth%2C%20database%2C%20storage%2C%20and%20optional%20Vercel%20AI%20Gateway%20support.&demo-image=https%3A%2F%2Fraw.githubusercontent.com%2FInsForge%2Finsforge-templates%2Fmain%2Fchatbot%2Fpublic%2Fchatbot-readme-cover.png)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FYarah%2Fyarah-templates%2Ftree%2Fmain%2Fchatbot&root-directory=chatbot&project-name=yarah-chatbot&repository-name=yarah-chatbot&env=NEXT_PUBLIC_YARAH_URL,NEXT_PUBLIC_YARAH_ANON_KEY&envDescription=Connect%20your%20Yarah%20project%20URL%20and%20anon%20key.&external-id=https%3A%2F%2Fgithub.com%2FYarah%2Fyarah-templates%2Ftree%2Fmain%2Fchatbot&demo-title=Yarah%20Chatbot%20Starter&demo-description=A%20Next.js%20chatbot%20starter%20with%20Yarah%20auth%2C%20database%2C%20storage%2C%20and%20optional%20Vercel%20AI%20Gateway%20support.&demo-image=https%3A%2F%2Fraw.githubusercontent.com%2FYarah%2Fyarah-templates%2Fmain%2Fchatbot%2Fpublic%2Fchatbot-readme-cover.png)
 
-1. Set `NEXT_PUBLIC_INSFORGE_URL`
-2. Set `NEXT_PUBLIC_INSFORGE_ANON_KEY`
+1. Set `NEXT_PUBLIC_YARAH_URL`
+2. Set `NEXT_PUBLIC_YARAH_ANON_KEY`
 3. Deploy the project
 4. In Vercel, open your project, go to `Settings` → `Environment Variables`, and set `NEXT_PUBLIC_APP_URL` to your deployed app URL
 5. Redeploy the project
-6. In the InsForge dashboard, open `Authentication` → `General` → `Allowed Redirect URLs`, then add your deployed callback URL (for example `https://your-project.vercel.app/auth/callback`)
+6. In the Yarah dashboard, open `Authentication` → `General` → `Allowed Redirect URLs`, then add your deployed callback URL (for example `https://your-project.vercel.app/auth/callback`)
 
 ## First Try
 

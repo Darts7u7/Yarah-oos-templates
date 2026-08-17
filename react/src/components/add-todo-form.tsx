@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { getInsforgeClient } from "../lib/insforge";
+import { getYarahClient } from "../lib/yarah";
 
 function PlusIcon() {
   return (
@@ -28,8 +28,8 @@ export function AddTodoForm({ onAdded }: { onAdded: () => void }) {
     setError(null);
     setIsPending(true);
 
-    const insforge = getInsforgeClient();
-    const { error: dbError } = await insforge.database
+    const yarah = getYarahClient();
+    const { error: dbError } = await yarah.database
       .from("todos")
       .insert({ title, is_complete: false });
 

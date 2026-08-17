@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
-import { insforge } from '@/lib/insforge'
+import { yarah } from '@/lib/yarah'
 import { useAuth } from '@/lib/auth-context'
 import type { Task, TaskFormValues } from './schemas'
 
@@ -25,7 +25,7 @@ export function useTasks(workspaceId: string | undefined) {
     enabled: !!workspaceId,
     queryKey: tasksKey(workspaceId),
     queryFn: async (): Promise<Task[]> => {
-      const { data, error } = await insforge.database
+      const { data, error } = await yarah.database
         .from('tasks')
         .select(TASK_COLUMNS)
         .eq('workspace_id', workspaceId!)
@@ -44,7 +44,7 @@ export function useCreateTask(workspaceId: string | undefined) {
     mutationFn: async (values: TaskFormValues): Promise<Task> => {
       if (!workspaceId) throw new Error('No active workspace')
       if (!user) throw new Error('Not signed in')
-      const { data, error } = await insforge.database
+      const { data, error } = await yarah.database
         .from('tasks')
         .insert([
           {
@@ -73,7 +73,7 @@ export function useUpdateTask(workspaceId: string | undefined) {
 
   return useMutation({
     mutationFn: async ({ id, values }: { id: string; values: TaskFormValues }): Promise<Task> => {
-      const { data, error } = await insforge.database
+      const { data, error } = await yarah.database
         .from('tasks')
         .update(toDbPayload(values))
         .eq('id', id)
@@ -97,7 +97,7 @@ export function useDeleteTask(workspaceId: string | undefined) {
 
   return useMutation({
     mutationFn: async (id: string): Promise<void> => {
-      const { error } = await insforge.database.from('tasks').delete().eq('id', id)
+      const { error } = await yarah.database.from('tasks').delete().eq('id', id)
       if (error) throw new Error(error.message)
     },
     onSuccess: () => {
@@ -118,7 +118,7 @@ export function useBulkDeleteTasks(workspaceId: string | undefined) {
       if (ids.length === 0) return 0
       // Issue deletes in parallel; collect first error if any.
       const results = await Promise.all(
-        ids.map((id) => insforge.database.from('tasks').delete().eq('id', id)),
+        ids.map((id) => yarah.database.from('tasks').delete().eq('id', id)),
       )
       const failure = results.find((r) => r.error)
       if (failure?.error) throw new Error(failure.error.message)

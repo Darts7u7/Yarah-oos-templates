@@ -1,8 +1,8 @@
 import { cookies } from 'next/headers';
 
-const ACCESS_COOKIE = 'insforge_access_token';
-const REFRESH_COOKIE = 'insforge_refresh_token';
-const PKCE_VERIFIER_COOKIE = 'insforge_pkce_verifier';
+const ACCESS_COOKIE = 'yarah_access_token';
+const REFRESH_COOKIE = 'yarah_refresh_token';
+const PKCE_VERIFIER_COOKIE = 'yarah_pkce_verifier';
 
 const cookieOptions = {
   httpOnly: true,

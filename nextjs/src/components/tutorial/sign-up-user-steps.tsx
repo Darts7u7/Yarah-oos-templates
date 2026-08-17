@@ -12,7 +12,7 @@ export function SignUpUserSteps() {
         <TutorialStep title="Set up redirect URLs">
           <p>It looks like this starter is running on Vercel.</p>
           <p>
-            If you enable email links or OAuth, configure the redirect URLs in your InsForge
+            If you enable email links or OAuth, configure the redirect URLs in your Yarah
             auth settings to match localhost, production, and preview deployments.
           </p>
           <ul className="space-y-2">

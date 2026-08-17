@@ -4,7 +4,7 @@ import './globals.css';
 const themeInitScript = `
 (() => {
   try {
-    const storageKey = "insforge-theme";
+    const storageKey = "yarah-theme";
     const savedTheme = localStorage.getItem(storageKey) || "system";
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
     const resolvedTheme = savedTheme === "system"
@@ -18,8 +18,8 @@ const themeInitScript = `
 `;
 
 export const metadata: Metadata = {
-  title: "Next.js InsForge Starter",
-  description: "A starter template for building Next.js apps with InsForge auth and data flows.",
+  title: "Next.js Yarah Starter",
+  description: "A starter template for building Next.js apps with Yarah auth and data flows.",
 };
 
 export default function RootLayout({

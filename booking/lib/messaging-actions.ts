@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 import { requireAuthenticatedSession } from '@/lib/auth-session';
-import { createInsforgeServerClient } from '@/lib/insforge';
+import { createYarahServerClient } from '@/lib/yarah';
 
 type Result = { success: true } | { success: false; error: string };
 
@@ -11,14 +11,14 @@ export async function sendBookingMessage(input: {
   body: string;
 }): Promise<Result> {
   const session = await requireAuthenticatedSession();
-  const insforge = createInsforgeServerClient({ accessToken: session.accessToken });
+  const yarah = createYarahServerClient({ accessToken: session.accessToken });
 
   const body = input.body.trim();
   if (!body) {
     return { success: false, error: 'Message cannot be empty.' };
   }
 
-  const { error } = await insforge.database.from('booking_messages').insert([
+  const { error } = await yarah.database.from('booking_messages').insert([
     {
       booking_id: input.bookingId,
       sender_id: session.viewer.id,

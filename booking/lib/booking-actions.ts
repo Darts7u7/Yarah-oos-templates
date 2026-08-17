@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 import { requireAuthenticatedSession } from '@/lib/auth-session';
-import { createInsforgeServerClient } from '@/lib/insforge';
+import { createYarahServerClient } from '@/lib/yarah';
 import type { BookingStatus } from '@/lib/types';
 
 type BookingResult =
@@ -16,9 +16,9 @@ export async function createBooking(input: {
   notes?: string;
 }): Promise<BookingResult> {
   const session = await requireAuthenticatedSession();
-  const insforge = createInsforgeServerClient({ accessToken: session.accessToken });
+  const yarah = createYarahServerClient({ accessToken: session.accessToken });
 
-  const { data: service, error: serviceError } = await insforge.database
+  const { data: service, error: serviceError } = await yarah.database
     .from('services')
     .select('id, provider_id, price_cents, duration_min, is_active')
     .eq('id', input.serviceId)
@@ -31,7 +31,7 @@ export async function createBooking(input: {
     return { success: false, error: 'This service is no longer accepting bookings.' };
   }
 
-  const { data: inserted, error } = await insforge.database
+  const { data: inserted, error } = await yarah.database
     .from('bookings')
     .insert([
       {
@@ -70,9 +70,9 @@ async function updateBookingStatus(
   patch: Record<string, unknown>,
 ): Promise<StatusTransitionResult> {
   const session = await requireAuthenticatedSession();
-  const insforge = createInsforgeServerClient({ accessToken: session.accessToken });
+  const yarah = createYarahServerClient({ accessToken: session.accessToken });
 
-  const { error } = await insforge.database
+  const { error } = await yarah.database
     .from('bookings')
     .update(patch)
     .eq('id', bookingId);

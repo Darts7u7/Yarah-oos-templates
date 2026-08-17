@@ -9,7 +9,7 @@ type ThemeContextValue = {
 
 const ThemeContext = createContext<ThemeContextValue | null>(null)
 
-const STORAGE_KEY = 'insforge-admin.theme'
+const STORAGE_KEY = 'yarah-admin.theme'
 
 function applyTheme(theme: Theme) {
   const root = window.document.documentElement

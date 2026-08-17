@@ -19,7 +19,7 @@ export function AuthShell({
             className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface)] px-3 py-1.5 text-xs font-medium text-[var(--muted-foreground)] shadow-sm hover:bg-[var(--surface-muted)]"
           >
             <span className="inline-block h-2 w-2 rounded-full bg-orange-500" />
-            <span>Next.js InsForge Starter</span>
+            <span>Next.js Yarah Starter</span>
           </Link>
         </div>
 

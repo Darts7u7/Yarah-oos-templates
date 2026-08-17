@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { createInsforgeServerClient } from '@/lib/insforge';
+import { createYarahServerClient } from '@/lib/yarah';
 import { getCurrentAuthState } from '@/lib/auth-state';
 import { retrieveForQuestion, toCitations } from '@/lib/rag/retrieve';
 import { RAG_SYSTEM_PROMPT, buildUserPrompt } from '@/lib/ai/prompts';
@@ -45,7 +45,7 @@ export async function POST(req: Request) {
   }
 
   const ownerId = auth.viewer.id;
-  const client = createInsforgeServerClient({ accessToken: auth.accessToken });
+  const client = createYarahServerClient({ accessToken: auth.accessToken });
 
   let chatId = body.chatId;
   let workspaceId: string | null = body.workspaceId ?? null;

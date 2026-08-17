@@ -1,6 +1,6 @@
 import type { AIProvider, StreamCompletionParams } from '@/lib/ai/types';
 
-type InsforgeClient = {
+type YarahClient = {
   ai: {
     chat: {
       completions: {
@@ -28,7 +28,7 @@ function extractDeltaText(content: unknown): string {
   return '';
 }
 
-export function createInsforgeAIProvider(client: InsforgeClient): AIProvider {
+export function createYarahAIProvider(client: YarahClient): AIProvider {
   return {
     async streamCompletion(params: StreamCompletionParams) {
       const raw = await client.ai.chat.completions.create({

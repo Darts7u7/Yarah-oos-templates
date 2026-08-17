@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 type ThemeMode = "light" | "dark" | "system";
 
-const STORAGE_KEY = "insforge-theme";
+const STORAGE_KEY = "yarah-theme";
 
 function applyTheme(theme: ThemeMode) {
   const root = document.documentElement;

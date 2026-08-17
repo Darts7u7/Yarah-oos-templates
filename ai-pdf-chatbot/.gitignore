@@ -28,13 +28,13 @@ pnpm-debug.log*
 .vercel
 .turbo
 
-# InsForge CLI link metadata (per-user, never commit)
-.insforge
+# Yarah CLI link metadata (per-user, never commit)
+.yarah
 
 # OS
 .DS_Store
 
-# InsForge & AI agent skills
+# Yarah & AI agent skills
 .agent
 .agents
 .augment

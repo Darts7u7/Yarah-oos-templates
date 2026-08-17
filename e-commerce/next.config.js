@@ -8,11 +8,11 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'txvtce5i.us-west.insforge.app',
+        hostname: 'txvtce5i.us-west.apps.yarah.dev',
       },
       {
         protocol: 'https',
-        hostname: 'cdn.insforge.dev',
+        hostname: 'cdn.yarah.dev',
       },
     ],
   },

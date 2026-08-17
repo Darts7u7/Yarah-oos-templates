@@ -7,7 +7,7 @@ import type {
   ChatSummary,
   SendMessageResponse,
 } from '@/lib/types';
-import { DEFAULT_SYSTEM_PROMPT, getConfiguredModel, getInsforgeServerClient, createInsforgeServerClient } from '@/lib/insforge';
+import { DEFAULT_SYSTEM_PROMPT, getConfiguredModel, getYarahServerClient, createYarahServerClient } from '@/lib/yarah';
 import { createAIProvider, getAIProviderName } from '@/lib/ai';
 import type { UserContentPart, FileParserOptions } from '@/lib/ai';
 
@@ -58,13 +58,13 @@ function ownerInsertFields(owner: ChatOwner) {
   return { user_id: owner.userId, visitor_id: null };
 }
 
-type InsforgeClient = ReturnType<typeof createInsforgeServerClient>;
+type YarahClient = ReturnType<typeof createYarahServerClient>;
 
-function getClient(accessToken?: string | null): InsforgeClient {
+function getClient(accessToken?: string | null): YarahClient {
   if (accessToken) {
-    return createInsforgeServerClient({ accessToken });
+    return createYarahServerClient({ accessToken });
   }
-  return getInsforgeServerClient();
+  return getYarahServerClient();
 }
 
 function buildTitle(input: string) {
@@ -86,8 +86,8 @@ function assertNoDatabaseError(
 }
 
 async function getChatRow(owner: ChatOwner, chatId: string, accessToken?: string | null) {
-  const insforge = getClient(accessToken);
-  let query = insforge.database
+  const yarah = getClient(accessToken);
+  let query = yarah.database
     .from('chat_sessions')
     .select('id, user_id, title, created_at, last_message_at')
     .eq('id', chatId);
@@ -101,8 +101,8 @@ async function getChatRow(owner: ChatOwner, chatId: string, accessToken?: string
 }
 
 async function getMessageRows(chatId: string, accessToken?: string | null) {
-  const insforge = getClient(accessToken);
-  const { data, error } = await insforge.database
+  const yarah = getClient(accessToken);
+  const { data, error } = await yarah.database
     .from('chat_messages')
     .select('id, chat_id, role, content, created_at, sort_order')
     .eq('chat_id', chatId)
@@ -115,7 +115,7 @@ async function getMessageRows(chatId: string, accessToken?: string | null) {
   if (rows.length === 0) return rows;
 
   const messageIds = rows.map((row) => row.id);
-  const { data: attachmentData, error: attachmentError } = await insforge.database
+  const { data: attachmentData, error: attachmentError } = await yarah.database
     .from('chat_attachments')
     .select('message_id, key, url, file_name, file_size, mime_type')
     .in('message_id', messageIds);
@@ -146,8 +146,8 @@ async function getMessageRows(chatId: string, accessToken?: string | null) {
 }
 
 async function createChat(owner: ChatOwner, input: string, accessToken?: string | null) {
-  const insforge = getClient(accessToken);
-  const { data, error } = await insforge.database
+  const yarah = getClient(accessToken);
+  const { data, error } = await yarah.database
     .from('chat_sessions')
     .insert([
       {
@@ -176,8 +176,8 @@ async function createMessages(
   }>,
   accessToken?: string | null,
 ) {
-  const insforge = getClient(accessToken);
-  const { data, error } = await insforge.database
+  const yarah = getClient(accessToken);
+  const { data, error } = await yarah.database
     .from('chat_messages')
     .insert(records)
     .select('id, chat_id, role, content, created_at');
@@ -194,8 +194,8 @@ async function createMessages(
 
 export async function listChats(owner: ChatOwner, accessToken?: string | null) {
   const safeOwner = ensureOwner(owner);
-  const insforge = getClient(accessToken);
-  let query = insforge.database
+  const yarah = getClient(accessToken);
+  let query = yarah.database
     .from('chat_sessions')
     .select('id, title, created_at, last_message_at');
 
@@ -219,8 +219,8 @@ export async function deleteChat(
     throw new Error('Chat not found.');
   }
 
-  const insforge = getClient(accessToken);
-  const { error } = await insforge.database
+  const yarah = getClient(accessToken);
+  const { error } = await yarah.database
     .from('chat_sessions')
     .delete()
     .eq('id', chatId);
@@ -247,7 +247,7 @@ export async function getChatDetail(
 async function saveAttachments(messageId: string, attachments: Attachment[], accessToken?: string | null) {
   if (attachments.length === 0) return;
 
-  const insforge = getClient(accessToken);
+  const yarah = getClient(accessToken);
   const records = attachments.map((att) => ({
     message_id: messageId,
     bucket: UPLOAD_BUCKET,
@@ -258,7 +258,7 @@ async function saveAttachments(messageId: string, attachments: Attachment[], acc
     mime_type: att.mimeType,
   }));
 
-  const { error } = await insforge.database
+  const { error } = await yarah.database
     .from('chat_attachments')
     .insert(records);
 
@@ -266,8 +266,8 @@ async function saveAttachments(messageId: string, attachments: Attachment[], acc
 }
 
 async function downloadAttachment(att: Attachment, accessToken?: string | null) {
-  const insforge = getClient(accessToken);
-  const { data, error } = await insforge.storage
+  const yarah = getClient(accessToken);
+  const { data, error } = await yarah.storage
     .from(UPLOAD_BUCKET)
     .download(att.key);
 
@@ -343,7 +343,7 @@ type PreparedMessageRequest = {
   text: string;
   requestedModel: string;
   token?: string | null;
-  insforgeClient: InsforgeClient;
+  yarahClient: YarahClient;
   chat: ChatSessionRow;
   attachments: Attachment[];
   nextSortOrder: number;
@@ -372,7 +372,7 @@ async function prepareMessageRequest(input: {
 
   const requestedModel = input.model?.trim() || getConfiguredModel();
   const token = input.accessToken;
-  const insforge = getClient(token);
+  const yarah = getClient(token);
 
   let chat =
     input.chatId?.trim() && input.chatId
@@ -410,7 +410,7 @@ async function prepareMessageRequest(input: {
     text,
     requestedModel,
     token,
-    insforgeClient: insforge,
+    yarahClient: yarah,
     chat,
     attachments,
     nextSortOrder,
@@ -492,13 +492,13 @@ export async function streamMessage(input: {
           writeEvent({ type: 'chat', chat: prepared.chat });
 
           const providerName = getAIProviderName();
-          const provider = await createAIProvider(prepared.insforgeClient);
+          const provider = await createAIProvider(prepared.yarahClient);
 
-          if (providerName !== 'insforge' && prepared.fileParser) {
+          if (providerName !== 'yarah' && prepared.fileParser) {
             writeEvent({
               type: 'warning',
               message:
-                'PDF file parsing is only supported with the InsForge AI provider. ' +
+                'PDF file parsing is only supported with the Yarah AI provider. ' +
                 'Attached PDFs may not be fully processed by the current provider.',
             });
           }

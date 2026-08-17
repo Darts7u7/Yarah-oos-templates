@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { createInsforgeServerClient } from '@/lib/insforge';
+import { createYarahServerClient } from '@/lib/yarah';
 import { PublicPageView } from '@/components/editor/PublicPageViewClient';
 
 export default async function SharedPage({
@@ -9,7 +9,7 @@ export default async function SharedPage({
 }) {
   const { shareToken } = await params;
   // Anon client (no access token) — the RPC has SECURITY DEFINER and is granted to anon.
-  const client = createInsforgeServerClient();
+  const client = createYarahServerClient();
 
   const { data, error } = await client.database.rpc('get_shared_page', { p_share_token: shareToken });
 

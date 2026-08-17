@@ -1,19 +1,19 @@
 import 'server-only';
-import type { createClient } from '@insforge/sdk';
+import type { createClient } from '@yarahdev/sdk';
 import { after } from 'next/server';
 import { parsePdf } from '@/lib/pdf/parse';
 import { chunkPages } from '@/lib/pdf/chunk';
 import { embedTexts } from '@/lib/ai/embeddings';
 import { generateDocumentInsights } from '@/lib/ai/document-insights';
 
-type InsforgeClient = ReturnType<typeof createClient>;
+type YarahClient = ReturnType<typeof createClient>;
 
 export type IngestResult =
   | { status: 'ready'; chunkCount: number; pageCount: number }
   | { status: 'failed'; error: string };
 
 export async function ingestPdf(
-  client: InsforgeClient,
+  client: YarahClient,
   params: {
     userId: string;
     documentId: string;
@@ -102,7 +102,7 @@ export async function ingestPdf(
 }
 
 async function markDocument(
-  client: InsforgeClient,
+  client: YarahClient,
   documentId: string,
   patch: { status: 'processing' | 'ready' | 'failed'; error: string | null; page_count?: number },
 ) {

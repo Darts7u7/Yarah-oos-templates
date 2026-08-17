@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 import { requireAuthenticatedSession } from '@/lib/auth-session';
-import { createInsforgeServerClient } from '@/lib/insforge';
+import { createYarahServerClient } from '@/lib/yarah';
 
 type Result = { success: true } | { success: false; error: string };
 
@@ -13,7 +13,7 @@ export async function upsertMyProfile(input: {
   phone?: string;
 }): Promise<Result> {
   const session = await requireAuthenticatedSession();
-  const insforge = createInsforgeServerClient({ accessToken: session.accessToken });
+  const yarah = createYarahServerClient({ accessToken: session.accessToken });
 
   const payload = {
     user_id: session.viewer.id,
@@ -23,7 +23,7 @@ export async function upsertMyProfile(input: {
     phone: input.phone?.trim() || null,
   };
 
-  const { error: existingError, data: existing } = await insforge.database
+  const { error: existingError, data: existing } = await yarah.database
     .from('profiles')
     .select('user_id')
     .eq('user_id', session.viewer.id)
@@ -34,14 +34,14 @@ export async function upsertMyProfile(input: {
   }
 
   if (existing) {
-    const { error } = await insforge.database
+    const { error } = await yarah.database
       .from('profiles')
       .update(payload)
       .eq('user_id', session.viewer.id);
 
     if (error) return { success: false, error: error.message ?? 'Update failed.' };
   } else {
-    const { error } = await insforge.database.from('profiles').insert([payload]);
+    const { error } = await yarah.database.from('profiles').insert([payload]);
     if (error) return { success: false, error: error.message ?? 'Create failed.' };
   }
 

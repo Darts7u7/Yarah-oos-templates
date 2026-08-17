@@ -15,7 +15,7 @@ function ForgotPasswordPage() {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // InsForge sends the reset code via email automatically based on its auth config.
+    // Yarah sends the reset code via email automatically based on its auth config.
     // The user is then taken to /otp to enter the code and set a new password.
     toast.success(`If an account exists for ${email}, a reset code has been sent.`)
     setSent(true)

@@ -4,7 +4,7 @@ import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { insforge } from '@/lib/insforge'
+import { yarah } from '@/lib/yarah'
 import { useAuth } from '@/lib/auth-context'
 import { ensureWorkspace } from '@/features/auth/ensure-workspace'
 import { useWorkspaceStore } from '@/features/workspaces/workspace-store'
@@ -25,7 +25,7 @@ function SignUpPage() {
     e.preventDefault()
     setLoading(true)
     try {
-      const { data, error } = await insforge.auth.signUp({ email, password })
+      const { data, error } = await yarah.auth.signUp({ email, password })
       if (error) {
         toast.error(error.message ?? 'Sign up failed')
         return

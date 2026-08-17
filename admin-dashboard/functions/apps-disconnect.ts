@@ -1,4 +1,4 @@
-import { createClient } from 'npm:@insforge/sdk'
+import { createClient } from 'npm:@yarahdev/sdk'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -26,7 +26,7 @@ export default async function handler(req: Request): Promise<Response> {
   if (!userToken) return err(401, 'unauthorized')
 
   const client = createClient({
-    baseUrl: Deno.env.get('INSFORGE_BASE_URL'),
+    baseUrl: Deno.env.get('YARAH_BASE_URL'),
     edgeFunctionToken: userToken,
   })
 
