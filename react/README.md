@@ -85,7 +85,7 @@ cp env.example .env.local
 Set the following values in `.env.local`:
 
 ```env
-VITE_YARAH_BASE_URL=https://your-project.region.apps.yarah.dev
+VITE_YARAH_URL=https://your-project.region.apps.yarah.dev
 VITE_YARAH_ANON_KEY=your-anon-key
 ```
 
@@ -101,12 +101,12 @@ The starter should now be running on [localhost:5173](http://localhost:5173).
 
 ## Deploy to Vercel
 
-Click [Deploy with Vercel](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FYarah%2Fyarah-templates&root-directory=react&project-name=yarah-react-starter&repository-name=yarah-react-starter&env=VITE_YARAH_BASE_URL,VITE_YARAH_ANON_KEY&envDescription=Connect%20your%20Yarah%20project%20URL%20and%20anon%20key.&external-id=https%3A%2F%2Fgithub.com%2FYarah%2Fyarah-templates%2Ftree%2Fmain%2Freact&demo-title=React%20Yarah%20Starter&demo-description=A%20clean%20React%20and%20Vite%20starter%20with%20Yarah%20auth%20and%20Tailwind%20CSS.&demo-image=https%3A%2F%2Fraw.githubusercontent.com%2FYarah%2Fyarah-templates%2Fmain%2Freact%2Freact-starter.png), then fill in the required environment variables during the setup flow:
+Click [Deploy with Vercel](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FYarah%2Fyarah-templates&root-directory=react&project-name=yarah-react-starter&repository-name=yarah-react-starter&env=VITE_YARAH_URL,VITE_YARAH_ANON_KEY&envDescription=Connect%20your%20Yarah%20project%20URL%20and%20anon%20key.&external-id=https%3A%2F%2Fgithub.com%2FYarah%2Fyarah-templates%2Ftree%2Fmain%2Freact&demo-title=React%20Yarah%20Starter&demo-description=A%20clean%20React%20and%20Vite%20starter%20with%20Yarah%20auth%20and%20Tailwind%20CSS.&demo-image=https%3A%2F%2Fraw.githubusercontent.com%2FYarah%2Fyarah-templates%2Fmain%2Freact%2Freact-starter.png), then fill in the required environment variables during the setup flow:
 
-- `VITE_YARAH_BASE_URL`
+- `VITE_YARAH_URL`
 - `VITE_YARAH_ANON_KEY`
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FYarah%2Fyarah-templates&root-directory=react&project-name=yarah-react-starter&repository-name=yarah-react-starter&env=VITE_YARAH_BASE_URL,VITE_YARAH_ANON_KEY&envDescription=Connect%20your%20Yarah%20project%20URL%20and%20anon%20key.&external-id=https%3A%2F%2Fgithub.com%2FYarah%2Fyarah-templates%2Ftree%2Fmain%2Freact&demo-title=React%20Yarah%20Starter&demo-description=A%20clean%20React%20and%20Vite%20starter%20with%20Yarah%20auth%20and%20Tailwind%20CSS.&demo-image=https%3A%2F%2Fraw.githubusercontent.com%2FYarah%2Fyarah-templates%2Fmain%2Freact%2Freact-starter.png)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FYarah%2Fyarah-templates&root-directory=react&project-name=yarah-react-starter&repository-name=yarah-react-starter&env=VITE_YARAH_URL,VITE_YARAH_ANON_KEY&envDescription=Connect%20your%20Yarah%20project%20URL%20and%20anon%20key.&external-id=https%3A%2F%2Fgithub.com%2FYarah%2Fyarah-templates%2Ftree%2Fmain%2Freact&demo-title=React%20Yarah%20Starter&demo-description=A%20clean%20React%20and%20Vite%20starter%20with%20Yarah%20auth%20and%20Tailwind%20CSS.&demo-image=https%3A%2F%2Fraw.githubusercontent.com%2FYarah%2Fyarah-templates%2Fmain%2Freact%2Freact-starter.png)
 
 After importing into Vercel:
 

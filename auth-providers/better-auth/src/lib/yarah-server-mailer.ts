@@ -10,7 +10,7 @@ export function serverMailer() {
     process.env.YARAH_JWT_SECRET!,
     { algorithm: 'HS256', expiresIn: '5m' },
   );
-  const c = createClient({ baseUrl: process.env.NEXT_PUBLIC_YARAH_BASE_URL! });
+  const c = createClient({ baseUrl: process.env.NEXT_PUBLIC_YARAH_URL! });
   c.getHttpClient().setAuthToken(token);
   return c;
 }

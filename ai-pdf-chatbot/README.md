@@ -91,7 +91,7 @@ npm install
    cp .env.example .env.local
    ```
 
-   - `NEXT_PUBLIC_YARAH_BASE_URL`, `NEXT_PUBLIC_YARAH_ANON_KEY` — from the dashboard
+   - `NEXT_PUBLIC_YARAH_URL`, `NEXT_PUBLIC_YARAH_ANON_KEY` — from the dashboard
    - `DATABASE_URL` — the Postgres connection string for the BA tables (cloud: from the dashboard; self-hosted: the default `postgresql://postgres:postgres@127.0.0.1:5432/yarah` works against the local stack)
    - `BETTER_AUTH_SECRET` — `openssl rand -hex 32`
    - `BETTER_AUTH_URL` and `NEXT_PUBLIC_BETTER_AUTH_URL` — `http://localhost:3000` for dev

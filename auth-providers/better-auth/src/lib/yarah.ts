@@ -33,7 +33,7 @@ export function useYarahClient(): { client: YarahClient; isReady: boolean } {
   const client = useMemo(
     () =>
       createClient({
-        baseUrl: process.env.NEXT_PUBLIC_YARAH_BASE_URL!,
+        baseUrl: process.env.NEXT_PUBLIC_YARAH_URL!,
         anonKey: process.env.NEXT_PUBLIC_YARAH_ANON_KEY!,
         autoRefreshToken: false,
       }),

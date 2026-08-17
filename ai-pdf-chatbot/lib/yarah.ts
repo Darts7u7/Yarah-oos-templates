@@ -10,12 +10,12 @@ import { createClient } from '@yarahdev/sdk';
 // `getCurrentAuthState()` (see lib/auth-state.ts) — never construct a
 // client with a stale or missing token.
 export function createYarahServerClient(options?: { accessToken?: string }) {
-  const baseUrl = process.env.NEXT_PUBLIC_YARAH_BASE_URL;
+  const baseUrl = process.env.NEXT_PUBLIC_YARAH_URL;
   const anonKey = process.env.NEXT_PUBLIC_YARAH_ANON_KEY;
 
   if (!baseUrl || !anonKey) {
     throw new Error(
-      'Missing Yarah configuration. Set NEXT_PUBLIC_YARAH_BASE_URL and NEXT_PUBLIC_YARAH_ANON_KEY.',
+      'Missing Yarah configuration. Set NEXT_PUBLIC_YARAH_URL and NEXT_PUBLIC_YARAH_ANON_KEY.',
     );
   }
 

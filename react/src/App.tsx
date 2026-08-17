@@ -12,7 +12,7 @@ import { useAuth } from './lib/auth-context';
 import { getYarahConfig } from './lib/yarah';
 
 const deployUrl =
-  'https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FYarah%2Fyarah-templates&root-directory=react&project-name=yarah-react-starter&repository-name=yarah-react-starter&env=VITE_YARAH_BASE_URL,VITE_YARAH_ANON_KEY&envDescription=Connect%20your%20Yarah%20project%20URL%20and%20anon%20key.&external-id=https%3A%2F%2Fgithub.com%2FYarah%2Fyarah-templates%2Ftree%2Fmain%2Freact&demo-title=React%20Yarah%20Starter&demo-description=A%20clean%20React%20and%20Vite%20starter%20with%20Yarah%20auth%20and%20Tailwind%20CSS.&demo-image=https%3A%2F%2Fraw.githubusercontent.com%2FYarah%2Fyarah-templates%2Fmain%2Freact%2Freact-starter.png';
+  'https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FYarah%2Fyarah-templates&root-directory=react&project-name=yarah-react-starter&repository-name=yarah-react-starter&env=VITE_YARAH_URL,VITE_YARAH_ANON_KEY&envDescription=Connect%20your%20Yarah%20project%20URL%20and%20anon%20key.&external-id=https%3A%2F%2Fgithub.com%2FYarah%2Fyarah-templates%2Ftree%2Fmain%2Freact&demo-title=React%20Yarah%20Starter&demo-description=A%20clean%20React%20and%20Vite%20starter%20with%20Yarah%20auth%20and%20Tailwind%20CSS.&demo-image=https%3A%2F%2Fraw.githubusercontent.com%2FYarah%2Fyarah-templates%2Fmain%2Freact%2Freact-starter.png';
 
 const isVercelDeployment =
   import.meta.env.VERCEL_ENV === 'preview' || import.meta.env.VERCEL_ENV === 'production';
@@ -146,7 +146,7 @@ function HomePage() {
                   </p>
                   <ul>
                     <li>
-                      <code className="app-code">VITE_YARAH_BASE_URL</code>
+                      <code className="app-code">VITE_YARAH_URL</code>
                     </li>
                     <li>
                       <code className="app-code">VITE_YARAH_ANON_KEY</code>

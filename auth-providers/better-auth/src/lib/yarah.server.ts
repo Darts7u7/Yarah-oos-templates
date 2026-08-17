@@ -21,7 +21,7 @@ export async function createYarahClient() {
   );
 
   return createClient({
-    baseUrl: process.env.NEXT_PUBLIC_YARAH_BASE_URL!,
+    baseUrl: process.env.NEXT_PUBLIC_YARAH_URL!,
     edgeFunctionToken: yarahToken, // sets BOTH HttpClient + TokenManager
   });
 }

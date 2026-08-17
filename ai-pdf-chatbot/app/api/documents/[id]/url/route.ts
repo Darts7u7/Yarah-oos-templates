@@ -29,7 +29,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
   }
   const doc = data as { storage_bucket: string; storage_key: string };
 
-  const baseUrl = process.env.NEXT_PUBLIC_YARAH_BASE_URL!;
+  const baseUrl = process.env.NEXT_PUBLIC_YARAH_URL!;
   const strategyRes = await fetch(
     `${baseUrl}/api/storage/buckets/${doc.storage_bucket}/objects/${encodeURIComponent(doc.storage_key)}/download-strategy`,
     {
