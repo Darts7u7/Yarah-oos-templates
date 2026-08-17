@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "better-auth",
+  "description": "Better Auth + InsForge bridge: same-origin sessions, HS256 bridge JWT, Row Level Security via requesting_user_id().",
+  "files": [
+    "src/lib/auth.ts",
+    "src/lib/auth-client.ts",
+    "src/lib/insforge.ts",
+    "src/lib/insforge.server.ts",
+    "src/lib/insforge-server-mailer.ts",
+    "src/app/api/auth/[...all]/route.ts",
+    "src/app/api/insforge-token/route.ts",
+    "src/app/sign-in/page.tsx",
+    "src/app/sign-up/page.tsx",
+    "migrations/0001_better-auth-bootstrap.sql"
+  ],
+  "packageJsonPatch": {
+    "dependencies": {
+      "@insforge/sdk": "^1.2.6",
+      "better-auth": "^1.6.0",
+      "jsonwebtoken": "^9.0.2",
+      "pg": "^8.13.0"
+    },
+    "devDependencies": {
+      "@better-auth/cli": "^1.4.21",
+      "@types/jsonwebtoken": "^9.0.8",
+      "@types/pg": "^8.11.10"
+    },
+    "scripts": {
+      "auth:migrate": "better-auth migrate --config ./src/lib/auth.ts -y",
+      "setup": "npx -y @insforge/cli db migrations up --to 0001 && npm run auth:migrate && npx -y @insforge/cli db migrations up --all"
+    }
+  },
+  "envExampleAppend": "# ─── Better Auth + InsForge bridge (added by --auth better-auth) ────────\n# Postgres for BA's own user/session/account/verification tables. The CLI\n# auto-fills this from your project — cloud uses the project's managed\n# Postgres, self-hosted defaults to the localhost stack below.\nDATABASE_URL=postgresql://postgres:postgres@127.0.0.1:5432/insforge\n\nBETTER_AUTH_SECRET=replace-with-32-random-bytes\nBETTER_AUTH_URL=http://localhost:3000\nNEXT_PUBLIC_BETTER_AUTH_URL=http://localhost:3000\n\n# Same secret InsForge uses internally; the bridge route signs HS256 with this.\nINSFORGE_JWT_SECRET=replace-with-output-of-cli-secrets-get-JWT_SECRET\nNEXT_PUBLIC_INSFORGE_BASE_URL=http://localhost:7130\nNEXT_PUBLIC_INSFORGE_ANON_KEY=replace-with-anon-key-from-insforge-dashboard",
+  "nextSteps": "Run `npm run dev` and open http://localhost:3000/sign-up."
+}
